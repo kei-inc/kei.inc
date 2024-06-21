@@ -1,0 +1,20 @@
+body{
+    background: #EFEDE4;
+}
+
+section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 50px;
+    border-top: 2px solid #000000;
+}
+#first-case-study p{
+    color: #E2725B;
+text-align: right;
+font-family: NeuzeitGroT;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px; /* 120% */
+}
