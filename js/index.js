@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const endY = startY + getRandomOffset();
             rc.line(startX, startY, endX, endY, {
                 stroke: 'white',
-                strokeWidth: 5,
-                roughness: 3
+                strokeWidth: 3,
+                roughness: 4
             });
         });
     }

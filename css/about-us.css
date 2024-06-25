@@ -1,6 +1,7 @@
-body{
+body,header{
     background: #EFEDE4;
 }
+
 section{
     display: flex;
     flex-wrap: wrap;
