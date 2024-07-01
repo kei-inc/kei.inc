@@ -1,0 +1,56 @@
+body,header{
+    background: black;
+    font-family: NeuzeitGroT;
+}
+nav a {
+    color: white;
+}
+.intro-text{
+    padding-top: 100px;
+}
+.hero-text .column{
+    color: white;
+}
+.hero-text .column:nth-child(2) p,
+.hero-text .column:nth-child(3) p,
+.hero-text .column:nth-child(4) p,
+.hero-text .column:nth-child(5) p {
+    border-top: white solid 1px;
+}
+.hero-text .column:nth-child(4) p,
+.hero-text .column:nth-child(5) p{
+    border-bottom: white solid 1px;
+}
+#focus-text{
+    color: white;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px; /* 144.444% */
+}
+
+.main-section .content {
+    margin: unset;
+}
+
+.content{
+    gap:40px;
+}
+.member{
+    min-width: 280px;
+    max-width: 305px;
+}
+.member-name{
+    color: white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 142.857% */
+}
+.member-bio{
+    color: #BBC0B6;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}

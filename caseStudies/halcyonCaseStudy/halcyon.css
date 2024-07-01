@@ -1,3 +1,34 @@
 body,header{
     background: #EFEDE4;
+    font-family: NeuzeitGroT;
+}
+footer{
+    background: white;
+}
+.intro-text{
+    padding-top: 100px;
+}
+#focus-text{
+    color: #BB3216;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px; /* 144.444% */
+}
+.open-quote{
+    margin: 0 0 auto 0
+}
+.close-quote{
+    margin: auto 0 0 auto;
+}
+.intro-text h1{
+    font-weight: 700;
+    line-height: 30px; 
+}
+.intro-text p{
+    font-weight: 400;
+    line-height: 46px; 
+}
+.two-column .sidebar p{
+    color: #BB3216;
 }
