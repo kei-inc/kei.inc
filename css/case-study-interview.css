@@ -143,7 +143,6 @@ flex: 2;
 .two-column .sidebar img{
 }
 #full-width, #half-width{
-    max-width: 1090px;
     display: flex;
     flex-wrap: wrap;
 }

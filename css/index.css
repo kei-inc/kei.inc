@@ -28,8 +28,9 @@ main{
     position: relative;
     transition: all 0.3s ease-in-out;
 }
-.highlight {
-    color: #FFD700; 
+.focus-text {
+    text-decoration: underline; 
+    font-weight: bold;
 }
 .unselect-text{
     color:#bbc0b6;

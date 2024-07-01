@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         const texts = [
-            '<strong>Hello World.</strong>',  
+            '<span><strong>Hello World.</strong>',  
             'Hello World. <strong>We are Kei?</strong>',
             'world. <strong>We are Kei?</strong>',
             '<strong>We are Kei?</strong>',
@@ -80,21 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
             '<strong>Kei<span class="unselect-text">?</span></strong>', 
             '<strong>Kei<span class="unselect-text strike-through" id="straight-strike">?</span></strong>', 
             "<strong>Kei.</strong>",
-            "<strong>Kei</strong> helps organizations.",
-            '<span class="strike-through" id="straight-strike">What is</span>&nbsp;Kei<span class="strike-through" id="straight-strike">?</span>',
-            'Kei',
-            'Kei is',
-            'Kei is a',
-            'Kei is a <span class="highlight">Swiss Army knife. </span>',
-            'Kei is a <span class="strike-through highlight" id="rough-strike">Swiss Army knife.</span>',
-            'Kei is a',
-            'Kei is a <span class="highlight">force multiplier.</span>',
-            'Kei is a <span class="strike-through highlight" id="rough-strike">force multiplier.</span>',
-            'Kei is a <span class="highlight">full-service agency</span>',
-            'Kei is a full-service agency <span class="highlight">designed to accelerate the pace and scale </span>',
-            'Kei is a full-service agency designed to accelerate the pace and scale <span class="highlight">of purpose-led organizations. </span>',
-            'Kei is a full-service agency designed to accelerate the pace and scale of purpose-led organizations. <br> <br><span class="highlight"> We help purpose-led organizations </span>',
-            'Kei is a full-service agency designed to accelerate the pace and scale of purpose-led organizations. <br> <br> We help purpose-led organizations <span class="highlight"> identify trends, competitive context, opportunities, and potential demand through customer, cultural and market research </span>',
+            "<strong>Kei</strong> helps ",
+            "<strong>Kei</strong> helps <span class='focus-text'>organizations</span>.",
+            "<strong>Kei</strong> helps <span class='focus-text'>purpose-led</span> organizations.",
+
             ];
         const index = Math.floor(scrollPosition / 300);
 
