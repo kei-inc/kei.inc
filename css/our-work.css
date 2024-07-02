@@ -93,3 +93,28 @@ main img {
     width: calc(33.333% - 27px); /* Ensures each case study takes 1/3 of the available width minus the gap */
     min-width:300px;
 }
+
+@media (max-width: 768px) {
+    #single-case-study .case-study-text {
+        width: unset;
+        padding-bottom: unset;
+    }
+    .case-study-container{
+        display: grid;
+    }
+    .case-study-text{
+        order: 1;
+    }
+    .case-study-container a{
+        order: 2;
+    }
+    .case-study-container img{
+        padding: unset;
+    }
+    .case-study-container h3{
+        display: none;
+    }
+    .project-date{
+        margin: unset;
+    }
+}
