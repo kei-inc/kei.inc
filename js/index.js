@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('scroll', function() {
         const scrollPosition = window.scrollY;
         const texts = [
-            '<span><strong>Hello World.</strong>',  
             'Hello World. <strong>We are Kei?</strong>',
             'world. <strong>We are Kei?</strong>',
             '<strong>We are Kei?</strong>',
