@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backSpeed: 25,
         backDelay: 2000,
         startDelay: 1000,
+        smartbackspace: true,
         loop: true,
         onComplete: function() {
             const ignoredElements = fixedText.querySelectorAll('.ignore');
