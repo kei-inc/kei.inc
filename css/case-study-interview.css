@@ -264,6 +264,9 @@ flex: 2;
     .two-column{
         flex-wrap: wrap;
     }
+    .single-column, .two-column {
+        padding: 20px 0;
+    }
 }
 .two-column img {
     height: auto;

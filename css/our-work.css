@@ -62,6 +62,7 @@ main img {
 
 #double-case-study .first-post, 
 #double-case-study .second-post {
+    min-width: 300px;
     border-top: 2px solid #000000;
     flex-grow: 1; /* Allows the posts to grow */
 }
