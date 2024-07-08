@@ -141,6 +141,7 @@ flex: 2;
     margin-bottom: unset;
 }
 .two-column .sidebar img{
+    width: 100%;
 }
 #full-width, #half-width{
     display: flex;
