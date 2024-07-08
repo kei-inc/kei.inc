@@ -36,6 +36,11 @@ nav a {
 .content{
     gap:40px;
 }
+.member-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:40px;
+}
 .member{
     min-width: 280px;
     max-width: 305px;
@@ -53,4 +58,13 @@ nav a {
     font-style: normal;
     font-weight: 400;
     line-height: 20px; /* 142.857% */
+}
+#full-image img{
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .member{
+        flex-wrap: wrap;
+    }
 }
