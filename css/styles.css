@@ -14,11 +14,16 @@
 }
 
 body{
+    font-family: 'NeuzeitGroT', sans-serif;
+    margin: 0px;
+}
+
+.content-wrapper{
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
-    font-family: 'NeuzeitGroT', sans-serif;
 }
+
 .sticky-header {
     position: sticky;
     top: 0;
@@ -60,9 +65,6 @@ nav a:hover {
     color: #FFD700;
 }
 
-.logo {
-    margin-right: 20px;
-}
 .dropdown {
     display: none;
     position: relative;

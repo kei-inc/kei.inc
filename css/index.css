@@ -3,14 +3,14 @@ body {
     height: 1000vh; 
     background-color: #EF7354; /* Match the background color in the screenshot */
     color: #efede4;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0px 50px;
 }
 header{
     background-color: #EF7354; /* Match the background color in the screenshot */
 }
 
-main{
-
-}
 .fixed-text-container {
     position: fixed;
     display: flex;

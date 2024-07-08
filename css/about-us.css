@@ -1,4 +1,5 @@
-body,header{
+
+main,header{
     background: #EFEDE4;
 }
 
@@ -67,8 +68,9 @@ section{
     margin: 5px 0;
 }
 #our-approach object{
-padding-top: 150px;
-margin: auto;
+    padding-top: 150px;
+    margin: auto;
+    width: 100%;
 }
 @keyframes draw {
     from {

@@ -1,141 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/our-work.css" />
-    <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
-  </head>
-  <body>
 
-    <header class="sticky-header">
-      <div class="header-container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/our-work.css" />
+  <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+</head>
+
+<body>
+  <main>
+    <div class="content-wrapper">
+      <header class="sticky-header">
+        <div class="header-container">
           <a href="index.html" class="logo">
-              <img src="./images/full-logo.svg" alt="Logo" class="logo"/>
+            <img src="./images/full-logo.svg" alt="Logo" class="logo" style="border-radius: 0;"/>
           </a>
           <nav>
-              <ul class="menu">
-                  <a href="./about-us.html">Who We Are</a>
-                  <a href="./our-work.html" style="color: #FFD700;">Our Work</a>
-                  <a href="./insights-ideas.html">Insights</a>
-                  <a href="./how-we-help.html">How We Work</a>
-                  <a href="./contact.html">Contact</a>
-              </ul>
-              <div class="dropdown">
-                <img src="./images/mobile-menu.png" alt="Menu" class="dropbtn"/>
-                  <div class="dropdown-content">
-                      <a href="./about-us.html">Who We Are</a>
-                      <a href="./our-work.html">Our Work</a>
-                      <a href="./insights-ideas.html">Insights</a>
-                      <a href="./how-we-help.html">How We Work</a>
-                      <a href="./contact.html">Contact</a>
-                  </div>
+            <ul class="menu">
+              <a href="./about-us.html">Who We Are</a>
+              <a href="./our-work.html" style="color: #FFD700;">Our Work</a>
+              <a href="./insights-ideas.html">Insights</a>
+              <a href="./how-we-help.html">How We Work</a>
+              <a href="./contact.html">Contact</a>
+            </ul>
+            <div class="dropdown">
+              <img src="./images/mobile-menu.png" alt="Menu" class="dropbtn" />
+              <div class="dropdown-content">
+                <a href="./about-us.html">Who We Are</a>
+                <a href="./our-work.html">Our Work</a>
+                <a href="./insights-ideas.html">Insights</a>
+                <a href="./how-we-help.html">How We Work</a>
+                <a href="./contact.html">Contact</a>
               </div>
+            </div>
           </nav>
-      </div>
-  </header>
-  
+        </div>
+      </header>
+      <section id="hero">
+        <div class="hero-container">
+          <p>Ditch the crystal ball, Kei builds dream futures! We empower organizations to make a positive impact (and
+            maybe slay some spreadsheets). See our case studies for Kei-powered magic!</p>
+        </div>
+      </section>
 
-    <main>
-    <section id="hero">
-      <div class="hero-container">
-          <p>Ditch the crystal ball, Kei builds dream futures! We empower organizations to make a positive impact (and maybe slay some spreadsheets). See our case studies for Kei-powered magic!</p>
-      </div>
-  </section>
+      <section class="case-study-section" id="single-case-study">
+        <h2 class="section-subtitle" style="width: 50%;">Halcyon</h2>
+        <p class="first-post-text">New case study</p>
+        <div class="case-study-container">
+          <div class="case-study-text">
+            <p>Halcyon helps professionals navigating the energy transition make faster, more informed business
+              decisions.</p>
+          </div>
+          <p class="project-date">2024 -</p>
+          <a href="./caseStudies/halcyonCaseStudy/halcyon.html"><img src="./images/halcyon-cover.png" alt="Placeholder"
+              class="case-study-image" /></a>
+          <h3 class="case-study"></h3>
+        </div>
+      </section>
 
-  <section class="case-study-section" id="single-case-study" >
-    <h2 class="section-subtitle" style="width: 50%;">Halcyon</h2>
-    <p class="first-post-text">New case study</p>
-    <div class="case-study-container">
-      <div class="case-study-text">
-        <p>Halcyon helps professionals navigating the energy transition make faster, more informed business decisions.</p>
-      </div>
-      <p class ="project-date">2024 -</p>
-      <a href="./caseStudies/halcyonCaseStudy/halcyon.html"><img src="./images/halcyon-cover.png" alt="Placeholder" class="case-study-image"/></a>
-      <h3 class="case-study"></h3>
+      <section class="case-study-section" id="double-case-study">
+        <div class="first-post">
+          <h2 class="section-subtitle">Elemental</h2>
+          <div class="case-study-container">
+            <div class="case-study-text">
+              <p>Elemental is a cloud-based natural resource management platform designed to help speed and scale the
+                restoration of resilience to our rapidly changing ecological systems.</p>
+            </div>
+            <p class="project-date">2018 - 2020</p>
+            <a href="blank"><img src="./images/elemental-cover.png" alt="Placeholder" class="case-study-image" /></a>
+            <h3 class="case-study"></h3>
+          </div>
+        </div>
+
+        <div class="second-post">
+          <h2 class="section-subtitle">Lazaza</h2>
+          <div class="case-study-container">
+            <a href="blank"><img src="./images/lazaza-cover.png" style="max-width: 320px; padding: 120px 0;"
+                alt="Placeholder" class="case-study-image" /></a>
+            <div class="case-study-text">
+              <p>A small business isn't a marketing agency and neither are we, but we can help you put together ad
+                campaigns in minutes.</p>
+            </div>
+            <p class="project-date">2024</p>
+            <h3 class="case-study"></h3>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="case-study-section" id="single-case-study">
+        <h2 class="section-subtitle">Bold Humboldt, Kansas</h2>
+        <div class="case-study-container">
+          <div class="case-study-text">
+            <p>A Bolder Humboldt is a visionary program to transition small ordinary American rural town into an
+              inclusive and welcoming environment for thriving community</p>
+          </div>
+          <p class="project-date">2016 - 2020</p>
+          <a href="blank"><img src="./images/halcyon-cover.png" alt="Placeholder" class="case-study-image" /></a>
+          <h3 class="case-study"></h3>
+        </div>
+      </section>
+
+
+      <section class="case-study-section" id="triple-case-study">
+
+        <div class="first-post">
+          <h2 class="section-subtitle">Macy's</h2>
+          <div class="case-study-container">
+            <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image" /></a>
+            <div class="case-study-text">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam.</p>
+            </div>
+            <p class="project-date">2018 - 2020</p>
+            <h3 class="case-study"></h3>
+          </div>
+        </div>
+
+        <div class="second-post">
+          <h2 class="section-subtitle">Mirra</h2>
+          <div class="case-study-container">
+            <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image" /></a>
+            <div class="case-study-text">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam.</p>
+            </div>
+            <p class="project-date">2018 - 2020</p>
+            <h3 class="case-study"></h3>
+          </div>
+        </div>
+
+        <div class="third-post">
+          <h2 class="section-subtitle">Buisness Wire</h2>
+          <div class="case-study-container">
+            <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image" /></a>
+            <div class="case-study-text">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam.</p>
+            </div>
+            <p class="project-date">2024</p>
+            <h3 class="case-study"></h3>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  </main>
+  <footer>
 
-  <section class="case-study-section" id="double-case-study" >
-    <div class="first-post">
-    <h2 class="section-subtitle">Elemental</h2>
-    <div class="case-study-container">
-      <div class="case-study-text">
-        <p>Elemental is a cloud-based natural resource management platform designed to help speed and scale the restoration of resilience to our rapidly changing ecological systems.</p>
-      </div>
-      <p class ="project-date">2018 - 2020</p>
-      <a href="blank"><img src="./images/elemental-cover.png" alt="Placeholder" class="case-study-image"/></a>
-      <h3 class="case-study"></h3>
-    </div>
-  </div>
-
-  <div class="second-post">
-    <h2 class="section-subtitle">Lazaza</h2>
-    <div class="case-study-container">
-      <a href="blank"><img src="./images/lazaza-cover.png" style="max-width: 320px; padding: 120px 0;" alt="Placeholder" class="case-study-image"/></a>
-      <div class="case-study-text">
-        <p>A small business isn't a marketing agency and neither are we, but we can help you put together ad campaigns in minutes.</p>
-      </div>
-      <p class ="project-date">2024</p>
-      <h3 class="case-study"></h3>
-    </div>
-  </div>
-  </section>
-
-
-  <section class="case-study-section" id="single-case-study" >
-    <h2 class="section-subtitle">Bold Humboldt, Kansas</h2>
-    <div class="case-study-container">
-      <div class="case-study-text">
-        <p>A Bolder Humboldt is a visionary program to transition small ordinary American rural town into an inclusive and welcoming environment for thriving community</p>
-      </div>
-      <p class ="project-date">2016 - 2020</p>
-      <a href="blank"><img src="./images/halcyon-cover.png" alt="Placeholder" class="case-study-image"/></a>
-      <h3 class="case-study"></h3>
-    </div>
-  </section>
-
-  
-<section class="case-study-section" id="triple-case-study" >
-
-    <div class="first-post">
-    <h2 class="section-subtitle">Macy's</h2>
-    <div class="case-study-container">
-      <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image"/></a>
-      <div class="case-study-text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-      </div>
-      <p class ="project-date">2018 - 2020</p>
-      <h3 class="case-study"></h3>
-    </div>
-  </div>
-
-  <div class="second-post">
-    <h2 class="section-subtitle">Mirra</h2>
-    <div class="case-study-container">
-      <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image"/></a>
-      <div class="case-study-text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-      </div>
-      <p class ="project-date">2018 - 2020</p>
-      <h3 class="case-study"></h3>
-    </div>
-  </div>
-
-  <div class="third-post">
-    <h2 class="section-subtitle">Buisness Wire</h2>
-    <div class="case-study-container">
-      <a href="blank"><img src="./images/Macy's.png" alt="Placeholder" class="case-study-image"/></a>
-      <div class="case-study-text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-      </div>
-      <p class ="project-date">2024</p>
-      <h3 class="case-study"></h3>
-    </div>
-  </div>
-  </section>
-</main>
+  </footer>
 </body>
+
 </html>
