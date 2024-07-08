@@ -261,6 +261,12 @@ flex: 2;
     #interview .content{
         border-top: white solid 1px;
     }
+    .two-column{
+        flex-wrap: wrap;
+    }
+    .single-column, .two-column {
+        padding: 20px 0;
+    }
 }
 .two-column img {
     height: auto;
