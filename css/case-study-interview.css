@@ -1,3 +1,39 @@
+p,ul{  
+     color: black;
+    font-family: "Source Serif Pro";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 158.333% */
+    margin-top: 0px;   
+}
+
+.main-section ul {
+    counter-reset: list-counter; 
+    margin-left: -90px;
+}
+
+.main-section ul li {
+    list-style: none;
+    counter-increment: list-counter;
+    padding-left: 2.1em;
+    text-indent: -2.1em;
+}
+
+.main-section ul li::before {
+    content: counter(list-counter, decimal-leading-zero) ". ";
+    margin-right: 0.5em;
+    display: inline-block;
+    width: 2em;
+    text-indent: 0;
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 190% */
+}
+
 /* Case Study Styles */
 /*Case Study Hero*/
 .case-hero img{
@@ -6,7 +42,6 @@
     object-fit: cover;
     border-radius: 10px;
 }
-
 .hero-text {
     display: flex;
     flex-wrap: wrap;
@@ -74,14 +109,21 @@ flex: 2;
 .section-subtitle{
     color: #BB3216;
     font-family: NeuzeitGroT;
-    font-size: 16px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; /* 100% */
+    line-height: 20px; /* 100% */
     letter-spacing: 0.48px;
 }
-
-.section-text{
+.body-Copy-Title{
+    color:#BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 38px; /* 190% */
+}
+.body-Copy{
     color: black;
     font-family: "Source Serif Pro";
     font-size: 24px;
@@ -101,9 +143,26 @@ flex: 2;
     margin: 0 auto;
     display: flex;
 }
-.main-section p{
+.main-section #title{
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 64px; /* 100% */
+}
+.main-section #title p{
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 46px; /* 127.778% */
+}
+.main-section p, .main-section ul{
     max-width: 880px;
 }
+
 .main-section .full-width-image img {
     width: 100%;
     height: auto;
@@ -251,8 +310,63 @@ flex: 2;
 .profile p{
     color: #BBC0B6;
 }
-
-@media (max-width: 756px) {
+#focus-text{
+    color: #BB3216;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px; /* 144.444% */
+}
+.open-quote{
+    margin: 0 0 auto 0
+}
+.close-quote{
+    margin: auto 0 0 auto;
+}
+.intro-text h1{
+    font-weight: 700;
+    line-height: 30px; 
+}
+.intro-text p{
+    font-weight: 400;
+    line-height: 46px; 
+}
+.two-column .sidebar p{
+    color: #BB3216;
+}
+@media only screen and (max-width: 768px) {
+    body,
+    header {
+        background: #EFEDE4;
+        font-family: NeuzeitGroT;
+    }
+    footer {
+        background: white;
+    }
+    .intro-text {
+        padding-top: 50px;
+    }
+    #focus-text {
+        color: #BB3216;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 36px;
+    }
+    .intro-text h1 {
+        font-weight: 700;
+        line-height: 24px;
+    }
+    .intro-text p {
+        font-weight: 400;
+        line-height: 36px;
+    }
+    .open-quote, .close-quote{
+        width: 15%;
+    }
+    #quote .sidebar{
+        order: 2;
+    }
     .example-image-container .content {
         padding: 40px 10px;
     }
