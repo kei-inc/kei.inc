@@ -1,0 +1,10 @@
+main,header{
+    background: #EFEDE4;
+    font-family: NeuzeitGroT;
+}
+footer{
+    background: white;
+}
+.intro-text{
+    padding-top: 100px;
+}
