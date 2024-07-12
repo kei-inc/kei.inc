@@ -2,13 +2,16 @@
 main,header{
     background: #EFEDE4;
 }
+p {
+    max-width: 880px;
+}
 
 section{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 50px;
-    border-top: 2px solid #000000;
+    padding-top: 100px;
 }
 
 .member-container{
@@ -71,6 +74,29 @@ section{
     padding-top: 150px;
     margin: auto;
     width: 100%;
+}
+#our-structure{
+    background-color:#84E6B2;
+    width: 100%;
+    color: #004B22;
+}
+#our-structure .top-border{
+    border-top: 1px solid #004B22;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+#our-structure button{
+    display: inline-flex;
+    height: 50px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+#top-border{
+    width: 100%;
+    border-top: 1px solid #BB3216;
 }
 @keyframes draw {
     from {
