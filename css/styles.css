@@ -197,6 +197,9 @@ footer{
     margin: 0 auto;
     padding-top: 60px;
 }
+.three-column-flex-extra{
+    padding-top: 60px;
+}
 .flex-item{
     flex: 1;
     min-width: 225px;
