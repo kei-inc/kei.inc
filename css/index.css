@@ -1,41 +1,67 @@
 /* styles.css */
 body {
-    height: 1000vh; 
+    height: 1000vh;
     background-color: #EF7354; /* Match the background color in the screenshot */
     color: #efede4;
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
 }
-header{
+
+header {
     background-color: #EF7354; /* Match the background color in the screenshot */
-}
-
-.fixed-text-container {
-    position: fixed;
-    display: flex;
-    height: 40%;
-    padding-top: 50px;
-}
-
-.fixed-text {
-    font-size: 48px;
-    font-style: normal;
-    line-height: 56px; 
-    color: #efede4; 
-    position: relative;
-    transition: all 0.3s ease-in-out;
-}
-.focus-text {
-    text-decoration: underline; 
-    font-weight: bold;
-}
-.unselect-text{
-    color:#bbc0b6;
 }
 
 #lineCanvas {
     position: absolute;
-
     pointer-events: none;
+}
+
+.hidden-div {
+    opacity: 0;
+    padding-top: 50px;
+    padding-bottom: 200px;
+    display: block;
+}
+
+.visible-text {
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 48px;
+    font-style: normal;
+    line-height: 56px; /* 116.667% */
+}
+
+.hidden-div {
+    display: flex;
+    opacity: 0;
+    height: 40%;
+    padding-top: 50px;
+}
+
+.hidden-div p {
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 48px;
+    font-style: normal;
+    line-height: 56px; /* 116.667% */
+}
+
+.settings-box {
+    color: black;
+    position: fixed;
+    top: 200px;
+    right: 10px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
 }

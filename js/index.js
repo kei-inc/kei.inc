@@ -1,108 +1,146 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const fixedText = document.getElementById('fixedText');
-    const lineCanvas = document.getElementById('lineCanvas');
-    resizeCanvas();
-    const rc = rough.canvas(lineCanvas);
-    let currentTextIndex = -1;
+// index.js
+gsap.registerPlugin(TextPlugin);
 
-    function resizeCanvas() {
-        lineCanvas.width = fixedText.offsetWidth;
-        lineCanvas.height = fixedText.offsetHeight;
-    }
+document.addEventListener('scroll', () => {
+    const divs = document.querySelectorAll('.hidden-div');
+    const scrollPosition = window.scrollY;
 
-    function drawLine(text) {
-        resizeCanvas();
-        const context = lineCanvas.getContext('2d');
-        context.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
-        const spans = fixedText.querySelectorAll('.strike-through');
-        spans.forEach(span => {
-            const spanRect = span.getBoundingClientRect();
-            const containerRect = fixedText.getBoundingClientRect();
-            const startX = spanRect.left - containerRect.left;
-            const startY = (spanRect.top + spanRect.bottom) / 2 - containerRect.top ;
-            const endX = spanRect.right - containerRect.left;
-            const endY = startY;
-            if (span.id === 'rough-strike'){
-                drawSquigglyLine(startX, startY, endX, endY);
-            }
-            if (span.id === 'straight-strike') {
-                drawStraightLine(startX, startY, endX, endY);
-            }
-        });
-    }
-
-    function drawSquigglyLine(startX, startY, endX, endY) {
-        const points = [];
-        const segmentCount = 30; // Increase the number of segments for smoother squiggles
-        const frequency = 20; // Adjust frequency for more or fewer curves
-        const amplitude = 20; // Adjust amplitude for larger or smaller squiggles
-        for (let i = 0; i <= segmentCount; i++) {
-            const t = i / segmentCount;
-            const x = startX + t * (endX - startX);
-            const y = startY + Math.sin(t * Math.PI * frequency) * amplitude; 
-            points.push([x, y]);
-        }
-        rc.curve(points, {
-            stroke: 'white',
-            strokeWidth: 8,
-            roughness: 2
-        });
-    }
-
-    function drawStraightLine(text) {
-        resizeCanvas();
-        const context = lineCanvas.getContext('2d');
-        context.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
-        const spans = fixedText.querySelectorAll('.strike-through');
-        spans.forEach(span => {
-            const spanRect = span.getBoundingClientRect();
-            const containerRect = fixedText.getBoundingClientRect();
-            const startX = spanRect.left - containerRect.left ;
-            const startY = (spanRect.top + spanRect.bottom) / 2 - containerRect.top;
-            const endX = spanRect.right - containerRect.left ;
-            const endY = startY;
-            rc.line(startX, startY, endX, endY, {
-                stroke: 'white',
-                strokeWidth: 6,
-                roughness: 2,
-            });
-        });
-    }
-
-    document.addEventListener('scroll', function() {
-        const scrollPosition = window.scrollY;
-        const texts = [
-            "Hello world.",
-            "Kei helps organizations.",
-            "Kei helps organizations unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.",
-            "Kei helps organizations <span class='strike-through'>unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.</span>",
-            "Kei helps organizations discover patterns, identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and did we already mention strategy and solutions and innovative and impact and transformative…?",
-            "Kei helps organizations discover patterns, <span class='strike-through'>identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and did we already mention strategy and solutions and innovative and impact and transformative…?</span>",
-            "Kei helps organizations discover patterns, find focus, ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, holisti-harmonize, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, inter-brainstorm, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, big-bangify...",
-            "Kei helps organizations discover patterns, find focus, <span class='strike-through'>ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, holisti-harmonize, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, inter-brainstorm, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, big-bangify...</span>",
-            "Kei helps organizations discover patterns, find focus, create experiences, and leverage brand synergies, amplify value propositions, drive stakeholder engagement, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and hologram-project value bombs directly into the limbic systems of target demographics while AI-powered narrative swarms colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and telepathically implants USPs into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...",
-            "Kei helps organizations discover patterns, find focus, create experiences, <span class='strike-through'>and leverage brand synergies, amplify value propositions, drive stakeholder engagement, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and hologram-project value bombs directly into the limbic systems of target demographics while AI-powered narrative swarms colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and telepathically implants USPs into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...</span>",
-            "Kei helps organizations to discover patterns, find focus, create experiences, and inspire audiences.",
-            "It’s simple, really.",
-            "[transition to Formless Intake]",
-            "…and who might you be?"
-        ];
-        
-        const index = Math.floor(scrollPosition / 300);
-
-        if (index < texts.length) {
-            if (index !== currentTextIndex) {
-                fixedText.innerHTML = texts[index];
-                currentTextIndex = index;
-                drawLine();
-            }
-        } else {
-            if (currentTextIndex !== texts.length - 1) {
-                fixedText.innerHTML = texts[texts.length - 1];
-                currentTextIndex = texts.length - 1;
-                drawLine();
+    divs.forEach((div, index) => {
+        if (scrollPosition >= index * (messageGap) && scrollPosition < (index + 1) * (messageGap)) {
+            if (!div.classList.contains('visible')) {
+                div.classList.add('visible');
+                callAnimationFunction(div.id);
             }
         }
     });
 });
 
+let typingSpeed = 50; // default typing speed
+let messageGap = 200; // default gap between messages and bottom padding
+
+// Control panel functionality
+const typingSpeedSlider = document.getElementById('typingSpeed');
+const messageGapInput = document.getElementById('messageGap');
+const typingSpeedValue = document.getElementById('typingSpeedValue');
+
+// Event listener for typing speed slider
+typingSpeedSlider.addEventListener('input', function() {
+    typingSpeed = parseInt(this.value);
+    typingSpeedValue.textContent = this.value;
+    console.log(`Updated typing speed: ${typingSpeed}`);
+});
+
+// Event listener for message gap input
+messageGapInput.addEventListener('input', function() {
+    messageGap = parseInt(this.value);
+    document.querySelectorAll('.hidden-div').forEach(div => {
+        div.style.paddingBottom = `${messageGap}px`;
+    });
+    console.log(`Updated message gap and bottom padding: ${messageGap} pixels`);
+});
+
+function callAnimationFunction(id) {
+    switch (id) {
+        case 'frame1':
+            frame1Function();
+            break;
+        case 'frame2':
+            frame2Function();
+            break;
+        case 'frame3':
+            frame3Function();
+            break;
+        case 'frame4':
+            frame4Function();
+            break;
+        case 'frame5':
+            frame5Function();
+            break;
+        default:
+            console.log('Unknown frame ID');
+    }
+}
+
+function calculateDuration(textLength) {
+    return textLength / typingSpeed;
+}
+
+function frame1Function() {
+    const div = document.getElementById('frame1');
+    const text = div.textContent;
+    const duration = calculateDuration(text.length);
+    gsap.to(div, {
+        y: -100,
+        opacity: 1,
+        duration: duration,
+        text: {
+            value: text,
+            newClass: "visible-text",
+            ease: "none"
+        }
+    });
+}
+
+function frame2Function() {
+    const div = document.getElementById('frame2');
+    const text = div.textContent;
+    const duration = calculateDuration(text.length);
+    gsap.to(div, {
+        y: -100,
+        opacity: 1,
+        duration: duration,
+        text: {
+            value: text,
+            newClass: "visible-text",
+            ease: "none"
+        }
+    });
+}
+
+function frame3Function() {
+    const div = document.getElementById('frame3');
+    const text = div.textContent;
+    const duration = calculateDuration(text.length);
+    gsap.to(div, {
+        y: -100,
+        opacity: 1,
+        duration: duration,
+        text: {
+            value: text,
+            newClass: "visible-text",
+            ease: "none"
+        }
+    });
+}
+
+function frame4Function() {
+    const div = document.getElementById('frame4');
+    const text = div.textContent;
+    const duration = calculateDuration(text.length);
+    gsap.to(div, {
+        y: -100,
+        opacity: 1,
+        duration: duration,
+        text: {
+            value: text,
+            newClass: "visible-text",
+            ease: "none"
+        }
+    });
+}
+
+function frame5Function() {
+    const div = document.getElementById('frame5');
+    const text = div.textContent;
+    const duration = calculateDuration(text.length);
+    gsap.to(div, {
+        y: -100,
+        opacity: 1,
+        duration: duration,
+        text: {
+            value: text,
+            newClass: "visible-text",
+            ease: "none"
+        }
+    });
+}
