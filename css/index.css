@@ -1,20 +1,16 @@
-
 /* styles.css */
 body {
-    height: 1000vh; 
+    height: 1000vh;
     background-color: #EF7354; /* Match the background color in the screenshot */
     color: #efede4;
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
-    height: 2000px; /* Ensure there is enough space to scroll */
-    overflow-x: hidden;
-    height: 2000px; /* Ensure there is enough space to scroll */
-}
-header{
-    background-color: #EF7354; /* Match the background color in the screenshot */
 }
 
+header {
+    background-color: #EF7354; /* Match the background color in the screenshot */
+}
 
 #lineCanvas {
     position: absolute;
@@ -23,13 +19,12 @@ header{
 
 .hidden-div {
     opacity: 0;
-    /* Add default transition for opacity */
-    height: 40%;
     padding-top: 50px;
     padding-bottom: 200px;
     display: block;
 }
-.visible-text{
+
+.visible-text {
     color: black;
     font-family: NeuzeitGroT;
     font-size: 48px;
@@ -38,17 +33,35 @@ header{
 }
 
 .hidden-div {
-    display: flex; 
+    display: flex;
     opacity: 0;
-    /* Add default transition for opacity */
-    position: fixed;
     height: 40%;
     padding-top: 50px;
 }
-.hidden-div p{
+
+.hidden-div p {
     color: black;
     font-family: NeuzeitGroT;
     font-size: 48px;
     font-style: normal;
     line-height: 56px; /* 116.667% */
+}
+
+.settings-box {
+    color: black;
+    position: fixed;
+    top: 200px;
+    right: 10px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
 }
