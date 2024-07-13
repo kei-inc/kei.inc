@@ -8,6 +8,18 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
+#logos .flex-item{
+    align-content: center;
+    border-left: 1px solid #BB3216;
+}
+#logos .flex-item img{
+    margin: 0 auto;
+    display: flex;
+}
+#logos .flex-item{
+    min-width: none;
+    max-width: none;
+}
 
 #four-column h3{
     color: #BB3216;

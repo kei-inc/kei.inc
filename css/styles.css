@@ -166,14 +166,28 @@ nav a:hover {
     margin: 0 auto;
     padding-top: 60px;
 }
-.three-column-flex-extra{
-    padding-top: 60px;
-}
-.flex-item{
+.three-column-flex .flex-item{
     flex: 1;
     min-width: 340px;
     max-width: 420px;
 }
+
+.four-column-flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    flex-direction: row;
+    margin: 0 auto;
+    padding-top: 60px;
+    width: 100%;
+}
+.four-column-flex .flex-item{
+    flex: 1;
+    min-width: 280px;
+    max-width: 305px;
+}
+
 #center-text{
     max-width: 880px;
     width: 100%;
