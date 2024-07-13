@@ -9,6 +9,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+
+
   </head>
   <body>
     <header class="sticky-header">
@@ -37,12 +42,14 @@
           </nav>
       </div>
     </header>
-    <main>
-        <div class="fixed-text-container">
-            <div class="fixed-text" id="fixedText"><span><strong>Hello World.</strong></div>
-            <canvas id="lineCanvas"></canvas>
+      <body>
+        <div id="scroll-container" aria-live="polite">
+            <div id="frame1" class="hidden-div"><p><strong>Hello World</strong> </p></div>
+            <div id="frame2" class="hidden-div"><p>Hello World. <strong>We are Kei.</strong></p></div>
+            <div id="frame3" class="hidden-div"><p><strong>Kei?</strong></p></div>
+            <div id="frame4" class="hidden-div"><p>Div 4</p></div>
+            <div id="frame5" class="hidden-div"><p>Div 5</p></div>
         </div>
-    </main>
     <script src="js/index.js"></script>
   </body>
 </html>

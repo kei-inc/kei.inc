@@ -1,3 +1,4 @@
+
 /* styles.css */
 body {
     height: 1000vh; 
@@ -6,6 +7,8 @@ body {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
+    height: 2000px; /* Ensure there is enough space to scroll */
+    overflow-x: hidden;
 }
 header{
     background-color: #EF7354; /* Match the background color in the screenshot */
@@ -36,6 +39,21 @@ header{
 
 #lineCanvas {
     position: absolute;
-
     pointer-events: none;
+}
+
+.hidden-div {
+    display: flex; 
+    opacity: 0;
+    /* Add default transition for opacity */
+    position: fixed;
+    height: 40%;
+    padding-top: 50px;
+}
+.hidden-div p{
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 48px;
+    font-style: normal;
+    line-height: 56px; /* 116.667% */
 }
