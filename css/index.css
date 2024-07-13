@@ -1,3 +1,4 @@
+
 /* styles.css */
 body {
     height: 1000vh; 
@@ -6,36 +7,31 @@ body {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
+    height: 2000px; /* Ensure there is enough space to scroll */
+    overflow-x: hidden;
 }
 header{
     background-color: #EF7354; /* Match the background color in the screenshot */
 }
 
-.fixed-text-container {
-    position: fixed;
-    display: flex;
-    height: 40%;
-    padding-top: 50px;
-}
-
-.fixed-text {
-    font-size: 48px;
-    font-style: normal;
-    line-height: 56px; 
-    color: #efede4; 
-    position: relative;
-    transition: all 0.3s ease-in-out;
-}
-.focus-text {
-    text-decoration: underline; 
-    font-weight: bold;
-}
-.unselect-text{
-    color:#bbc0b6;
-}
 
 #lineCanvas {
     position: absolute;
-
     pointer-events: none;
+}
+
+.hidden-div {
+    opacity: 0;
+    /* Add default transition for opacity */
+    height: 40%;
+    padding-top: 50px;
+    padding-bottom: 200px;
+    display: block;
+}
+.visible-text{
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 48px;
+    font-style: normal;
+    line-height: 56px; /* 116.667% */
 }
