@@ -1,6 +1,6 @@
 /* styles.css */
 body {
-    height: 1000vh;
+    height: 100%;
     background-color: #EF7354; /* Match the background color in the screenshot */
     color: #efede4;
     max-width: 1440px;
@@ -64,4 +64,19 @@ header {
 .setting {
     display: flex;
     flex-direction: column;
+}
+
+
+#svg-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+#svg-overlay.hidden {
+    opacity: 0;
 }
