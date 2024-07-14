@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+
   </head>
   <body>
     <header class="sticky-header">
@@ -45,8 +47,8 @@
       </div>
       <div class="setting">
         <label for="typingSpeed">Typing Speed:</label>
-        <input type="range" id="typingSpeed" name="typingSpeed" min="1" max="100" value="50">
-        <span id="typingSpeedValue">50</span>
+        <input type="range" id="typingSpeed" name="typingSpeed" min="1" max="100" value="30">
+        <span id="typingSpeedValue">30</span>
       </div>
       <div class="setting">
         <label for="messageGap">Message Gap (pixels):</label>
@@ -59,16 +61,15 @@
     <div id="scroll-container" aria-live="polite">
       <div id="frame1" class="hidden-div" style="padding-top: 300px;"><p><strong>Hello World</strong> </p></div>
       <div id="frame2" class="hidden-div"><p><strong>We are Kei.</strong></p></div>
-      <div id="frame3" class="hidden-div"><p><strong>Kei?</strong></p></div>
-      <div id="frame4" class="hidden-div"><p>Kei helps <span style="text-decoration: underline;">organizations. </span></p></div>
-      <div id="frame5" class="hidden-div"><p>Kei helps <span style="text-decoration: underline;">purpose-led </span>organizations.</p></div>
-      <div id="frame6" class="hidden-div"><p>Kei helps purpose-led organizations unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what on earth can be done about it</p></div>
-    </div>
+      <div id="frame3" class="hidden-div"><p><strong>Kei helps organizations.</strong></p></div>
+      <div id="frame4" class="hidden-div"><p>Kei helps organizations unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.</p></div>
+      <div id="frame5" class="hidden-div"><p>Kei helps organizations discover patterns, identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and did we already mention strategy and solutions and innovative and impact and transformative…?</p></div>
+      <div id="frame6" class="hidden-div"><p>Kei helps organizations discover patterns, find focus, ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, holisti-harmonize, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, inter-brainstorm, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, big-bangify...</p></div>
+      <div id="frame7" class="hidden-div"><p>Kei helps organizations discover patterns, find focus, create experiences, and leverage brand synergies, amplify value propositions, drive stakeholder engagement, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and hologram-project value bombs directly into the limbic systems of target demographics while AI-powered narrative swarms colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and telepathically implants USPs into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...</p></div>
+      <div id="frame8" class="hidden-div"><p>Kei helps organizations to discover patterns, find focus, create experiences, and inspire audiences.</p></div>
+      <div id="frame9" class="hidden-div"><p>It’s simple, really.</p></div>
 
-        <!-- SVG Overlay -->
-        <div id="svg-overlay">
-          <img src="./images/svgviewer-output.svg" alt="down svg" class="svg" />
-        </div>
+    </div>
     <script src="js/index.js"></script>
   </body>
 </html>

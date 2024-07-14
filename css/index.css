@@ -1,6 +1,5 @@
 /* styles.css */
 body {
-    height: 100%;
     background-color: #EF7354; /* Match the background color in the screenshot */
     color: #efede4;
     max-width: 1440px;
@@ -22,6 +21,7 @@ header {
     padding-top: 50px;
     padding-bottom: 200px;
     display: block;
+    max-width: 880px;
 }
 
 .visible-text {
@@ -35,7 +35,6 @@ header {
 .hidden-div {
     display: flex;
     opacity: 0;
-    height: 40%;
     padding-top: 50px;
 }
 
@@ -59,6 +58,8 @@ header {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    z-index: 1000
+    ;
 }
 
 .setting {
