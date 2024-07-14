@@ -1,20 +1,6 @@
 // index.js
 gsap.registerPlugin(TextPlugin);
 
-document.addEventListener('scroll', () => {
-    const divs = document.querySelectorAll('.hidden-div');
-    const scrollPosition = window.scrollY;
-
-    divs.forEach((div, index) => {
-        if (scrollPosition >= index * (messageGap) && scrollPosition < (index + 1) * (messageGap)) {
-            if (!div.classList.contains('visible')) {
-                div.classList.add('visible');
-                callAnimationFunction(div.id);
-            }
-        }
-    });
-});
-
 let typingSpeed = 50; // default typing speed
 let messageGap = 200; // default gap between messages and bottom padding
 
@@ -39,37 +25,22 @@ messageGapInput.addEventListener('input', function() {
     console.log(`Updated message gap and bottom padding: ${messageGap} pixels`);
 });
 
-function callAnimationFunction(id) {
-    switch (id) {
-        case 'frame1':
-            frame1Function();
-            break;
-        case 'frame2':
-            frame2Function();
-            break;
-        case 'frame3':
-            frame3Function();
-            break;
-        case 'frame4':
-            frame4Function();
-            break;
-        case 'frame5':
-            frame5Function();
-            break;
-        default:
-            console.log('Unknown frame ID');
+const tl = gsap.timeline({
+    paused: true,
+    onComplete: () => {
+        document.addEventListener('scroll', onScroll);
     }
-}
+});
 
 function calculateDuration(textLength) {
     return textLength / typingSpeed;
 }
 
-function frame1Function() {
-    const div = document.getElementById('frame1');
+function frameFunction(frameId) {
+    const div = document.getElementById(frameId);
     const text = div.textContent;
     const duration = calculateDuration(text.length);
-    gsap.to(div, {
+    tl.to(div, {
         y: -100,
         opacity: 1,
         duration: duration,
@@ -81,66 +52,28 @@ function frame1Function() {
     });
 }
 
-function frame2Function() {
-    const div = document.getElementById('frame2');
-    const text = div.textContent;
-    const duration = calculateDuration(text.length);
-    gsap.to(div, {
-        y: -100,
-        opacity: 1,
-        duration: duration,
-        text: {
-            value: text,
-            newClass: "visible-text",
-            ease: "none"
+function callAnimationFunction(id) {
+    frameFunction(id);
+}
+
+function onScroll() {
+    const svgOverlay = document.getElementById('svg-overlay');
+    svgOverlay.classList.add('hidden');
+
+    const divs = document.querySelectorAll('.hidden-div');
+    const scrollPosition = window.scrollY;
+
+    tl.clear(); // Clear any previous animations
+    divs.forEach((div, index) => {
+        if (scrollPosition >= index * (messageGap) && scrollPosition < (index + 1) * (messageGap)) {
+            if (!div.classList.contains('visible')) {
+                div.classList.add('visible');
+                document.removeEventListener('scroll', onScroll);
+                callAnimationFunction(div.id);
+                tl.play();
+            }
         }
     });
 }
 
-function frame3Function() {
-    const div = document.getElementById('frame3');
-    const text = div.textContent;
-    const duration = calculateDuration(text.length);
-    gsap.to(div, {
-        y: -100,
-        opacity: 1,
-        duration: duration,
-        text: {
-            value: text,
-            newClass: "visible-text",
-            ease: "none"
-        }
-    });
-}
-
-function frame4Function() {
-    const div = document.getElementById('frame4');
-    const text = div.textContent;
-    const duration = calculateDuration(text.length);
-    gsap.to(div, {
-        y: -100,
-        opacity: 1,
-        duration: duration,
-        text: {
-            value: text,
-            newClass: "visible-text",
-            ease: "none"
-        }
-    });
-}
-
-function frame5Function() {
-    const div = document.getElementById('frame5');
-    const text = div.textContent;
-    const duration = calculateDuration(text.length);
-    gsap.to(div, {
-        y: -100,
-        opacity: 1,
-        duration: duration,
-        text: {
-            value: text,
-            newClass: "visible-text",
-            ease: "none"
-        }
-    });
-}
+document.addEventListener('scroll', onScroll);
