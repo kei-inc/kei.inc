@@ -19,6 +19,7 @@ typingSpeedSlider.addEventListener('input', function() {
 // Event listener for message gap input
 messageGapInput.addEventListener('input', function() {
     messageGap = parseInt(this.value);
+    messageGapValue.textContent = this.value;
     document.querySelectorAll('.hidden-div').forEach(div => {
         div.style.paddingBottom = `${messageGap}px`;
     });
