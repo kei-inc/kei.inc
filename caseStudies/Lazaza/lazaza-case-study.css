@@ -8,3 +8,12 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
+.hero-text .content p {
+    column-count: 1;
+}
+.two-column .sidebar{
+    max-width: 160px;
+}
+.content{
+    max-width: 880px;
+}
