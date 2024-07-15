@@ -8,3 +8,33 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
+.two-column .sidebar{
+    max-width: 190px;
+}
+.two-column{
+    width: 84%;
+}
+.two-column img{
+    max-width: 880px;
+}
+#four-column h3{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 190% */
+    border-bottom: 1px solid #BB3216;
+    width: 100%;
+}
+.focus-list{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 50px;
+    border-top: #BB3216 1px solid;
+    width: 100%;
+    margin: 0;
+}
