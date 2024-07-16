@@ -54,11 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function drawSquigglyLine(startX, startY, endX, endY) {
-        console.log("Drawing squiggly line");
+        const lineLength = endX - startX;
         const points = [];
-        const segmentCount = 20;
-        const frequency = 30;
-        const amplitude = 15;
+        const segmentCount = lineLength / 40;
+        const frequency = lineLength / 120;
+        const amplitude = lineLength / 70;
+        console.log(amplitude, frequency, segmentCount);
         for (let i = 0; i <= segmentCount; i++) {
             const t = i / segmentCount;
             const x = startX + t * (endX - startX);
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         rc.curve(points, {
             stroke: '#efede4',
-            strokeWidth: 14,
+            strokeWidth: 25,
             roughness: 3,
         });
     }
