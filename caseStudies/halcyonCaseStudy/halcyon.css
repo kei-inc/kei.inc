@@ -20,23 +20,3 @@ footer{
     min-width: none;
     max-width: none;
 }
-
-#four-column h3{
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 38px; /* 190% */
-    border-bottom: 1px solid #BB3216;
-    width: 100%;
-}
-
-#four-column p{
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 36px;
-}

@@ -8,3 +8,8 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
+#top-bottom-border{
+    border-top: 1px solid #bb3216;
+    border-bottom: 1px solid #bb3216;
+
+}
