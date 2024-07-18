@@ -1,7 +1,9 @@
 main,header{
     background: #EFEDE4;
 }
-
+.content-wrapper{
+    padding-bottom: 100px;
+}
 section{
     display: flex;
     flex-wrap: wrap;
