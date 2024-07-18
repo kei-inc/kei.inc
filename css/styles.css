@@ -18,6 +18,7 @@ body{
     margin: 0px;
     background-color: #EFEDE4;
 }
+
 p,ul{  
     color: black;
     font-family: NeuzeitGroT;
@@ -58,12 +59,13 @@ nav {
 
 .menu {
     display: flex;
+    gap: 40px
+    ;
 }
 
 nav a {
     color: black;
     text-decoration: none;
-    margin-right: 20px;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;

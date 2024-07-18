@@ -1,5 +1,6 @@
-wher ; u;;
-
+main{
+    padding-bottom: 100px;
+}
 .main-section ul {
     counter-reset: list-counter; 
     margin-left: -90px;
@@ -81,6 +82,10 @@ wher ; u;;
     font-style: normal;
     font-weight: 400;
     line-height: 70px;
+}
+#title-text{
+    max-width: 880px;
+    width: 100%;
 }
 
 .hero-text .column:first-child p{
@@ -207,6 +212,9 @@ wher ; u;;
     margin: 0 auto;
     flex: 1;
     width: 80%;
+}
+.sidebar{
+    padding-bottom: 20px;
 }
 .two-column .sidebar {
     width: 20%;

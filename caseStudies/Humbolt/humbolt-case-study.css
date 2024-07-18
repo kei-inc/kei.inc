@@ -38,9 +38,14 @@ footer{
     font-style: normal;
     font-weight: 700;
     line-height: 50px;
-    border-top: #BB3216 1px solid;
     width: 100%;
     margin: 0;
+}
+#border-top{
+    border-top: #BB3216 1px solid;
+}
+#border-top a{
+    text-decoration: none;
 }
 .hbox{
 }
