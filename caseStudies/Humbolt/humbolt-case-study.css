@@ -8,7 +8,7 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
-.two-column .sidebar{
+.sidebar{
     max-width: 190px;
 }
 .two-column{
@@ -17,6 +17,10 @@ footer{
 .two-column img{
     max-width: 880px;
 }
+.single-column, .two-column {
+    padding: 40px 0;
+}
+
 #four-column h3{
     color: #BB3216;
     font-family: NeuzeitGroT;
@@ -37,4 +41,20 @@ footer{
     border-top: #BB3216 1px solid;
     width: 100%;
     margin: 0;
+}
+.hbox{
+}
+#sidebar-padding{
+    padding-bottom: 230px;
+}
+@media screen and (max-width: 970px) {
+    #sidebar-padding{
+        padding-bottom: 0;
+    }
+    .wrap-on-mobile {
+        flex-flow: wrap;
+    }
+    .hbox #vimages img{
+        margin: 0 auto;
+    }
 }

@@ -1,4 +1,4 @@
-
+wher ; u;;
 
 .main-section ul {
     counter-reset: list-counter; 
@@ -212,6 +212,7 @@
     width: 20%;
     flex: 1;
     max-width: 190px;
+    min-width: 190px;
 }
 .two-column .sidebar p{
     font-size: 14px;
@@ -411,6 +412,27 @@
     font-weight: 700;
     line-height: 36px;
 }
+
+.vbox {
+    display: flex;
+    flex-flow: column;
+    gap: 40px;
+}
+.hbox {
+    display: flex;
+    max-width: fit-content;
+    flex-flow: row;
+    gap: 40px;
+}
+.vbox > img {
+    width: 100%;
+    height: fit-content
+}
+.hbox > img {
+    width: 100%;
+    height: fit-content
+}
+
 
 @media only screen and (max-width: 768px) {
     body,
