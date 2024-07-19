@@ -1,7 +1,7 @@
 
 @font-face {
     font-family: 'PoppinsSemi';
-    src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+    src: url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
