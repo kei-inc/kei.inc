@@ -29,27 +29,6 @@ ul {
     /* 158.333% */
     margin-top: 0px;
 }
- ul li {
-    list-style: none;
-    counter-increment: list-counter;
-    text-indent: -2.1em;
-    padding-bottom: 15px;
-    margin-left: -40px;
-
-}
- ul li::before {
-    content: counter(list-counter, decimal-leading-zero) ".";
-    margin-right: 0.5em;
-    display: inline-block;
-    width: 2em;
-    text-indent: 0;
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 38px; /* 190% */
-}
 
 .content-wrapper {
     max-width: 1440px;
@@ -371,5 +350,8 @@ footer {
 
     .footer-text p {
         text-align: center;
+    }
+    #numbered-list ul li{
+        margin-left: 0px;
     }
 }

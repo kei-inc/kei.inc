@@ -10,7 +10,19 @@ main,header{
 footer{
     background: white;
 }
-.intro-text{
+
+.hero-text .column:nth-child(1),
+.hero-text .column:nth-child(3),
+.hero-text .column:nth-child(4){
+    max-width: unset;
+    flex: 1;
+}
+.hero-text .column:nth-child(2){
+    max-width: 400px;
+}
+
+
+.intro-texdt{
     padding-top: 100px;
 }
 .sidebar{
@@ -29,6 +41,14 @@ footer{
 
 .hbox{
     gap: 20px;
+}
+.header-big-text p{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
 }
 @media (max-width: 768px) {
 
