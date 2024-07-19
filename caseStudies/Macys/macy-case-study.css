@@ -5,6 +5,22 @@ main,header{
 footer{
     background: white;
 }
+
+.hero-text .column:nth-child(3),
+.hero-text .column:nth-child(4){
+    max-width: unset;
+    flex: 1;
+}
+.hero-text .column:nth-child(2){
+    max-width: 400px;
+}
+.hero-text .subtitle{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 128.571% */}
 .intro-text{
     padding-top: 100px;
 }

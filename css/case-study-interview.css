@@ -60,7 +60,7 @@ main{
     min-width: 150px;
     padding: 0 20px;
 }
-.hero-text .content p {
+.hero-text .list p {
     column-count: 2;
     column-gap: 20px;
     column-width: 100px;
@@ -112,7 +112,6 @@ main{
 .hero-text .column:nth-child(4){
     border-right: #BB3216 solid 1px;
 }
-
 
 .download-button {
     padding-top: 50px;
