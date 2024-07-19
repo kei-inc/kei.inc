@@ -209,15 +209,13 @@ main{
 .two-column .column {
     flex: 1;
     box-sizing: border-box;
-    margin: 0 auto;
     flex: 1;
-    width: 80%;
+    margin: unset;
 }
 .sidebar{
     padding-bottom: 20px;
 }
 .two-column .sidebar {
-    width: 20%;
     flex: 1;
     max-width: 190px;
     min-width: 190px;
@@ -399,27 +397,6 @@ main{
     color: #BB3216;
 }
 
-/* four-column*/
-
-#four-column h3{
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 38px; /* 190% */
-    border-bottom: 1px solid #BB3216;
-    width: 100%;
-}
-
-#four-column p{
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 36px;
-}
 
 .vbox {
     display: flex;

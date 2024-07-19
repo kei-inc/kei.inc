@@ -1,7 +1,4 @@
-:root {
-    --fadein-duration: .5s;
-    --fadein-delay: .1s;
-  }
+
 main,header{
     background: #EFEDE4;
 }
