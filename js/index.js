@@ -243,7 +243,7 @@ async function changeSlide() {
          // Remove all event listeners
          window.removeEventListener('keydown', handleKeydown);
          window.removeEventListener('resize', resizeCanvases);
-         window.removeEventListener('keydown', handleEscapeKey);
+         //window.removeEventListener('keydown', handleEscapeKey);
      
          // Remove any ongoing animations or timeouts
          if (animationControl.cancel) {
