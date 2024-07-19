@@ -204,20 +204,11 @@ async function changeSlide() {
              return;
          }
      
-         let nextSlide = currentSlide + direction;
-         if (nextSlide >= slides.length) {
-             const formlessHolder = document.getElementById('formlessHolder');
-             if (formlessHolder) {
-                 await animateSlide(currentSlideElement, false);  // This will clear underlines
-                 formlessHolder.style.display = 'block';
-                 
-                 window.removeEventListener('keydown', handleKeydown);
-                 window.removeEventListener('resize', resizeCanvases);
-                 
-                 console.log('All slides completed. Event listeners removed.');
-             }
-             return;
-         }
+        let nextSlide = currentSlide + direction;
+        if (nextSlide >= slides.length) {
+            jumpToEnd();
+            return;
+        }
      
          isAnimating = true;
      
@@ -235,6 +226,31 @@ async function changeSlide() {
      
          isAnimating = false;
          animationStage = 0;
+     }
+     function jumpToEnd() {
+         // Hide all slides
+         slides.forEach(slide => {
+             slide.style.display = 'none';
+             clearUnderlines(slide);
+         });
+     
+         // Show the formlessHolder
+         const formlessHolder = document.getElementById('formlessHolder');
+         if (formlessHolder) {
+             formlessHolder.style.display = 'block';
+         }
+     
+         // Remove all event listeners
+         window.removeEventListener('keydown', handleKeydown);
+         window.removeEventListener('resize', resizeCanvases);
+         window.removeEventListener('keydown', handleEscapeKey);
+     
+         // Remove any ongoing animations or timeouts
+         if (animationControl.cancel) {
+             clearTimeout(animationControl.cancel);
+         }
+     
+         console.log('Jumped to end. All event listeners removed.');
      }
     
 /* --------- END OF SLIDE CHANGE STUFF ---------- */   
@@ -603,7 +619,9 @@ function toggleScribble(slide, scribble) {
      * @param {KeyboardEvent} event - The keyboard event
      */
     function handleKeydown(event) {
-        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+        if (event.key === 'Escape') {
+            jumpToEnd();
+        }else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
             direction = 1;
             changeSlide();
         } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
@@ -614,6 +632,7 @@ function toggleScribble(slide, scribble) {
             changeSlide();
         }
     }
+
 
     // Add event listener for keyboard navigation
     window.addEventListener('keydown', handleKeydown);
