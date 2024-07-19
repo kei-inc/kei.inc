@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'NeuzeitGroT';
     src: url('../fonts/NeuzeitGroT.ttf') format('truetype');
@@ -13,22 +12,25 @@
     font-style: normal;
 }
 
-body{
+body {
     font-family: 'NeuzeitGroT', sans-serif;
     margin: 0px;
     background-color: #EFEDE4;
 }
 
-p,ul{  
+p,
+ul {
     color: black;
     font-family: NeuzeitGroT;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
-    line-height: 38px; /* 158.333% */
-    margin-top: 0px;   
+    line-height: 38px;
+    /* 158.333% */
+    margin-top: 0px;
 }
-.content-wrapper{
+
+.content-wrapper {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0px 50px;
@@ -59,8 +61,7 @@ nav {
 
 .menu {
     display: flex;
-    gap: 40px
-    ;
+    gap: 40px;
 }
 
 nav a {
@@ -69,7 +70,8 @@ nav a {
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 30px; /* 187.5% */
+    line-height: 30px;
+    /* 187.5% */
 }
 
 nav a:hover {
@@ -85,8 +87,10 @@ nav a:hover {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    width: 40px;  /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
+    width: 40px;
+    /* Adjust size as needed */
+    height: 40px;
+    /* Adjust size as needed */
 }
 
 .dropdown-content {
@@ -94,7 +98,7 @@ nav a:hover {
     position: absolute;
     background-color: white;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     right: 0;
     border-radius: 10px;
@@ -123,43 +127,47 @@ nav a:hover {
 
 
 
-#hero{
+#hero {
     width: 100%;
     padding-bottom: 20px;
     border-top: unset;
 }
 
-#hero p{
+#hero p {
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
-    line-height: 30px; /* 125% */
+    line-height: 30px;
+    /* 125% */
 }
 
-#hero img{
+#hero img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
 }
 
-#focus-text p{
+#focus-text p {
     color: #BB3216;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
-    line-height: 52px; /* 144.444% */
+    line-height: 52px;
+    /* 144.444% */
 }
 
-.body-Copy-Title{
-    color:#BB3216;
+.body-Copy-Title {
+    color: #BB3216;
     font-family: NeuzeitGroT;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: 38px; /* 190% */
+    line-height: 38px;
+    /* 190% */
 }
-.three-column-flex{
+
+.three-column-flex {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -168,13 +176,14 @@ nav a:hover {
     margin: 0 auto;
     padding-top: 60px;
 }
-.three-column-flex .flex-item{
+
+.three-column-flex .flex-item {
     flex: 1;
     min-width: 340px;
     max-width: 420px;
 }
 
-.four-column-flex{
+.four-column-flex {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -184,79 +193,98 @@ nav a:hover {
     padding-top: 60px;
     width: 100%;
 }
-.four-column-flex .flex-item{
+
+.four-column-flex .flex-item {
     flex: 1;
     min-width: 280px;
     max-width: 305px;
 }
 
-#center-text{
+#center-text {
     max-width: 880px;
     width: 100%;
     margin: 0 auto;
 }
 
-.section-subtitle{
+.section-subtitle {
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: 24px; /* 120% */
-    padding-bottom:10px;
+    line-height: 24px;
+    /* 120% */
+    padding-bottom: 10px;
     width: 100%;
 }
+
 /*Footer*/
-footer{
+footer {
     background-color: white;
 }
-.upper-footer-container{
+
+.upper-footer-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding-bottom: 400px;
     padding-top: 50px;
 }
-.footer-text p{
+
+.footer-text p {
+    color: #E2725B;
+    font-family: NeuzeitGroT;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    /* 125% */
     max-width: 400px;
 }
 
-.lower-footer-container{
+.lower-footer-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding-bottom: 50px;
     gap: 40px;
 }
-.lower-footer-container .right a{
+
+.lower-footer-container .right a {
     color: #E2725B;
     font-family: NeuzeitGroT;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 30px;
+    line-height: 20px;
+    /* 125% */
     text-decoration: none;
     border-top: 1px solid #E2725B;
 }
-.lower-footer-container .right{
+
+.lower-footer-container .right {
     display: flex;
     flex-direction: column;
     max-width: 400px;
     width: 100%;
 }
-.lower-footer-container .left{
+
+.lower-footer-container .left {
     display: flex;
     flex-direction: column;
     max-width: 400px;
 }
-.lower-footer-container .left a{
+
+.lower-footer-container .left a {
     text-decoration: none;
 }
-.lower-footer-container .left p{
+
+.lower-footer-container .left p {
     color: #E2725B;
     font-family: NeuzeitGroT;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
+    /* 142.857% */
 }
 
 
@@ -265,24 +293,32 @@ footer{
     .menu {
         display: none;
     }
+
     .dropdown {
         display: block;
     }
-    body{
-        padding: 0px 0px;
-}
-.content-wrapper{
-    padding: 0px 20px;
-}
-.upper-footer-container {
-    padding-bottom: 200px;
-}
-.upper-footer-container .logo{
-    margin: 0 auto;
-    padding-bottom: 20px;
-}
-.footer-text p{
-    text-align: center;
-}
-}
 
+    body {
+        padding: 0px 0px;
+    }
+
+    .content-wrapper {
+        padding: 0px 20px;
+    }
+
+    .upper-footer-container {
+        padding-bottom: 200px;
+    }
+
+    .upper-footer-container .logo {
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+    .upper-footer-container .footer-text{
+        margin: 0 auto;
+    }
+
+    .footer-text p {
+        text-align: center;
+    }
+}

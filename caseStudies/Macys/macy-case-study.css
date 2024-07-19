@@ -13,3 +13,7 @@ footer{
     border-bottom: 1px solid #bb3216;
 
 }
+.sidebar{max-width: 190px;}
+.vbox, .hbox{
+    gap: 20px;
+}
