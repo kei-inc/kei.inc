@@ -1,44 +1,96 @@
 
-/* styles.css */
-body {
-    height: 5000px; 
-    background-color: #EF7354; /* Match the background color in the screenshot */
-    color: #efede4;
+@font-face {
+    font-family: 'PoppinsSemi';
+    src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #EF7354;
+    color: #f7cbc1;
+}
+
+header {
+    background-color: #EF7354;
+}
+
+main {
+    font-family: PoppinsSemi;
+    font-size: 36px;
+    line-height: 1.5em;
+    width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0px 50px;
-}
-header{
-    background-color: #EF7354; /* Match the background color in the screenshot */
-}
-
-.fixed-text-container {
-    position: fixed;
-    display: flex;
-    width: 90%;
-    padding-top: 50px;
-    max-width: 60%;
+    position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
-.fixed-text {
-    font-size: 48px;
-    font-style: normal;
-    line-height: 56px; 
-    color: #efede4; 
-    position: fixed;
-    max-width: 1440px;
-}
-.focus-text {
-    text-decoration: underline; 
-    font-weight: bold;
-}
-.unselect-text{
-    color:#bbc0b6;
-}
-
-#lineCanvas {
+/* Position slides at the top of the main container */
+[id^="slide"] {
     position: absolute;
-
-    pointer-events: none;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 1440px;
+    display: none;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
+/* Style for individual words */
+.word {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.0s ease;
+}
+/* Style for the blinking cursor */
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left:10px;
+    margin-top:2px;
+    background-color: black;
+    animation: blink 0.7s infinite;
+}
+/* Keyframes for cursor blinking animation */
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+/* Style for scribblable text */
+.scribblable {
+    color: #f7cbc1;
+    text-decoration: none;
+    position: relative;
+}
+/* Style for scribbled text */
+.scribbled {
+    display: inline;
+    color: #f7cbc1;
+    position: relative;
+}
+/* Style for scribble canvas overlay */
+.scribble-canvas {
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.formlessHolder{
+	display: none;
+	top:150px;
+}
+
+
+@media (max-width: 768px) {
+    main, [id^="slide"] {
+        font-size: 24px;
+    }
+}

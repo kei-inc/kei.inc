@@ -1,63 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kei</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/index.css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kei - A Difference Agency</title>
+      <link rel="stylesheet" href="./css/styles.css" />
+	  <link rel="stylesheet" href="./css/homepage.css" />
+    <!-- Include Rough.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/roughjs@4.5.2/bundled/rough.js"></script>
+    <script src="./js/homepage.js"></script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src=“https://www.googletagmanager.com/gtag/js?id=G-6JLHBDS7J7”></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G - 6JLHBDS7J7');
-</script>
-
 <body>
-  <header class="sticky-header">
+	<header class="sticky-header">
     <div class="header-container">
-      <a href="./index.html" class="logo">
-        <img src="./images/full-logo.svg" alt="Logo" class="logo" />
+      <a class='logo' href='/'>
+        <img src="./img/full-logo.svg" alt="Logo" class="logo" />
       </a>
       <nav>
         <ul class="menu">
-          <a href="./who.html">Who</a>
-          <a href="./how.html">How</a>
-          <a href="./case-studies.html">Case Studies</a>
-          <a href="./contact.html">Contact</a>
+          <a href='/about-us'>Who</a>
+          <a href='/how-we-help'>How</a>
+          <a href='/our-work'>Case Studies</a>
+          <!--<a href='/workshop'>Workshop</a>-->
+          <a href='/contact'>Contact</a>
         </ul>
         <div class="dropdown">
-          <img src="./images/mobile-menu.png" alt="Menu" class="dropbtn" . />
+          <img src="./img/mobile-menu.png" alt="Menu" class="dropbtn" . />
           <div class="dropdown-content">
-            <a href="./who.html">Who</a>
-            <a href="./how.html">How</a>
-            <a href="./case-studies.html">Case Studies</a>
-            <a href="./contact.html">Contact</a>
+          <a href='/about-us'>Who</a>
+          <a href='/how-we-help'>How</a>
+          <a href='/our-work'>Case Studies</a>
+          <!--<a href='/workshop'>Workshop</a>-->
+          <a href='/contact'>Contact</a>
           </div>
         </div>
       </nav>
     </div>
   </header>
-  <main>
-    <div class="hero-container">
 
-      <div class="fixed-text-container">
-        <div class="fixed-text" id="fixedText"><span><strong>Hello World.</strong></div>
-        <canvas id="lineCanvas"></canvas>
-      </div>
-      <script src=“https://embed.formless.ai/embed.js” async></script>
+  <main id="main-content">
+	<div class="main-content">
+	    <!-- Slide content -->
+	    <div id="slide1" class="slide">
+	        <span>Hello World.</span>
+	    </div>
+	    <div id="slide2" class="slide">
+	        <span>We Are Kei.</span>
+	    </div>
+	    <div id="slide3" class="slide">
+	        <span>Kei is a difference agency.</span>
+	    </div>
+	    <div id="slide4" class="slide">
+	        <span><span class="unscribbled">Kei helps organizations unlock actionable insights,</span> <span class="scribblable">gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.</span></span>
+	    </div>
+	    <div id="slide5" class="slide">
+	        <span><span class="unscribbled">Kei helps organizations discover patterns,</span> <span class="scribblable">identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and did we already mention strategy and solutions and innovative and impact and transformative...?</span></span>
+	    </div>
+	    <div id="slide6" class="slide">
+	        <span><span class="unscribbled">Kei helps organizations discover patterns, find focus,</span> <span class="scribblable">ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, holisti-harmonize, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, inter-brainstorm, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, big-bangify...</span></span>
+	    </div>
+		<div id="slide7" class="slide">
+		    <span><span class="unscribbled">Kei helps organizations discover patterns, find focus, create experiences, </span> <span class="scribblable">and leverage brand synergies, amplify value propositions, drive stakeholder engagement, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and hologram-project value bombs directly into the limbic systems of target demographics while AI-powered narrative swarms colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and telepathically implants USPs into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...</span></span>
+		    </div>
+			<div id="slide8" class="slide">
+	        <span>Kei is a difference agency. </span>
+	    </div>
+	        <div id="slide9" class="slide">
+	        <span>Seriously now, what the hell is a difference agency?</br></br> 
+	
+	Kei helps organizations find different ways of thinking, seeing and doing. Using systems thinking, we help detect patterns, uncover opportunities, create processes, and generally turn elusive ideas into tangible realities that make a difference.</span>
+	    </div>
+	            <div id="slide10" class="slide">
+	        <span>We make a difference.</br></br>
+			it's simple really.
+	</span>
+	    </div>
+	    <div id="formlessHolder" class="formlessHolder">
+	        <span>Wanna chat?</span>
+	        <div>other formless stuff goes here</div>
+	    </div>
+	</div>
     </main>
-  <script src="js/index.js"></script>
 
 </body>
-
 </html>

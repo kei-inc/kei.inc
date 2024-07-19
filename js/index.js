@@ -1,135 +1,565 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM fully loaded and parsed");
-    const fixedTextContainer = document.getElementById('fixed-text-container');
-    const fixedText = document.getElementById('fixedText');
-    const lineCanvas = document.getElementById('lineCanvas');
-    const rc = rough.canvas(lineCanvas);
-    let currentTextIndex = 0;
-    let isAnimating = false;  // Flag to track if an animation is in progress
-    let lastScrollTop = 0;  // Variable to keep track of the last scroll top position
+	// Select all slide divs
+    let slides = document.querySelectorAll('div[id^="slide"]');
+    let currentSlide = 0;
+    let isAnimating = false;
+    let direction = 1;
+    let animationStage = 0; // 0: typing, 1: scribbling, 2: erasing
+    
+    // Create cursor element
+    let cursor = document.createElement('span');
+    cursor.className = 'cursor';
 
-    function resizeCanvas() {
-        console.log("Resizing canvas");
-        lineCanvas.width = fixedText.offsetWidth;
-        lineCanvas.height = fixedText.offsetHeight;
-        console.log(`Canvas size: ${lineCanvas.width}x${lineCanvas.height}`);
-    }
+    // Animation speed settings
+    let typingSpeed = 50;
+    let erasingSpeed = 10;
+    let scribbleInSpeed = 20; // Speed for scribble drawing animation
+    let scribbleOutSpeed = 50; // Speed for scribble erasing animation
 
-    function clearCanvas() {
-        console.log("Clearing canvas");
-        const context = lineCanvas.getContext('2d');
-        context.clearRect(0, 0, lineCanvas.width, lineCanvas.height);
-    }
+/* --------- CORE ANIMATION STUFF ---------- */   
 
-    function drawLine() {
-        console.log("Drawing lines");
-        resizeCanvas();
-        const spans = fixedText.querySelectorAll('.strike-through');
-        console.log(`Found ${spans.length} strike-through spans`);
-        spans.forEach(span => {
-            const spanRect = span.getBoundingClientRect();
-            const containerRect = fixedText.getBoundingClientRect();
-            const children = Array.from(span.childNodes);
-            children.forEach(child => {
-                if (child.nodeType === Node.TEXT_NODE) {
-                    const range = document.createRange();
-                    range.selectNodeContents(child);
-                    const rects = range.getClientRects();
-                    Array.from(rects).forEach(rect => {
-                        const startX = rect.left - containerRect.left;
-                        const startY = (rect.top + rect.bottom) / 2 - containerRect.top;
-                        const endX = rect.right - containerRect.left;
-                        const endY = startY;
-                        console.log(`Drawing line from (${startX}, ${startY}) to (${endX}, ${endY})`);
-                        if (span.id === 'rough-strike') {
-                            drawSquigglyLine(startX, startY, endX, endY);
-                        }
-                        if (span.id === 'straight-strike') {
-                            drawStraightLine(startX, startY, endX, endY);
+    // Object to control animation
+    let animationControl = {
+        cancel: null
+    };
+
+    /**
+     * Wraps words in spans for animation while preserving spaces and structure
+     * @param {HTMLElement} element - The element to process
+     */
+    function wrapWords(element) {
+        // Check if words are already wrapped
+        if (element.querySelector('.word')) return;
+
+        function processNode(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                // Split text into words and spaces
+                let words = node.textContent.split(/(\s+)/);
+                let fragment = document.createDocumentFragment();
+                words.forEach((word, index) => {
+                    if (index % 2 === 0 && word.trim()) { // It's a non-empty word
+                        let span = document.createElement('span');
+                        span.className = 'word';
+                        span.textContent = word;
+                        fragment.appendChild(span);
+                    } else { // It's a space or empty
+                        fragment.appendChild(document.createTextNode(word));
+                    }
+                });
+                node.parentNode.replaceChild(fragment, node);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.classList.contains('scribblable')) {
+                    // Process scribblable span content
+                    let innerContent = node.innerHTML;
+                    node.innerHTML = '';
+                    let words = innerContent.split(/(\s+)/);
+                    words.forEach((word, index) => {
+                        if (index % 2 === 0 && word.trim()) { // It's a non-empty word
+                            let span = document.createElement('span');
+                            span.className = 'word';
+                            span.textContent = word;
+                            node.appendChild(span);
+                        } else { // It's a space or empty
+                            node.appendChild(document.createTextNode(word));
                         }
                     });
+                } else {
+                    // Recursively process child nodes
+                    Array.from(node.childNodes).forEach(processNode);
                 }
+            }
+        }
+
+        Array.from(element.childNodes).forEach(processNode);
+    }
+
+    /**
+     * Animates words appearing one by one
+     * @param {HTMLElement} element - The element containing the words
+     * @param {Function} callback - Function to call when animation completes
+     */
+    function animateWordsIn(element, callback) {
+        let words = element.querySelectorAll('.word');
+        let index = 0;
+        function showNextWord() {
+            if (index < words.length) {
+                words[index].style.opacity = '1';
+                index++;
+                animationControl.cancel = setTimeout(showNextWord, typingSpeed);
+            } else {
+                callback();
+            }
+        }
+        showNextWord();
+    }
+
+    /**
+     * Animates words disappearing one by one
+     * @param {HTMLElement} element - The element containing the words
+     * @param {Function} callback - Function to call when animation completes
+     */
+    function animateWordsOut(element, callback) {
+        let words = element.querySelectorAll('.word');
+        let index = words.length - 1;
+        function hideNextWord() {
+            if (index >= 0) {
+                words[index].style.opacity = '0';
+                index--;
+                animationControl.cancel = setTimeout(hideNextWord, erasingSpeed);
+            } else {
+                callback();
+            }
+        }
+        hideNextWord();
+    }
+/* --------- END OF CORE ANIMATION STUFF ---------- */   
+    
+    
+/* --------- SLIDE CHANGE STUFF ---------- */  
+    /**
+     * Animates a slide in or out
+     * @param {HTMLElement} slide - The slide to animate
+     * @param {boolean} isIn - True if animating in, false if animating out
+     * @returns {Promise} Resolves when animation completes
+     */
+    function animateSlide(slide, isIn) {
+        return new Promise((resolve) => {
+            let span = slide.querySelector('span');
+            if (isIn) {
+                wrapWords(span);
+                animateWordsIn(span, () => {
+                    span.appendChild(cursor);
+                    resolve();
+                });
+            } else {
+                cursor.remove();
+                animateWordsOut(span, () => {
+                    slide.style.display = 'none';
+                    resolve();
+                });
+            }
+        });
+    }
+
+
+    /**
+     * Changes to the next or previous slide
+     */
+async function changeSlide() {
+    if (isAnimating) return;
+
+    let currentSlideElement = slides[currentSlide];
+    let hasScribbleable = currentSlideElement.querySelector('.scribblable');
+    let hasScribbled = currentSlideElement.querySelector('.scribbled');
+
+    if (direction === 1 && hasScribbleable && animationStage === 0) {
+        // Moving forward, scribbleable exists, and we're at typing stage
+        toggleScribble(currentSlideElement, true);
+        animationStage = 1;
+        return;
+    } else if (direction === -1 && hasScribbled && animationStage === 1) {
+        // Moving backward, scribbled exists, and we're at scribbling stage
+        toggleScribble(currentSlideElement, false);
+        animationStage = 0;
+        return;
+    } else if (direction === -1 && animationStage === 0) {
+        // Moving backward and we're at typing stage, move to previous slide
+        let nextSlide = currentSlide - 1;
+        if (nextSlide < 0) return;
+
+        isAnimating = true;
+        if (currentSlideElement.querySelector('.scribbled')) {
+            toggleScribble(currentSlideElement, false);
+        }
+        await animateSlide(currentSlideElement, false);
+        currentSlide = nextSlide;
+        currentSlideElement = slides[currentSlide];
+        currentSlideElement.style.display = 'block';
+        let words = currentSlideElement.querySelectorAll('.word');
+        words.forEach(word => word.style.opacity = '1');
+        if (currentSlideElement.querySelector('.scribblable')) {
+            toggleScribble(currentSlideElement, true);
+            animationStage = 1;
+        } else {
+            animationStage = 0;
+        }
+        currentSlideElement.querySelector('span').appendChild(cursor);
+        isAnimating = false;
+        return;
+    }
+
+    let nextSlide = currentSlide + direction;
+    if (nextSlide >= slides.length) {
+        // We've reached the end of the slides
+        const formlessHolder = document.getElementById('formlessHolder');
+        if (formlessHolder) {
+            currentSlideElement.style.display = 'none';
+            formlessHolder.style.display = 'block';
+            
+            // Discontinue all event captures
+            window.removeEventListener('keydown', handleKeydown);
+            window.removeEventListener('resize', resizeCanvases);
+            
+            // You might want to remove other event listeners here if you have any
+            
+            console.log('All slides completed. Event listeners removed.');
+        }
+        return;
+    }
+
+    isAnimating = true;
+
+    // Remove scribble before erasing text
+    if (currentSlideElement.querySelector('.scribbled')) {
+        toggleScribble(currentSlideElement, false);
+    }
+
+    await animateSlide(slides[currentSlide], false);
+    
+    removeAllScribbles();
+    
+    currentSlide = nextSlide;
+    slides[currentSlide].style.display = 'block';
+    await animateSlide(slides[currentSlide], true);
+
+    isAnimating = false;
+    animationStage = 0;
+}
+    
+/* --------- END OF SLIDE CHANGE STUFF ---------- */   
+ 
+/* --------- SCRIBBLE RELATED STUFF ---------- */
+
+    /**
+     * Generates a random number within a specified range
+     * @param {number} min - The minimum value
+     * @param {number} max - The maximum value
+     * @returns {number} A random number between min and max
+     */
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    /**
+     * Creates a canvas element for a line of text
+     * @param {HTMLElement} element - The scribblable element
+     * @param {DOMRect} lineRect - The bounding rectangle of the line
+     * @param {DOMRect} parentDivRect - The bounding rectangle of the parent div
+     * @param {boolean} isFirstLine - Whether this is the first line of the scribble
+     * @param {number} unscribbledWidth - The width of the unscribbled span
+     * @returns {HTMLCanvasElement} The created canvas element
+     */
+function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan) {
+    const canvas = document.createElement('canvas');
+    canvas.className = 'scribble-canvas';
+    canvas.width = Math.max(1, lineRect.width);
+    canvas.height = Math.max(1, lineRect.height);
+    
+    unscribbledWidth = unscribbledSpan.getBoundingClientRect().width;
+    unscribbledHeight = unscribbledSpan.getBoundingClientRect().height;
+    unscribbledLeft = unscribbledSpan.getBoundingClientRect().left;
+    //console.log(unscribbledSpan.getBoundingClientRect().height);
+
+    //console.log(unscribbledHeight+ " "+lineRect.width+ " "+parentDivRect.width);
+    //console.log(element.offsetLeft);
+    
+    if (isFirstLine && (unscribbledHeight <= lineRect.height) && (unscribbledWidth < (parentDivRect.width-120))) {
+	    //console.log("the first line of text but only one line and not the full width");
+	    // the first line of text but only one line and not the full width
+
+	    canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
+        canvas.style.left = '0px';
+    }else if(unscribbledWidth > (parentDivRect.width - 150) && unscribbledHeight <= lineRect.height) {
+	    // the first line but it is the full width
+		//console.log('the first line is the full width and all lines after that');
+
+		singleHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+        canvas.style.top = `${singleHeight}px`;
+        canvas.style.left = `0px`;
+        
+    }else if(isFirstLine && unscribbledHeight > lineRect.height ) {
+	    // the first line but it has broken on to two lines
+		//console.log('the first line but it has broken on to two lines');
+	    
+        canvas.style.top = `0px`;
+        canvas.style.left = `0px`;
+    }else if(!isFirstLine && unscribbledHeight > lineRect.height ) {
+	    // the following lines after the first has broken on to two lines 
+		//console.log('the following lines after the first has broken on to two lines');
+	    
+	    secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
+	    linePos = element.offsetLeft - 20;
+        canvas.style.top = `${secondHeight}px`;
+        canvas.style.left = `-${linePos}px`;
+    }else{
+	    //console.log('regular line left aligned');
+	    canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
+	    
+        canvas.style.left = `-${unscribbledWidth+8}px`;
+    }
+    
+    element.appendChild(canvas);
+    return canvas;
+}
+
+function resizeCanvases() {
+    const scribbleElements = document.querySelectorAll('.scribbled');
+    scribbleElements.forEach(element => {
+        const canvases = element.querySelectorAll('.scribble-canvas');
+        canvases.forEach(canvas => canvas.remove());
+        
+        const lineRects = getLineRects(element);
+        const parentDiv = element.closest('div');
+        const parentDivRect = parentDiv.getBoundingClientRect();
+        
+        const unscribbledSpan = parentDiv.querySelector('.unscribbled');
+       // const unscribbledWidth = unscribbledSpan ? unscribbledSpan.getBoundingClientRect().width : 0;
+
+        lineRects.forEach((lineRect, index) => {
+            const isFirstLine = index === 0;
+            const canvas = createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan);
+            
+            // Clear the scribble cache for this canvas
+            scribbleCache.delete(canvas);
+            
+            // Generate new scribble points
+            const amplitudeRange = { min: 8, max: 12 };
+			const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
+            const scribblePoints = generateScribblePoints(
+                0,
+                canvas.width,
+                canvas.height / 2,
+                amplitude,
+                0.1 // frequency is not used in the new implementation, but kept for consistency
+            );
+            scribbleCache.set(canvas, scribblePoints);
+            
+            // Redraw the full scribble
+            const rc = rough.canvas(canvas);
+            rc.curve(scribblePoints, {
+                roughness: randomInRange(1, 2),
+                strokeWidth: 2,
+                stroke: '#435861',
+                bowing: randomInRange(0.5, 1.5)
+            });
+        });
+    });
+}
+
+
+const scribbleCache = new WeakMap();
+
+/**
+ * Animates the scribble drawing
+ * @param {HTMLCanvasElement} canvas - The canvas to draw on
+ * @param {number} progress - The current progress of the animation (0 to 1)
+ */
+function animateScribbleIn(canvas, progress) {
+    const rc = rough.canvas(canvas);
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Check if canvas has valid dimensions
+    if (width <= 0 || height <= 0) {
+        console.error('Invalid canvas dimensions:', width, height);
+        return;
+    }
+
+    let scribblePoints;
+    if (scribbleCache.has(canvas)) {
+        scribblePoints = scribbleCache.get(canvas);
+    } else {
+        // Generate scribble points only once per canvas
+        const amplitudeRange = { min: 8, max: 12 };
+        const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
+
+        scribblePoints = generateScribblePoints(
+            0,
+            width,
+            height / 2,
+            amplitude,
+            0.1 // frequency is not used in the new implementation, but kept for consistency
+        );
+        scribbleCache.set(canvas, scribblePoints);
+    }
+
+    // Check if scribblePoints is not empty
+    if (scribblePoints.length === 0) {
+        console.error('No scribble points generated');
+        return;
+    }
+
+    // Calculate how many points to draw based on progress
+    const pointsToDraw = Math.max(2, Math.floor(scribblePoints.length * progress));
+
+    // Clear the canvas before redrawing
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, width, height);
+
+    try {
+        rc.curve(scribblePoints.slice(0, pointsToDraw), {
+            roughness: randomInRange(1, 2),
+            strokeWidth: 2,
+            stroke: '#435861',
+            bowing: randomInRange(0.5, 1.5)
+        });
+    } catch (error) {
+        console.error('Error drawing curve:', error);
+        return;
+    }
+
+    if (progress < 1) {
+        requestAnimationFrame(() => animateScribbleIn(canvas, progress + scribbleInSpeed / 100));
+    }
+}
+
+function generateScribblePoints(startX, endX, y, amplitude, frequency) {
+    const points = [];
+    const segmentWidth = 4; // Width of each back-and-forth segment
+    const numSegments = Math.floor((endX - startX) / segmentWidth);
+
+    for (let i = 0; i < numSegments; i++) {
+        const segmentStartX = startX + i * segmentWidth;
+        const segmentEndX = segmentStartX + segmentWidth;
+        
+        // Add a point at the start of the segment
+        points.push([segmentStartX, y + (Math.random() - 0.5) * amplitude * 2]);
+        
+        // Add a point in the middle of the segment
+        points.push([
+            (segmentStartX + segmentEndX) / 2,
+            y + (Math.random() - 0.5) * amplitude * 2
+        ]);
+        
+        // Add a point at the end of the segment
+        points.push([segmentEndX, y + (Math.random() - 0.5) * amplitude * 2]);
+    }
+
+    return points;
+}
+
+    /**
+     * Animates the scribble erasing
+     * @param {HTMLCanvasElement} canvas - The canvas to erase from
+     * @param {number} progress - The current progress of the animation (0 to 1)
+     */
+    function animateScribbleOut(canvas, progress) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (progress < 1) {
+            ctx.globalAlpha = 1 - progress;
+            animateScribbleIn(canvas, 1); // Redraw the full scribble with decreasing opacity
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(() => animateScribbleOut(canvas, progress + scribbleOutSpeed / 100));
+        } else {
+            canvas.remove(); // Remove the canvas when fully erased
+        }
+    }
+
+    /**
+     * Gets the bounding rectangles for each line of text in an element
+     * @param {HTMLElement} element - The element containing the text
+     * @returns {DOMRect[]} An array of DOMRect objects for each line
+     */
+    function getLineRects(element) {
+        const range = document.createRange();
+        const lineRects = [];
+        const words = element.querySelectorAll('.word');
+        
+        words.forEach((word, index) => {
+            range.selectNodeContents(word);
+            const rects = range.getClientRects();
+            if (rects.length > 0) {
+                if (index === 0 || rects[0].top !== lineRects[lineRects.length - 1].top) {
+                    lineRects.push(rects[0]);
+                } else {
+                    const lastRect = lineRects[lineRects.length - 1];
+                    lastRect.width = rects[0].right - lastRect.left;
+                }
+            }
+        });
+
+        return lineRects;
+    }
+
+    /**
+     * Toggles the scribbled effect on the scribblable element
+     * @param {HTMLElement} slide - The current slide
+     * @param {boolean} scribble - True to add scribble, false to remove
+     */
+function toggleScribble(slide, scribble) {
+    let scribbleElements = slide.querySelectorAll('.scribblable, .scribbled');
+    scribbleElements.forEach(element => {
+        if (scribble) {
+            element.classList.remove('scribblable');
+            element.classList.add('scribbled');
+            const lineRects = getLineRects(element);
+            const parentDiv = element.closest('div');
+            const parentDivRect = parentDiv.getBoundingClientRect();
+            
+            const unscribbledSpan = parentDiv.querySelector('.unscribbled');
+            //console.log(parentDiv.querySelector('.unscribbled').getBoundingClientRect().right);
+            //const unscribbledWidth = unscribbledSpan ? unscribbledSpan.getBoundingClientRect().width : 0;
+			
+			//console.log(unscribbledWidth);
+            lineRects.forEach((lineRect, index) => {
+                const isFirstLine = index === 0;
+                const canvas = createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan);
+                animateScribbleIn(canvas, 0); // Start the scribble animation
+            });
+        } else {
+            element.classList.remove('scribbled');
+            element.classList.add('scribblable');
+            const canvases = element.querySelectorAll('.scribble-canvas');
+            canvases.forEach(canvas => animateScribbleOut(canvas, 0)); // Start the erase animation
+        }
+    });
+}
+
+    /**
+     * Removes all scribbled classes from all slides
+     */
+    function removeAllScribbles() {
+        slides.forEach(slide => {
+            let scribbledElements = slide.querySelectorAll('.scribbled');
+            scribbledElements.forEach(element => {
+                element.classList.remove('scribbled');
+                element.classList.add('scribblable');
+                const canvases = element.querySelectorAll('.scribble-canvas');
+                canvases.forEach(canvas => canvas.remove());
             });
         });
     }
+/* --------- END OF SCRIBBLE RELATED STUFF ---------- */
 
-    function drawSquigglyLine(startX, startY, endX, endY) {
-        const lineLength = endX - startX;
-        const points = [];
-        const segmentCount = lineLength / 40;
-        const frequency = lineLength / 120;
-        const amplitude = lineLength / 70;
-        console.log(amplitude, frequency, segmentCount);
-        for (let i = 0; i <= segmentCount; i++) {
-            const t = i / segmentCount;
-            const x = startX + t * (endX - startX);
-            const y = startY + Math.sin(t * Math.PI * frequency) * amplitude;
-            points.push([x, y]);
+
+    /**
+     * Handles keyboard events for navigation
+     * @param {KeyboardEvent} event - The keyboard event
+     */
+    function handleKeydown(event) {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+            direction = 1;
+            changeSlide();
+        } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+            direction = -1;
+            changeSlide();
+        }else{
+	        direction = 1;
+            changeSlide();
         }
-        rc.curve(points, {
-            stroke: '#efede4',
-            strokeWidth: 25,
-            roughness: 3,
-        });
     }
 
-    function drawStraightLine(startX, startY, endX, endY) {
-        console.log("Drawing straight line");
-        rc.line(startX, startY, endX, endY, {
-            stroke: '#efede4',
-            strokeWidth: 8,
-            roughness: 1,
-        });
-    }
+    // Add event listener for keyboard navigation
+    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener("click", handleKeydown);
+    window.addEventListener('resize', resizeCanvases);
 
-    function initTyped(text) {
-        fixedText.innerHTML = ''; 
-        clearCanvas(); 
-        isAnimating = true;  // Set animation flag to true
-        new Typed('#fixedText', {
-            typeSpeed: 5,
-            strings: [text],
-            showCursor: false,
-            onComplete: function() {
-                setTimeout(function() {
-                    drawLine();
-                }, 400);
-                isAnimating = false;  // Set animation flag to false when complete
-            }
-        });
-    }
+    // Initialize all slides by wrapping words
+    slides.forEach(slide => wrapWords(slide.querySelector('span')));
 
-    const texts = [
-        '<strong>We are Kei.</strong>',
-        '<strong>Kei is a difference agency. </strong>',
-        '<strong>And so Kei helps organizations make a difference?</strong>', 
-        '<strong>Kei helps organizations<span class="unselect-text strike-through" id="rough-strike"> unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.?</span></strong>', 
-        "<strong>Kei helps organizations discover patterns,<span class='unselect-text strike-through' id='rough-strike'> identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and did we already mention strategy and solutions and innovative and impact and transformative…?</span></strong>",
-        "<strong>Kei helps organizations discover patterns, find focus<span class='unselect-text strike-through' id='rough-strike'> ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, holisti-harmonize, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, inter-brainstorm, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, big-bangify...</span></strong>",
-        "<strong>Kei helps organizations discover patterns, find focus, create experiences,<span class='unselect-text strike-through' id='rough-strike'> and leverage brand synergies, amplify value propositions, drive stakeholder engagement, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and hologram-project value bombs directly into the limbic systems of target demographics while AI-powered narrative swarms colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and telepathically implants USPs into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...</span></strong>",
-        '<strong>Kei is a difference agency. </strong>',
-        '<strong>Seriously now, what the hell is a difference agency?</strong> <br><br> Kei helps organizations find different ways of thinking, seeing and doing. Using systems thinking, we help detect patterns, uncover opportunities, create processes, and generally turn elusive ideas into tangible realities that make a difference.',
-        '<strong>We make a difference. <br><br> It’s simple, really.</strong> ',
-        ' <iframe src=“https://formless.ai/c/ZhmE7mIBg9XP” class=“formless-embed” style= "width:100%; height:600px; display: block"></iframe>',
-    ];
-
-    document.addEventListener('scroll', function() {
-        const scrollPosition = window.scrollY;
-        
-        if (!isAnimating) {
-            if (scrollPosition > lastScrollTop && currentTextIndex < texts.length - 1) {
-                // Scrolling down
-                currentTextIndex++;
-                initTyped(texts[currentTextIndex]);
-            } else if (scrollPosition < lastScrollTop && currentTextIndex > 0) {
-                // Scrolling up
-                currentTextIndex--;
-                initTyped(texts[currentTextIndex]);
-            }
-            lastScrollTop = scrollPosition;
-        }
+    // Initialize the first slide
+    slides[0].style.display = 'block';
+    animateSlide(slides[0], true);
     });
-
-    // Initial draw call
-    initTyped(texts[currentTextIndex]);
-});
