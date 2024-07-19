@@ -11,7 +11,7 @@ body, html {
     padding: 0;
     height: 100%;
     background-color: #EF7354;
-    color: #f7cbc1;
+    color: #fff;
 }
 
 header {
@@ -87,7 +87,25 @@ main {
 	display: none;
 	top:150px;
 }
+em{
+    font-style: normal; 
+}
+.rough-underline {
+    pointer-events: none;
+    user-select: none;
+}
+.rough-underline-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
 
+.slide {
+    position: relative;
+}
 
 @media (max-width: 768px) {
     main, [id^="slide"] {

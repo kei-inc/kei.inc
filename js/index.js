@@ -27,51 +27,66 @@ document.addEventListener('DOMContentLoaded', function() {
      * Wraps words in spans for animation while preserving spaces and structure
      * @param {HTMLElement} element - The element to process
      */
-    function wrapWords(element) {
-        // Check if words are already wrapped
-        if (element.querySelector('.word')) return;
-
-        function processNode(node) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                // Split text into words and spaces
-                let words = node.textContent.split(/(\s+)/);
-                let fragment = document.createDocumentFragment();
-                words.forEach((word, index) => {
-                    if (index % 2 === 0 && word.trim()) { // It's a non-empty word
-                        let span = document.createElement('span');
-                        span.className = 'word';
-                        span.textContent = word;
-                        fragment.appendChild(span);
-                    } else { // It's a space or empty
-                        fragment.appendChild(document.createTextNode(word));
-                    }
-                });
-                node.parentNode.replaceChild(fragment, node);
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                if (node.classList.contains('scribblable')) {
-                    // Process scribblable span content
-                    let innerContent = node.innerHTML;
-                    node.innerHTML = '';
-                    let words = innerContent.split(/(\s+)/);
-                    words.forEach((word, index) => {
-                        if (index % 2 === 0 && word.trim()) { // It's a non-empty word
-                            let span = document.createElement('span');
-                            span.className = 'word';
-                            span.textContent = word;
-                            node.appendChild(span);
-                        } else { // It's a space or empty
-                            node.appendChild(document.createTextNode(word));
-                        }
-                    });
-                } else {
-                    // Recursively process child nodes
-                    Array.from(node.childNodes).forEach(processNode);
-                }
-            }
-        }
-
-        Array.from(element.childNodes).forEach(processNode);
-    }
+function wrapWords(element) {
+         if (element.querySelector('.word')) return;
+     
+         function processNode(node) {
+             if (node.nodeType === Node.TEXT_NODE) {
+                 const words = node.textContent.split(/(\s+)/);
+                 const fragment = document.createDocumentFragment();
+                 words.forEach((word, index) => {
+                     if (index % 2 === 0 && word.trim()) {
+                         const span = document.createElement('span');
+                         span.className = 'word';
+                         span.textContent = word;
+                         fragment.appendChild(span);
+                     } else {
+                         fragment.appendChild(document.createTextNode(word));
+                     }
+                 });
+                 node.parentNode.replaceChild(fragment, node);
+             } else if (node.nodeType === Node.ELEMENT_NODE) {
+                 if (node.tagName.toLowerCase() === 'em') {
+                     // Preserve em tags
+                     const span = document.createElement('span');
+                     span.className = 'word';
+                     span.appendChild(node.cloneNode(true));
+                     node.parentNode.replaceChild(span, node);
+                 } else if (node.classList.contains('scribblable')) {
+                     // Process scribblable span content
+                     const fragment = document.createDocumentFragment();
+                     Array.from(node.childNodes).forEach(child => {
+                         if (child.nodeType === Node.TEXT_NODE) {
+                             const words = child.textContent.split(/(\s+)/);
+                             words.forEach((word, index) => {
+                                 if (index % 2 === 0 && word.trim()) {
+                                     const span = document.createElement('span');
+                                     span.className = 'word';
+                                     span.textContent = word;
+                                     fragment.appendChild(span);
+                                 } else {
+                                     fragment.appendChild(document.createTextNode(word));
+                                 }
+                             });
+                         } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName.toLowerCase() === 'em') {
+                             const span = document.createElement('span');
+                             span.className = 'word';
+                             span.appendChild(child.cloneNode(true));
+                             fragment.appendChild(span);
+                         } else {
+                             fragment.appendChild(child.cloneNode(true));
+                         }
+                     });
+                     node.innerHTML = '';
+                     node.appendChild(fragment);
+                 } else {
+                     Array.from(node.childNodes).forEach(processNode);
+                 }
+             }
+         }
+     
+         Array.from(element.childNodes).forEach(processNode);
+     }
 
     /**
      * Animates words appearing one by one
@@ -122,109 +137,105 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {boolean} isIn - True if animating in, false if animating out
      * @returns {Promise} Resolves when animation completes
      */
-    function animateSlide(slide, isIn) {
-        return new Promise((resolve) => {
-            let span = slide.querySelector('span');
-            if (isIn) {
-                wrapWords(span);
-                animateWordsIn(span, () => {
-                    span.appendChild(cursor);
-                    resolve();
-                });
-            } else {
-                cursor.remove();
-                animateWordsOut(span, () => {
-                    slide.style.display = 'none';
-                    resolve();
-                });
-            }
-        });
-    }
+     function animateSlide(slide, isIn) {
+         return new Promise((resolve) => {
+             let span = slide.querySelector('span');
+             if (isIn) {
+                 wrapWords(span);
+                 animateWordsIn(span, () => {
+                     span.appendChild(cursor);
+                     addRoughUnderlines(slide);
+                     resolve();
+                 });
+             } else {
+                 cursor.remove();
+                 clearUnderlines(slide);
+                 animateWordsOut(span, () => {
+                     slide.style.display = 'none';
+                     resolve();
+                 });
+             }
+         });
+     }
 
 
     /**
      * Changes to the next or previous slide
      */
 async function changeSlide() {
-    if (isAnimating) return;
-
-    let currentSlideElement = slides[currentSlide];
-    let hasScribbleable = currentSlideElement.querySelector('.scribblable');
-    let hasScribbled = currentSlideElement.querySelector('.scribbled');
-
-    if (direction === 1 && hasScribbleable && animationStage === 0) {
-        // Moving forward, scribbleable exists, and we're at typing stage
-        toggleScribble(currentSlideElement, true);
-        animationStage = 1;
-        return;
-    } else if (direction === -1 && hasScribbled && animationStage === 1) {
-        // Moving backward, scribbled exists, and we're at scribbling stage
-        toggleScribble(currentSlideElement, false);
-        animationStage = 0;
-        return;
-    } else if (direction === -1 && animationStage === 0) {
-        // Moving backward and we're at typing stage, move to previous slide
-        let nextSlide = currentSlide - 1;
-        if (nextSlide < 0) return;
-
-        isAnimating = true;
-        if (currentSlideElement.querySelector('.scribbled')) {
-            toggleScribble(currentSlideElement, false);
-        }
-        await animateSlide(currentSlideElement, false);
-        currentSlide = nextSlide;
-        currentSlideElement = slides[currentSlide];
-        currentSlideElement.style.display = 'block';
-        let words = currentSlideElement.querySelectorAll('.word');
-        words.forEach(word => word.style.opacity = '1');
-        if (currentSlideElement.querySelector('.scribblable')) {
-            toggleScribble(currentSlideElement, true);
-            animationStage = 1;
-        } else {
-            animationStage = 0;
-        }
-        currentSlideElement.querySelector('span').appendChild(cursor);
-        isAnimating = false;
-        return;
-    }
-
-    let nextSlide = currentSlide + direction;
-    if (nextSlide >= slides.length) {
-        // We've reached the end of the slides
-        const formlessHolder = document.getElementById('formlessHolder');
-        if (formlessHolder) {
-            currentSlideElement.style.display = 'none';
-            formlessHolder.style.display = 'block';
-            
-            // Discontinue all event captures
-            window.removeEventListener('keydown', handleKeydown);
-            window.removeEventListener('resize', resizeCanvases);
-            
-            // You might want to remove other event listeners here if you have any
-            
-            console.log('All slides completed. Event listeners removed.');
-        }
-        return;
-    }
-
-    isAnimating = true;
-
-    // Remove scribble before erasing text
-    if (currentSlideElement.querySelector('.scribbled')) {
-        toggleScribble(currentSlideElement, false);
-    }
-
-    await animateSlide(slides[currentSlide], false);
-    
-    removeAllScribbles();
-    
-    currentSlide = nextSlide;
-    slides[currentSlide].style.display = 'block';
-    await animateSlide(slides[currentSlide], true);
-
-    isAnimating = false;
-    animationStage = 0;
-}
+         if (isAnimating) return;
+     
+         let currentSlideElement = slides[currentSlide];
+         let hasScribbleable = currentSlideElement.querySelector('.scribblable');
+         let hasScribbled = currentSlideElement.querySelector('.scribbled');
+     
+         if (direction === 1 && hasScribbleable && animationStage === 0) {
+             toggleScribble(currentSlideElement, true);
+             animationStage = 1;
+             addRoughUnderlines(currentSlideElement);
+             return;
+         } else if (direction === -1 && hasScribbled && animationStage === 1) {
+             toggleScribble(currentSlideElement, false);
+             animationStage = 0;
+             clearUnderlines(currentSlideElement);
+             return;
+         } else if (direction === -1 && animationStage === 0) {
+             let nextSlide = currentSlide - 1;
+             if (nextSlide < 0) return;
+     
+             isAnimating = true;
+             if (currentSlideElement.querySelector('.scribbled')) {
+                 toggleScribble(currentSlideElement, false);
+             }
+             await animateSlide(currentSlideElement, false);
+             currentSlide = nextSlide;
+             currentSlideElement = slides[currentSlide];
+             currentSlideElement.style.display = 'block';
+             let words = currentSlideElement.querySelectorAll('.word');
+             words.forEach(word => word.style.opacity = '1');
+             if (currentSlideElement.querySelector('.scribblable')) {
+                 toggleScribble(currentSlideElement, true);
+                 animationStage = 1;
+             } else {
+                 animationStage = 0;
+             }
+             currentSlideElement.querySelector('span').appendChild(cursor);
+             isAnimating = false;
+             return;
+         }
+     
+         let nextSlide = currentSlide + direction;
+         if (nextSlide >= slides.length) {
+             const formlessHolder = document.getElementById('formlessHolder');
+             if (formlessHolder) {
+                 await animateSlide(currentSlideElement, false);  // This will clear underlines
+                 formlessHolder.style.display = 'block';
+                 
+                 window.removeEventListener('keydown', handleKeydown);
+                 window.removeEventListener('resize', resizeCanvases);
+                 
+                 console.log('All slides completed. Event listeners removed.');
+             }
+             return;
+         }
+     
+         isAnimating = true;
+     
+         if (currentSlideElement.querySelector('.scribbled')) {
+             toggleScribble(currentSlideElement, false);
+         }
+     
+         await animateSlide(slides[currentSlide], false);
+         
+         removeAllScribbles();
+         
+         currentSlide = nextSlide;
+         slides[currentSlide].style.display = 'block';
+         await animateSlide(slides[currentSlide], true);
+     
+         isAnimating = false;
+         animationStage = 0;
+     }
     
 /* --------- END OF SLIDE CHANGE STUFF ---------- */   
  
@@ -344,6 +355,11 @@ function resizeCanvases() {
             });
         });
     });
+    const currentSlideElement = slides[currentSlide];
+    if (currentSlideElement) {
+        clearUnderlines(currentSlideElement);
+        addRoughUnderlines(currentSlideElement);
+    }
 }
 
 
@@ -530,6 +546,54 @@ function toggleScribble(slide, scribble) {
                 canvases.forEach(canvas => canvas.remove());
             });
         });
+    }
+   function addRoughUnderlines(slide) {
+       const emTags = slide.querySelectorAll('.word em, em');
+       if (emTags.length === 0) return;  // No em tags in this slide
+   
+       let canvas = slide.querySelector('.rough-underline-canvas');
+       if (!canvas) {
+           canvas = document.createElement('canvas');
+           canvas.className = 'rough-underline-canvas';
+           slide.appendChild(canvas);
+       }
+   
+       const slideRect = slide.getBoundingClientRect();
+       canvas.width = slideRect.width;
+       canvas.height = slideRect.height;
+       canvas.style.opacity = '1';
+   
+       const rc = rough.canvas(canvas);
+       const ctx = canvas.getContext('2d');
+       ctx.clearRect(0, 0, canvas.width, canvas.height);
+   
+       emTags.forEach(em => {
+           const rect = em.getBoundingClientRect();
+           const relativeRect = {
+               left: rect.left - slideRect.left,
+               top: rect.top - slideRect.top,
+               width: rect.width,
+               height: rect.height
+           };
+   
+           rc.line(
+               relativeRect.left, 
+               relativeRect.top + relativeRect.height, 
+               relativeRect.left + relativeRect.width, 
+               relativeRect.top + relativeRect.height, 
+               {
+                   roughness: 2,
+                   strokeWidth: 2,
+                   stroke: window.getComputedStyle(em).color
+               }
+           );
+       });
+   }
+    function clearUnderlines(slide) {
+        const canvas = slide.querySelector('.rough-underline-canvas');
+        if (canvas) {
+            canvas.style.opacity = '0';
+        }
     }
 /* --------- END OF SCRIBBLE RELATED STUFF ---------- */
 
