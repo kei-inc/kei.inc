@@ -239,11 +239,19 @@ async function changeSlide() {
          if (formlessHolder) {
              formlessHolder.style.display = 'block';
          }
-     
+         
+        const mainSection = document.querySelector('main');
+         if (mainSection) {
+             mainSection.removeEventListener('touchstart', handleTouch);
+             mainSection.removeEventListener('click', handleClick);
+         }
+        
          // Remove all event listeners
-         window.removeEventListener('keydown', handleKeydown);
-         window.removeEventListener('resize', resizeCanvases);
-         //window.removeEventListener('keydown', handleEscapeKey);
+          window.removeEventListener('keydown', handleKeydown);
+          window.removeEventListener('resize', resizeCanvases);
+          window.removeEventListener('keydown', handleEscapeKey);
+          document.removeEventListener('touchstart', handleTouch);
+          document.removeEventListener('click', handleClick);
      
          // Remove any ongoing animations or timeouts
          if (animationControl.cancel) {
@@ -632,12 +640,67 @@ function toggleScribble(slide, scribble) {
             changeSlide();
         }
     }
-
-
+    
+function handleTouch(event) {
+        // Check if the touch occurred within the main section
+        if (!event.target.closest('main')) return;
+    
+        // Prevent default behavior to avoid scrolling
+        event.preventDefault();
+    
+        const touchX = event.touches[0].clientX;
+        const screenWidth = window.innerWidth;
+    
+        if (touchX < screenWidth / 2) {
+            // Touch on the left half of the screen, simulate left arrow
+            handleKeydown({ key: 'ArrowLeft' });
+        } else {
+            // Touch on the right half of the screen, simulate right arrow
+            handleKeydown({ key: 'ArrowRight' });
+        }
+    }
+    
     // Add event listener for keyboard navigation
-    window.addEventListener('keydown', handleKeydown);
-    window.addEventListener("click", handleKeydown);
+    //window.addEventListener('keydown', handleKeydown);
+    //window.addEventListener("click", handleKeydown);
+    //window.addEventListener('resize', resizeCanvases);
+    
+    function addNavigationListeners() {
+        const mainSection = document.querySelector('main');
+        
+        if (mainSection) {
+            // Touch events
+            mainSection.addEventListener('touchstart', handleTouch, { passive: false });
+    
+            // Mouse events (for desktop)
+            mainSection.addEventListener('click', handleClick);
+        } else {
+            console.warn('Main section not found. Navigation listeners not added.');
+        }
+    
+        // Keyboard events (keep the existing listener)
+        window.addEventListener('keydown', handleKeydown);
+    }
+    
+function handleClick(event) {
+        // Check if the click occurred within the main section
+        if (!event.target.closest('main')) return;
+    
+        const clickX = event.clientX;
+        const screenWidth = window.innerWidth;
+    
+        if (clickX < screenWidth / 2) {
+            // Click on the left half of the screen, simulate left arrow
+            handleKeydown({ key: 'ArrowLeft' });
+        } else {
+            // Click on the right half of the screen, simulate right arrow
+            handleKeydown({ key: 'ArrowRight' });
+        }
+    }
+    // Add event listeners
+    addNavigationListeners();
     window.addEventListener('resize', resizeCanvases);
+    //window.addEventListener('keydown', handleEscapeKey);
 
     // Initialize all slides by wrapping words
     slides.forEach(slide => wrapWords(slide.querySelector('span')));
