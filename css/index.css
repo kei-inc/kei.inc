@@ -93,6 +93,9 @@ main {
 }
 em{
     font-style: normal; 
+    display: inline;
+    position: relative;
+    text-decoration: none;
 }
 .rough-underline {
     pointer-events: none;
@@ -104,7 +107,6 @@ em{
     top: 0;
     pointer-events: none;
     z-index: 1;
-    transition: opacity 0.3s ease;
 }
 
 .slide {
@@ -126,5 +128,10 @@ em{
       
        height:600px;
        
+    }
+[id^="slide"] {
+        top: 0px;
+        padding: 0 10px;
+ 
     }
 }

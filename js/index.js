@@ -299,38 +299,47 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
     //console.log(element.offsetLeft);
     
     if (isFirstLine && (unscribbledHeight <= lineRect.height) && (unscribbledWidth < (parentDivRect.width-120))) {
-	    //console.log("the first line of text but only one line and not the full width");
-	    // the first line of text but only one line and not the full width
+      //console.log("the first line of text but only one line and not the full width");
+      // the first line of text but only one line and not the full width
 
-	    canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
-        canvas.style.left = '0px';
-    }else if(unscribbledWidth > (parentDivRect.width - 150) && unscribbledHeight <= lineRect.height) {
-	    // the first line but it is the full width
-		//console.log('the first line is the full width and all lines after that');
+      canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
+      canvas.style.left = '0px';
+   }else if(unscribbledWidth > (parentDivRect.width - 150) && unscribbledHeight <= lineRect.height) {
+      // the first line but it is the full width
+      //console.log('the first line is the full width and all lines after that');
 
-		singleHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
-        canvas.style.top = `${singleHeight}px`;
-        canvas.style.left = `0px`;
+      singleHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+      canvas.style.top = `${singleHeight}px`;
+      canvas.style.left = `0px`;
         
-    }else if(isFirstLine && unscribbledHeight > lineRect.height ) {
-	    // the first line but it has broken on to two lines
-		//console.log('the first line but it has broken on to two lines');
-	    
-        canvas.style.top = `0px`;
-        canvas.style.left = `0px`;
-    }else if(!isFirstLine && unscribbledHeight > lineRect.height ) {
-	    // the following lines after the first has broken on to two lines 
-		//console.log('the following lines after the first has broken on to two lines');
-	    
-	    secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
-	    linePos = element.offsetLeft - 20;
-        canvas.style.top = `${secondHeight}px`;
-        canvas.style.left = `-${linePos}px`;
-    }else{
-	    //console.log('regular line left aligned');
-	    canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
-	    
-        canvas.style.left = `-${unscribbledWidth+8}px`;
+   }else if(isFirstLine && unscribbledHeight > lineRect.height ) {
+      // the first line but it has broken on to two or more lines
+      //console.log('the first line but it has broken on to two or more lines');
+
+       canvas.style.top = `0px`;
+       canvas.style.left = `0px`;
+   }else if(!isFirstLine && unscribbledHeight > lineRect.height ) {
+      // the following lines after the first has broken on to two or more lines 
+      //console.log('the following lines after the first has broken on to two or more lines');
+      //console.log(unscribbledHeight-5+" "+lineRect.height*2);
+      if((unscribbledHeight-5) > (lineRect.height*2)){
+         console.log('the following lines after the first has broken on to three or more lines');
+         //if wrapped on to 3 or more lines
+         secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
+      }else{
+         console.log('the following lines after the first has broken on to two lines');
+         //if wrapped onto two lines
+        // secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
+         secondHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+      }
+     
+      linePos = element.offsetLeft - 20;
+      canvas.style.top = `${secondHeight}px`;
+      canvas.style.left = `-${linePos}px`;
+   }else{
+      //console.log('regular line left aligned');
+      canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
+      canvas.style.left = `-${unscribbledWidth+8}px`;
     }
     
     element.appendChild(canvas);
@@ -571,48 +580,72 @@ function toggleScribble(slide, scribble) {
             });
         });
     }
-   function addRoughUnderlines(slide) {
-       const emTags = slide.querySelectorAll('.word em, em');
-       if (emTags.length === 0) return;  // No em tags in this slide
-   
-       let canvas = slide.querySelector('.rough-underline-canvas');
-       if (!canvas) {
-           canvas = document.createElement('canvas');
-           canvas.className = 'rough-underline-canvas';
-           slide.appendChild(canvas);
-       }
-   
-       const slideRect = slide.getBoundingClientRect();
-       canvas.width = slideRect.width;
-       canvas.height = slideRect.height;
-       canvas.style.opacity = '1';
-   
-       const rc = rough.canvas(canvas);
-       const ctx = canvas.getContext('2d');
-       ctx.clearRect(0, 0, canvas.width, canvas.height);
-   
-       emTags.forEach(em => {
-           const rect = em.getBoundingClientRect();
-           const relativeRect = {
-               left: rect.left - slideRect.left,
-               top: rect.top - slideRect.top,
-               width: rect.width,
-               height: rect.height
-           };
-   
-           rc.line(
-               relativeRect.left, 
-               relativeRect.top + relativeRect.height, 
-               relativeRect.left + relativeRect.width, 
-               relativeRect.top + relativeRect.height, 
-               {
-                   roughness: 2,
-                   strokeWidth: 2,
-                   stroke: window.getComputedStyle(em).color
-               }
-           );
-       });
-   }
+  function addRoughUnderlines(slide) {
+      const emTags = slide.querySelectorAll('em');
+      if (emTags.length === 0) return;  // No em tags in this slide
+  
+      let canvas = slide.querySelector('.rough-underline-canvas');
+      if (!canvas) {
+          canvas = document.createElement('canvas');
+          canvas.className = 'rough-underline-canvas';
+          slide.appendChild(canvas);
+      }
+  
+      const slideRect = slide.getBoundingClientRect();
+      canvas.width = slideRect.width;
+      canvas.height = slideRect.height;
+      canvas.style.opacity = '1';
+  
+      const rc = rough.canvas(canvas);
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      emTags.forEach(em => {
+          const range = document.createRange();
+          range.selectNodeContents(em);
+          const rects = range.getClientRects();
+  
+          for (let i = 0; i < rects.length; i++) {
+              const rect = rects[i];
+              const startX = rect.left - slideRect.left;
+              const endX = rect.right - slideRect.left;
+              const y = rect.bottom - slideRect.top;
+  
+              // Adjust the line position slightly upwards
+              const adjustedY = y - 2;
+  
+              rc.line(
+                  startX, 
+                  adjustedY, 
+                  endX, 
+                  adjustedY, 
+                  {
+                      roughness: 2,
+                      strokeWidth: 2,
+                      stroke: window.getComputedStyle(em).color,
+                      bowing: 1
+                  }
+              );
+  
+              // If this is not the last line and the next line starts further right,
+              // draw a connecting line
+              if (i < rects.length - 1 && rects[i + 1].left > rect.right) {
+                  rc.line(
+                      endX,
+                      adjustedY,
+                      rects[i + 1].left - slideRect.left,
+                      adjustedY,
+                      {
+                          roughness: 2,
+                          strokeWidth: 2,
+                          stroke: window.getComputedStyle(em).color,
+                          bowing: 1
+                      }
+                  );
+              }
+          }
+      });
+  }
     function clearUnderlines(slide) {
         const canvas = slide.querySelector('.rough-underline-canvas');
         if (canvas) {
@@ -660,11 +693,6 @@ function handleTouch(event) {
         }
     }
     
-    // Add event listener for keyboard navigation
-    //window.addEventListener('keydown', handleKeydown);
-    //window.addEventListener("click", handleKeydown);
-    //window.addEventListener('resize', resizeCanvases);
-    
     function addNavigationListeners() {
         const mainSection = document.querySelector('main');
         
@@ -700,7 +728,6 @@ function handleClick(event) {
     // Add event listeners
     addNavigationListeners();
     window.addEventListener('resize', resizeCanvases);
-    //window.addEventListener('keydown', handleEscapeKey);
 
     // Initialize all slides by wrapping words
     slides.forEach(slide => wrapWords(slide.querySelector('span')));
