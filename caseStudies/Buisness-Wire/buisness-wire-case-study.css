@@ -2,9 +2,93 @@ main,header{
     background: #EFEDE4;
     font-family: NeuzeitGroT;
 }
+.header{position: absolute;}
 footer{
     background: white;
 }
 .intro-text{
     padding-top: 100px;
+}
+#top-border {
+    border-top: #BB3216 1px solid;
+}
+.strong-list li{
+    color: #BB3216;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 38px;
+}
+
+.orange-list{
+    color: #BB3216;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px;
+}
+/* four-column*/
+
+#reverse-four-column p{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 190% */
+    width: 100%;
+}
+
+#reverse-four-column h3{
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+    border-bottom: 1px solid #BB3216;
+    padding-bottom: 10px;
+}
+
+#validating-concept h3{
+    border-bottom: 1px #BB3216 solid; 
+    width: 100%;
+    color: #BB3216;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 110% */
+}
+#validating-concept p{
+    color: #BB3216;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 116.667% */
+    min-height: 60px;
+}
+#validating-concept strong{
+    color: #BB3216;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+}
+#big-percent .flex-item{
+    margin: 20px 0;
+}
+#big-percent h3{
+    color: #BB3216;
+font-size: 96px;
+font-style: normal;
+font-weight: 400;
+line-height: 96px; /* 100% */
+margin: 10px 0;
+}
+#big-percent p{
+    color: #BB3216;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 30px; /* 125% */
 }
