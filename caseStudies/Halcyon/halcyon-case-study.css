@@ -8,10 +8,17 @@ footer{
 .intro-text{
     padding-top: 100px;
 }
+#logos{
+    gap:unset
+}
 #logos .flex-item{
     align-content: center;
     border-left: 1px solid #BB3216;
 }
+#logos .border-right{
+    border-right: 1px solid #BB3216;
+}
+
 #logos .flex-item img{
     margin: 0 auto;
     display: flex;
@@ -30,6 +37,15 @@ footer{
     }
     .hbox {
         gap: 20px;
+    }
+    #logos .flex-item{
+        border-left: none;
+    }
+    #logos .border-right{
+        border-right: none;
+    }
+    #logos{
+        gap:100px;
     }
     
 }
