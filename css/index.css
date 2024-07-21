@@ -118,6 +118,15 @@ em{
    border: 0; 
    display: block";
 }
+.light{
+   color: #f7cbc1;
+   font-size: .3em;
+   font-weight:normal;
+}
+nav a {
+    color: white;
+
+}
  
 
 @media (max-width: 768px) {

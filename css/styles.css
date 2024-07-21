@@ -317,8 +317,16 @@ footer {
     font-weight: 700;
     line-height: 36px;
 }
-
-
+.carousel{
+    display:flex;
+    padding:40px 0;
+    overflow-y: scroll;
+}
+.carousel img{
+    height:400px;
+    margin-right:20px;
+    
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
     .menu {
