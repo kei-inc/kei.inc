@@ -11,7 +11,7 @@ body, html {
     padding: 0;
     height: 100%;
     background-color: #EF7354;
-    color: #f7cbc1;
+    color: #fff;
 }
 
 header {
@@ -23,11 +23,14 @@ main {
     font-size: 36px;
     line-height: 1.5em;
     width: 100%;
+    height:600px;
     max-width: 1440px;
     margin: 0 auto;
     position: relative;
     padding: 0 20px;
     box-sizing: border-box;
+    cursor: pointer;
+
 }
 
 /* Position slides at the top of the main container */
@@ -41,6 +44,7 @@ main {
     display: none;
     padding: 0 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 /* Style for individual words */
@@ -87,10 +91,47 @@ main {
 	display: none;
 	top:150px;
 }
+em{
+    font-style: normal; 
+    display: inline;
+    position: relative;
+    text-decoration: none;
+}
+.rough-underline {
+    pointer-events: none;
+    user-select: none;
+}
+.rough-underline-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 1;
+}
 
+.slide {
+    position: relative;
+}
+.formless-embed{
+   width:100%;
+   height:1000px;
+   border: 0; 
+   display: block";
+}
+ 
 
 @media (max-width: 768px) {
     main, [id^="slide"] {
         font-size: 24px;
+    }
+    .formless-embed{
+      
+       height:600px;
+       
+    }
+[id^="slide"] {
+        top: 0px;
+        padding: 0 10px;
+ 
     }
 }
