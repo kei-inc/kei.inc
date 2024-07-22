@@ -113,8 +113,11 @@ section{
     background-color: #F5C445;
 }
 @media (max-width: 1299px) {
-    #filler{
-        display: none;
-    }
+  #filler{
+      display: none;
+  }
+  .body-text{
+      font-size: 28px;
+      line-height: 36px;
+  }
 }
-

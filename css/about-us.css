@@ -120,5 +120,9 @@ section{
     #filler{
         display: none;
     }
+    .body-text{
+        font-size: 28px;
+        line-height: 36px;
+    }
 }
 
