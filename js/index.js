@@ -4,13 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentSlide = 0;
     let isAnimating = false;
     let direction = 1;
-    let animationStage = 0; // 0: typing, 1: scribbling, 2: erasing
+    let animationStage = 0; 
     
-    // Create cursor element
     let cursor = document.createElement('span');
     cursor.className = 'cursor';
 
-    // Animation speed settings
     let typingSpeed = 50;
     let erasingSpeed = 10;
     let scribbleInSpeed = 20; // Speed for scribble drawing animation

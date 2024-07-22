@@ -202,7 +202,7 @@ main{
 /* Two Column Section */
 .two-column {
     display: flex;
-    gap: 20px;
+    gap: 80px;
     padding: 20px;
 }
 .two-column .column {
