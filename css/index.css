@@ -131,7 +131,41 @@ nav a {
     color: white;
 
 }
- 
+.homeSections{
+   display:flex;
+   width:100%;
+   justify-content:space-evenly;
+   flex-wrap:wrap;
+}
+ .homeSections div{
+    margin:20px 0;
+    text-align: center;
+    padding:1%;
+    width:18%;
+    min-width:250px;
+  
+ }
+ .homeSections p{
+    font-family: PoppinsSemi;
+     color:white;
+     font-size: 18px;
+     line-height: 1.5em;
+ }
+ .homeSections p.homeSub{
+    
+    font-size: 14px;
+
+}
+ .homeSections a:link,  .homeSections a:visited{
+    text-decoration: none;
+    color:white;
+}
+ .homeSections a:hover{
+    text-decoration: none;
+    color:black;
+    cursor: pointer;
+ }
+.homeSub:before{content:"–";display:Block;}
 
 @media (max-width: 768px) {
    [id^="slide"] {
