@@ -466,6 +466,13 @@ main{
     .single-column, .two-column {
         padding: 20px 0;
     }
+
+.hero-text .column:nth-child(1) ,
+.hero-text .column:nth-child(2) ,
+.hero-text .column:nth-child(3) ,
+.hero-text .column:nth-child(4){
+    border-right: unset;
+}
 }
 .two-column img {
     height: auto;
