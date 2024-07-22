@@ -40,6 +40,7 @@ main {
     left: 0;
     right: 0;
     width: 100%;
+    margin-bottom:50px;
     max-width: 1440px;
     display: none;
     padding: 0 20px;
@@ -88,8 +89,8 @@ main {
     z-index: 1;
 }
 .formlessHolder{
-	display: none;
-	top:150px;
+   display: none;
+   top:150px;
 }
 em{
     font-style: normal; 
@@ -122,6 +123,9 @@ em{
    color: #f7cbc1;
    font-size: .3em;
    font-weight:normal;
+    font-weight: normal;
+    margin-left: 10px;
+    vertical-align: middle;
 }
 nav a {
     color: white;
@@ -130,17 +134,24 @@ nav a {
  
 
 @media (max-width: 768px) {
-    main, [id^="slide"] {
-        font-size: 24px;
+   [id^="slide"] {
+        font-size: 20px;
+        line-height: 1.5em;
+        padding: 10px 10px 50px 0;
+    }
+    .content-wrapper {
+
+        padding: 0px 0px;
+    }
+    .header-container {
+        padding: 30px;
     }
     .formless-embed{
-      
-       height:600px;
-       
+       margin:0;
+       height:500px;
     }
-[id^="slide"] {
-        top: 0px;
-        padding: 0 10px;
- 
+    .light{
+     font-size: .5em;
     }
+
 }

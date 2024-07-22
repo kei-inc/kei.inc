@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-	// Select all slide divs
+   // Select all slide divs
     let slides = document.querySelectorAll('div[id^="slide"]');
     let currentSlide = 0;
     let isAnimating = false;
@@ -99,6 +99,7 @@ function wrapWords(element) {
         function showNextWord() {
             if (index < words.length) {
                 words[index].style.opacity = '1';
+                scrollIfNeeded(words[index]);
                 index++;
                 animationControl.cancel = setTimeout(showNextWord, typingSpeed);
             } else {
@@ -127,6 +128,20 @@ function wrapWords(element) {
         }
         hideNextWord();
     }
+    function scrollIfNeeded(element) {
+        const rect = element.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const buffer = 50; // Pixels from bottom before scrolling
+    
+        if (rect.bottom > viewportHeight - buffer) {
+            const scrollAmount = rect.bottom - (viewportHeight - buffer);
+            window.scrollBy({
+                top: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
 /* --------- END OF CORE ANIMATION STUFF ---------- */   
     
     
@@ -137,18 +152,40 @@ function wrapWords(element) {
      * @param {boolean} isIn - True if animating in, false if animating out
      * @returns {Promise} Resolves when animation completes
      */
+     let instructionSpan;
+     
      function animateSlide(slide, isIn) {
          return new Promise((resolve) => {
              let span = slide.querySelector('span');
              if (isIn) {
                  wrapWords(span);
-                 animateWordsIn(span, () => {
-                     span.appendChild(cursor);
-                     addRoughUnderlines(slide);
-                     resolve();
+                 // Scroll to top before starting new slide animation
+                 window.scrollTo({
+                     top: 0,
+                     behavior: 'smooth'
                  });
+                 setTimeout(() => {
+                     animateWordsIn(span, () => {
+                         span.appendChild(cursor);
+                         
+                         // Add instruction span for the first slide
+                         if (currentSlide === 0) {
+                             instructionSpan = document.createElement('span');
+                             instructionSpan.className = 'light';
+                             instructionSpan.textContent = 'press Enter ↵ or click';
+                             span.appendChild(instructionSpan);
+                         }
+                         
+                         addRoughUnderlines(slide);
+                         resolve();
+                     });
+                 }, 300); // Small delay to allow smooth scroll to complete
              } else {
                  cursor.remove();
+                 if (instructionSpan) {
+                     instructionSpan.remove();
+                     instructionSpan = null;
+                 }
                  clearUnderlines(slide);
                  animateWordsOut(span, () => {
                      slide.style.display = 'none';
@@ -187,6 +224,11 @@ async function changeSlide() {
              if (currentSlideElement.querySelector('.scribbled')) {
                  toggleScribble(currentSlideElement, false);
              }
+             // Remove instruction span when changing slides
+              if (instructionSpan) {
+                  instructionSpan.remove();
+                  instructionSpan = null;
+              }
              await animateSlide(currentSlideElement, false);
              currentSlide = nextSlide;
              currentSlideElement = slides[currentSlide];
@@ -290,6 +332,9 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
     canvas.width = Math.max(1, lineRect.width);
     canvas.height = Math.max(1, lineRect.height);
     
+   const mobile =  isMobile();
+   
+   
     unscribbledWidth = unscribbledSpan.getBoundingClientRect().width;
     unscribbledHeight = unscribbledSpan.getBoundingClientRect().height;
     unscribbledLeft = unscribbledSpan.getBoundingClientRect().left;
@@ -325,15 +370,29 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
       if((unscribbledHeight-5) > (lineRect.height*2)){
          console.log('the following lines after the first has broken on to three or more lines');
          //if wrapped on to 3 or more lines
-         secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
+         
+         if(mobile){
+            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-8;
+         }else{
+            secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
+         }
       }else{
          console.log('the following lines after the first has broken on to two lines');
          //if wrapped onto two lines
         // secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
-         secondHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+         
+         if(mobile){
+            secondHeight =  ((lineRect.top+15) -parentDivRect.top) - unscribbledHeight;
+         }else{
+            secondHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+         }
       }
      
-      linePos = element.offsetLeft - 20;
+      if(mobile){
+         linePos = element.offsetLeft - 0;
+      }else{
+        linePos = element.offsetLeft - 20; 
+      }
       canvas.style.top = `${secondHeight}px`;
       canvas.style.left = `-${linePos}px`;
    }else{
@@ -368,7 +427,7 @@ function resizeCanvases() {
             
             // Generate new scribble points
             const amplitudeRange = { min: 8, max: 12 };
-			const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
+         const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
             const scribblePoints = generateScribblePoints(
                 0,
                 canvas.width,
@@ -382,7 +441,7 @@ function resizeCanvases() {
             const rc = rough.canvas(canvas);
             rc.curve(scribblePoints, {
                 roughness: randomInRange(1, 2),
-                strokeWidth: 2,
+                strokeWidth: mobileStroke(),
                 stroke: '#435861',
                 bowing: randomInRange(0.5, 1.5)
             });
@@ -407,21 +466,20 @@ function animateScribbleIn(canvas, progress) {
     const rc = rough.canvas(canvas);
     const width = canvas.width;
     const height = canvas.height;
-
+    const mobile =  isMobile();
     // Check if canvas has valid dimensions
     if (width <= 0 || height <= 0) {
         console.error('Invalid canvas dimensions:', width, height);
         return;
     }
 
-    let scribblePoints;
     if (scribbleCache.has(canvas)) {
         scribblePoints = scribbleCache.get(canvas);
     } else {
         // Generate scribble points only once per canvas
-        const amplitudeRange = { min: 8, max: 12 };
+  
+        const amplitudeRange = { min: 6, max: 12 };
         const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
-
         scribblePoints = generateScribblePoints(
             0,
             width,
@@ -446,9 +504,10 @@ function animateScribbleIn(canvas, progress) {
     ctx.clearRect(0, 0, width, height);
 
     try {
+     
         rc.curve(scribblePoints.slice(0, pointsToDraw), {
             roughness: randomInRange(1, 2),
-            strokeWidth: 2,
+            strokeWidth: mobileStroke(),
             stroke: '#435861',
             bowing: randomInRange(0.5, 1.5)
         });
@@ -550,8 +609,8 @@ function toggleScribble(slide, scribble) {
             const unscribbledSpan = parentDiv.querySelector('.unscribbled');
             //console.log(parentDiv.querySelector('.unscribbled').getBoundingClientRect().right);
             //const unscribbledWidth = unscribbledSpan ? unscribbledSpan.getBoundingClientRect().width : 0;
-			
-			//console.log(unscribbledWidth);
+         
+         //console.log(unscribbledWidth);
             lineRects.forEach((lineRect, index) => {
                 const isFirstLine = index === 0;
                 const canvas = createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan);
@@ -669,7 +728,7 @@ function toggleScribble(slide, scribble) {
             direction = -1;
             changeSlide();
         }else{
-	        direction = 1;
+           direction = 1;
             changeSlide();
         }
     }
@@ -692,6 +751,20 @@ function handleTouch(event) {
             handleKeydown({ key: 'ArrowRight' });
         }
     }
+    function isMobile(){
+       if(window.innerWidth <= 768){
+          return true;
+       }else{
+          return false;
+       }
+    }
+    function mobileStroke(){
+        if(window.innerWidth <= 768){
+           return 1.5;
+        }else{
+           return 2;
+        }
+     }
     
     function addNavigationListeners() {
         const mainSection = document.querySelector('main');
