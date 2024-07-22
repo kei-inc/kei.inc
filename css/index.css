@@ -137,7 +137,7 @@ nav a {
    [id^="slide"] {
         font-size: 20px;
         line-height: 1.5em;
-        padding: 10px 10px 50px 0;
+        padding: 0px 10px 50px 0;
     }
     .content-wrapper {
 
