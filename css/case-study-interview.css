@@ -410,11 +410,11 @@ main{
 }
 .vbox > img {
     width: 100%;
-    height: fit-content
+    height: fit-content;
 }
 .hbox > img {
     width: 100%;
-    height: fit-content
+    height: fit-content;
 }
 
 
