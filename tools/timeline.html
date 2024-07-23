@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Project Timeline Visualization</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+	<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 20px;
+				background-color: #f0f0f0;
+			}
+			#input-container {
+				margin-bottom: 20px;
+			}
+			#timeline-input {
+				width: 100%;
+				height: 200px;
+			}
+			#chart-container {
+				background-color: white;
+				padding: 20px;
+				border-radius: 5px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.1);
+				overflow-x: auto;
+			}
+			.axis text {
+				font-size: 12px;
+			}
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: #000;
+				shape-rendering: crispEdges;
+			}
+			#color-list {
+				display: flex;
+				flex-wrap: wrap;
+				margin-top: 10px;
+			}
+			.color-option {
+				width: 20px;
+				height: 20px;
+				margin: 5px;
+				cursor: pointer;
+			}
+			.y-axis text {
+				fill: currentColor;
+			}
+			.horizontal-line {
+				stroke: #e0e0e0;
+				stroke-width: 1;
+			}
+			.bar {
+				cursor: move;
+				position: relative;
+			}
+			.bar::before,
+			.bar::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 5px;
+				background-color: rgba(255, 255, 255, 0.5);
+			}
+			.bar::before {
+				left: 0;
+				cursor: w-resize;
+			}
+			.bar::after {
+				right: 0;
+				cursor: e-resize;
+			}
+			.x-axis text {
+				fill: #808080;
+			}
+			.duration-indicator {
+				font-size: 12px;
+				fill: #808080;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="input-container">
+			<textarea id="timeline-input" placeholder="Enter phases and durations (e.g., Requirement Gathering & Brainstorming - 1 week)"></textarea>
+			<button onclick="generateChart()">Generate Chart</button>
+		</div>
+		<div id="color-list"></div>
+		<div id="chart-container"></div>
+
+	<script>
+		const colors = [
+			"#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", 
+			"#98D8C8", "#F9ED69", "#F08A5D", "#B83B5E", 
+			"#6A2C70", "#08D9D6"
+		];
+
+		let colorIndex = 0;
+		let data;
+		let x, y, svg, xAxis;
+
+		function parseInput(input) {
+			const lines = input.trim().split('\n');
+			let currentDate = new Date();
+			return lines.map(line => {
+				const [phase, duration] = line.split(' - ');
+				const [amount, unit] = duration.trim().split(' ');
+				const durationInDays = unit.toLowerCase().startsWith('week') ? amount * 7 : parseInt(amount);
+				
+				const start = new Date(currentDate);
+				currentDate.setDate(currentDate.getDate() + durationInDays);
+				const end = new Date(currentDate);
+				
+				return { phase, start, end, duration: durationInDays, color: colors[colorIndex++ % colors.length] };
+			});
+		}
+
+		function formatDuration(days) {
+			const weeks = Math.floor(days / 7);
+			const remainingDays = days % 7;
+			let result = '';
+			if (weeks > 0) {
+				result += weeks + (weeks === 1 ? ' week' : ' weeks');
+			}
+			if (remainingDays > 0) {
+				if (result) result += ' ';
+				result += remainingDays + (remainingDays === 1 ? ' day' : ' days');
+			}
+			return result || '0 days';
+		}
+
+		function generateChart() {
+			const input = document.getElementById('timeline-input').value;
+			data = parseInput(input);
+			
+			const canvas = document.createElement('canvas');
+			const context = canvas.getContext('2d');
+			context.font = '12px Arial';
+			const maxTextWidth = Math.max(...data.map(d => context.measureText(d.phase).width));
+			
+			const margin = { top: 20, right: 150, bottom: 30, left: maxTextWidth + 40 };
+			const width = Math.max(1200, maxTextWidth + 900) - margin.left - margin.right; // Increased width
+			const height = data.length * 50;
+			
+			d3.select("#chart-container").html("");
+			
+			svg = d3.select("#chart-container")
+				.append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", `translate(${margin.left},${margin.top})`);
+			
+			x = d3.scaleTime()
+				.domain([d3.min(data, d => d.start), d3.max(data, d => d.end)])
+				.range([0, width]);
+			
+			y = d3.scaleBand()
+				.domain(data.map(d => d.phase))
+				.range([0, height])
+				.padding(0.3);
+			
+			svg.selectAll(".horizontal-line")
+				.data(data)
+				.enter().append("line")
+				.attr("class", "horizontal-line")
+				.attr("x1", 0)
+				.attr("x2", width)
+				.attr("y1", d => y(d.phase) + y.bandwidth() / 2)
+				.attr("y2", d => y(d.phase) + y.bandwidth() / 2)
+				.attr("stroke", "#e0e0e0")
+				.attr("stroke-width", 1);
+			
+			svg.selectAll(".bar")
+				.data(data)
+				.enter().append("rect")
+				.attr("class", "bar")
+				.attr("y", d => y(d.phase) + y.bandwidth() * 0.25)
+				.attr("height", y.bandwidth() * 0.5)
+				.attr("x", d => x(d.start))
+				.attr("width", d => x(d.end) - x(d.start))
+				.attr("fill", d => d.color)
+				.call(d3.drag()
+					.on("start", dragstarted)
+					.on("drag", dragged)
+					.on("end", dragended));
+			
+			const xAxisFormat = d3.timeFormat("%b %d");
+			xAxis = svg.append("g")
+				.attr("class", "x-axis")
+				.attr("transform", `translate(0,${height})`)
+				.call(d3.axisBottom(x).tickFormat(xAxisFormat));
+			
+			xAxis.selectAll("text")
+				.attr("fill", "#808080");
+			
+			const yAxis = svg.append("g")
+				.attr("class", "y axis")
+				.call(d3.axisLeft(y));
+			
+			yAxis.selectAll("text")
+				.style("fill", (d, i) => data[i].color)
+				.style("text-anchor", "end")
+				.attr("dx", "-0.5em")
+				.attr("dy", "0.3em");
+			
+			svg.selectAll(".duration-indicator")
+				.data(data)
+				.enter().append("text")
+				.attr("class", "duration-indicator")
+				.attr("x", width + 10)
+				.attr("y", d => y(d.phase) + y.bandwidth() / 2)
+				.attr("dy", "0.35em")
+				.text(d => formatDuration(d.duration));
+
+			const exportButton = d3.select("body")
+				.append("button")
+				.text("Export as SVG")
+				.on("click", exportSVG);
+
+			const colorList = d3.select("#color-list");
+			colorList.html("");
+			colors.forEach((color, index) => {
+				colorList.append("div")
+					.attr("class", "color-option")
+					.style("background-color", color)
+					.on("click", () => changeColor(index));
+			});
+		}
+
+		function dragstarted(event, d) {
+			d3.select(this).raise().attr("stroke", "black");
+			d.dragStartX = event.x;
+			d.originalStart = new Date(d.start);
+			d.originalEnd = new Date(d.end);
+		}
+
+		function dragged(event, d) {
+			const index = data.findIndex(item => item.phase === d.phase);
+			const barWidth = x(d.end) - x(d.start);
+			const clickX = event.x - x(d.start);
+			const dragType = clickX <= 5 ? 'left' : (clickX >= barWidth - 5 ? 'right' : 'middle');
+
+			const dx = event.x - d.dragStartX;
+			const timeDiff = x.invert(dx) - x.invert(0);
+
+			if (dragType === 'left') {
+				// Adjust start date, keeping end date fixed
+				d.start = new Date(d.originalStart.getTime() + timeDiff);
+				if (d.start > d.end) d.start = d.end;
+			} else if (dragType === 'right') {
+				// Adjust end date, keeping start date fixed
+				d.end = new Date(d.originalEnd.getTime() + timeDiff);
+				if (d.end < d.start) d.end = d.start;
+			} else {
+				// Move the entire bar
+				d.start = new Date(d.originalStart.getTime() + timeDiff);
+				d.end = new Date(d.originalEnd.getTime() + timeDiff);
+
+				// Update subsequent phases
+				for (let i = index + 1; i < data.length; i++) {
+					const phaseDuration = data[i].end.getTime() - data[i].start.getTime();
+					data[i].start = new Date(data[i-1].end.getTime());
+					data[i].end = new Date(data[i].start.getTime() + phaseDuration);
+				}
+			}
+
+			d.duration = Math.round((d.end.getTime() - d.start.getTime()) / (24 * 60 * 60 * 1000));
+
+			// Update x-scale domain
+			x.domain([d3.min(data, d => d.start), d3.max(data, d => d.end)]);
+
+			// Update bars
+			svg.selectAll(".bar")
+				.attr("x", d => x(d.start))
+				.attr("width", d => Math.max(0, x(d.end) - x(d.start)));
+
+			// Update duration indicators
+			svg.selectAll(".duration-indicator")
+				.text(d => formatDuration(d.duration));
+
+			// Update x-axis
+			const xAxisFormat = d3.timeFormat("%b %d");
+			xAxis.call(d3.axisBottom(x).tickFormat(xAxisFormat));
+		}
+
+		function dragended(event, d) {
+			d3.select(this).attr("stroke", null);
+			delete d.dragStartX;
+			delete d.originalStart;
+			delete d.originalEnd;
+		}
+
+		function changeColor(newColorIndex) {
+			colorIndex = newColorIndex;
+			generateChart();
+		}
+
+		function exportSVG() {
+			const svgCopy = document.querySelector("#chart-container svg").cloneNode(true);
+			
+			const style = document.createElementNS("http://www.w3.org/2000/svg", "style");
+			style.textContent = `
+				.axis text { font-size: 12px; }
+				.axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+				.bar { cursor: move; }
+				.duration-indicator { font-size: 12px; fill: #808080; }
+				.x-axis text { fill: #808080; }
+			`;
+			svgCopy.insertBefore(style, svgCopy.firstChild);
+		
+			const svgData = new XMLSerializer().serializeToString(svgCopy);
+			const svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
+			const svgUrl = URL.createObjectURL(svgBlob);
+			const downloadLink = document.createElement("a");
+			downloadLink.href = svgUrl;
+			downloadLink.download = "timeline_chart.svg";
+			document.body.appendChild(downloadLink);
+			downloadLink.click();
+			document.body.removeChild(downloadLink);
+		}
+	</script>
+</body>
+</html>
