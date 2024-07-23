@@ -12,7 +12,9 @@ header {
 }
 
 main {
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
+   
+    font-weight: 700;
     font-size: 36px;
     line-height: 1.5em;
     width: 100%;
@@ -145,7 +147,7 @@ nav a {
      line-height: 1.5em;
  }
  .homeSections p.homeSub{
-    font-family: NeuzeitReg;
+    font-weight: 400;
     font-size: 14px;
     border-top:1px solid white;
     padding-top:16px;
@@ -187,8 +189,7 @@ nav a {
    content:url('/images/home_secticons_contact.svg');
 }
 .homeTitle{
-   font-family: NeuzeitBold;
-
+   font-weight: 700;
    background-image: url("/images/arrow_marker.svg");
      height: 1em; 
      background-position: right; 
