@@ -1,7 +1,7 @@
 main,
 header {
     background: #EFEDE4;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
 }
 
 footer {
@@ -14,7 +14,7 @@ footer {
 
 .four-column-flex p {
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -23,7 +23,7 @@ footer {
 
 .four-column-flex .body-Copy-Title {
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
@@ -33,7 +33,7 @@ footer {
 
 #pinwheel li {
     color: #000;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -130,7 +130,7 @@ ul {
 
 .four-column-flex p {
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -145,7 +145,7 @@ ul {
 }
 .container p{
     color:  #000;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;

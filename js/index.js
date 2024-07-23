@@ -737,7 +737,8 @@ function handleTouch(event) {
     
         // Prevent default behavior to avoid scrolling
         event.preventDefault();
-    
+        
+    /* previous variant to allow back and forward
         const touchX = event.touches[0].clientX;
         const screenWidth = window.innerWidth;
     
@@ -747,7 +748,9 @@ function handleTouch(event) {
         } else {
             // Touch on the right half of the screen, simulate right arrow
             handleKeydown({ key: 'ArrowRight' });
-        }
+        } */
+        
+        handleKeydown({ key: 'ArrowRight' });
     }
     function isMobile(){
        if(window.innerWidth <= 768){

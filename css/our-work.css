@@ -28,7 +28,7 @@ main, header {
   
   .case-study-text {
     color: var(--Secondary-Black, #000);
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 32px;
     font-style: normal;
     font-weight: 400;
@@ -38,7 +38,7 @@ main, header {
   .first-post-text {
     color: #E2725B;
     text-align: right;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -56,7 +56,7 @@ main, header {
   }
   
   .project-date {
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;

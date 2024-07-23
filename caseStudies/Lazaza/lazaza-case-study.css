@@ -1,6 +1,6 @@
 main,header{
     background: #EFEDE4;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
 }
 footer{
     background: white;
@@ -19,7 +19,7 @@ footer{
 }
 .vbox .sidebar p{
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
