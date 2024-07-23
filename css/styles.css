@@ -1,19 +1,19 @@
 @font-face {
-    font-family: 'NeuzeitGroT';
+    font-family: 'NeuzeitReg';
     src: url('../fonts/NeuzeitGroT.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'NeuzeitGroT';
+    font-family: 'NeuzeitBold';
     src: url('../fonts/NeuzeitGroT_Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
 body {
-    font-family: 'NeuzeitGroT', sans-serif;
+    font-family: 'NeuzeitBold', sans-serif;
     margin: 0px;
     background-color: #EFEDE4;
 }
@@ -21,7 +21,7 @@ body {
 p,
 ul {
     color: black;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -159,7 +159,7 @@ nav a:hover {
 
 .body-Copy-Title {
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -231,7 +231,7 @@ footer {
 
 .footer-text p {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -250,7 +250,7 @@ footer {
 
 .lower-footer-container .right a {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -279,7 +279,7 @@ footer {
 
 .lower-footer-container .left p {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -288,7 +288,7 @@ footer {
 }
 .author-date{
     color:  #000;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -299,7 +299,7 @@ footer {
 
 #four-column h3{
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -310,7 +310,7 @@ footer {
 
 #four-column p{
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: NeuzeitBold;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;

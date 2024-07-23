@@ -274,10 +274,10 @@ async function changeSlide() {
              clearUnderlines(slide);
          });
      
-         // Show the formlessHolder
-         const formlessHolder = document.getElementById('formlessHolder');
-         if (formlessHolder) {
-             formlessHolder.style.display = 'block';
+         // Show the finalSlide
+         const finalSlide = document.getElementById('finalSlide');
+         if (finalSlide) {
+             finalSlide.style.display = 'block';
          }
          
         const mainSection = document.querySelector('main');
