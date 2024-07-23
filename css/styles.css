@@ -1,19 +1,30 @@
 @font-face {
-    font-family: 'NeuzeitReg';
+    font-family: 'NeuzeitGroT';
     src: url('../fonts/NeuzeitGroT.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'NeuzeitBold';
+    font-family: 'NeuzeitGroT';
     src: url('../fonts/NeuzeitGroT_Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
+@font-face {
+    font-family: 'SourceSerif4';
+    src: url('../fonts/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SourceSerif4Italic';
+    src: url('../fonts/SourceSerif4-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
 
 body {
-    font-family: 'NeuzeitBold', sans-serif;
+    font-family: 'NeuzeitGroT', sans-serif;
     margin: 0px;
     background-color: #EFEDE4;
 }

@@ -39,7 +39,7 @@ p {
 
   .body-text{
     color: var(--Secondary-Black, #000);
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
@@ -47,7 +47,7 @@ p {
   }
   .body-Copy-Title{
     color: var(--Secondary-Black, #000);
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -92,7 +92,7 @@ section{
 }
 .column li{
     color: black;
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
@@ -137,4 +137,3 @@ section{
         line-height: 36px;
     }
 }
-

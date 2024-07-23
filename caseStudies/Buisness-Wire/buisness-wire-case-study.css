@@ -1,6 +1,6 @@
 main,header{
     background: #EFEDE4;
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
 }
 .header{position: absolute;}
 footer{
@@ -31,7 +31,7 @@ footer{
 
 #reverse-four-column p{
     color: #BB3216;
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -41,7 +41,7 @@ footer{
 
 #reverse-four-column h3{
     color: #BB3216;
-    font-family: NeuzeitBold;
+    font-family: NeuzeitGroT;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
