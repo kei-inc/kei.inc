@@ -5,6 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mirra Case Study</title>
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KZ9RNJQ9');
+    </script>
     <link rel="stylesheet" href="../../css/styles.css" />
     <link rel="stylesheet" href="../../css/case-study-interview.css" />
     <link rel="stylesheet" href="./mirra-case-study.css" />
@@ -20,31 +32,35 @@
 </script>
 
 <body>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ9RNJQ9" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <main>
-            <header class="sticky-header">
-                <div class="header-container">
-                    <a href="../../index.html" class="logo">
-                        <img src="../../images/full-logo.svg" alt="Logo" class="logo" />
-                        <nav>
-                            <ul class="menu">
+        <header class="sticky-header">
+            <div class="header-container">
+                <a href="../../index.html" class="logo">
+                    <img src="../../images/full-logo.svg" alt="Logo" class="logo" />
+                    <nav>
+                        <ul class="menu">
+                            <a href="../../who.html">Who</a>
+                            <a href="../../how.html">How</a>
+                            <a href="../../case-studies.html" style="color: #FFD700;">Case Studies</a>
+                            <a href="../../contact.html">Contact</a>
+                        </ul>
+                        <div class="dropdown">
+                            <img src="../../images/mobile-menu.png" alt="Menu" class="dropbtn" . />
+                            <div class="dropdown-content">
                                 <a href="../../who.html">Who</a>
                                 <a href="../../how.html">How</a>
-                                <a href="../../case-studies.html" style="color: #FFD700;">Case Studies</a>
+                                <a href="../../case-studies.html">Case Studies</a>
                                 <a href="../../contact.html">Contact</a>
-                            </ul>
-                            <div class="dropdown">
-                                <img src="../../images/mobile-menu.png" alt="Menu" class="dropbtn" . />
-                                <div class="dropdown-content">
-                                    <a href="../../who.html">Who</a>
-                                    <a href="../../how.html">How</a>
-                                    <a href="../../case-studies.html">Case Studies</a>
-                                    <a href="../../contact.html">Contact</a>
-                                </div>
                             </div>
-                        </nav>
-                </div>
-            </header>
-            <div class="content-wrapper">
+                        </div>
+                    </nav>
+            </div>
+        </header>
+        <div class="content-wrapper">
 
             <section>
                 <div class="case-hero">
@@ -93,19 +109,21 @@
                         <div class="text-container">
                             <div class="title">Adoption by major organizations: </div>
                             <div class="content header-big-text" style="color: #BB3216; padding-top: 40px">
-                                <p>The World Bank</p> 
-                                <p>SFMOMA</p> 
+                                <p>The World Bank</p>
+                                <p>SFMOMA</p>
                                 <p>Logitech</p>
-                                <p>NBC Universal</p></div>
+                                <p>NBC Universal</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="column">
                         <div class="text-container">
-                            <div class="title">Paradigm shift in XR creation, making it accessible to non-technical users</div>
+                            <div class="title">Paradigm shift in XR creation, making it accessible to non-technical
+                                users</div>
+                        </div>
+
                     </div>
-                    
-                </div>
             </section>
 
             <section class="main-section">
@@ -128,7 +146,7 @@
                     <div class="content">
                         <article class="case-section" id="focus-text">
                             <img src="../../images/first-section-header.svg" alt="Section Header SVG">
-                            <p class="section-subtitle" style="font-size: 16px; line-height: 16px;" >Introduction</p>
+                            <p class="section-subtitle" style="font-size: 16px; line-height: 16px;">Introduction</p>
                             <p>In the rapidly evolving landscape of extended reality (XR), Kei embarked on a
                                 transformative journey with Mirra, a project that would redefine how we interact with
                                 digital spaces. This case study illustrates how Kei's comprehensive approach and
@@ -285,7 +303,7 @@
                         <p>Something about this image. Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                     </div>
                     <video controls style="max-width: 880px;
-                    width: 100%;" >
+                    width: 100%;">
                         <source src="./experience.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -298,7 +316,7 @@
                         </div>
                         <p>Something about this image. Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                     </div>
-                    <video controls  style="max-width: 880px;
+                    <video controls style="max-width: 880px;
                     width: 100%;">
                         <source src="./on-edge.mp4" type="video/mp4">
                         Your browser does not support the video tag.
@@ -493,7 +511,8 @@
                 <a href="../../index.html" class="logo">
                     <img src="../../images/orange-logo.svg" alt="Logo" class="logo" /></a>
                 <div class="footer-text">
-                    <p>Kei is a full-service strategic creative agency that bridges the gap between visionary thinking and exceptional implementation.<br><br>
+                    <p>Kei is a full-service strategic creative agency that bridges the gap between visionary thinking
+                        and exceptional implementation.<br><br>
                         We are a 100% employee-owned Public Benefit Corporation.
                     </p>
                 </div>
