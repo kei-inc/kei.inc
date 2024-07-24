@@ -209,7 +209,10 @@ main{
 .single-column, .double-image{
     margin: 0 auto;
 }
+.main-section .listStyle>p{
+    font-family: NeuzeitGroT;
 
+}
 
 /* Two Column Section */
 .two-column {
