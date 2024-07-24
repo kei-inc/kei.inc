@@ -1,20 +1,106 @@
 
-main,header{
+main {
     background: #EFEDE4;
 }
+
+header {
+    background: #84E6B2;
+}
+
 p {
     max-width: 880px;
+    margin: 0 auto;
 }
-.body-Copy-Title p{
+
+header nav a {
+    color: black;
+}
+
+.focus-text p {
+    color: #BB3216;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 46px;
+    /* 127.778% */
+}
+
+section {
+    padding: 45px 0;
+}
+
+.sidebar p {
     color: #BB3216;
 }
-#top-border{
-    border-top: 1px solid #BB3216;
+
+.logo img {
+    color: white;
+}
+
+.hero {
+    background-color: #84E6B2;
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+.hero .content-wrapper {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    color: black;
+    text-align: left;
     width: 100%;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 64px;
+    /* 100% */
 }
-section{
-    padding: 50px 0;
+
+.hero .subtitle {
+    color: black;
+    font-family: NeuzeitGroT;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 46px;
+    padding-bottom: 40px;
+    /* 127.778% */
 }
+
+.flex-item .body-Copy-Title {
+    color: #BB3216;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+    /* 110% */
+    border-bottom: #BB3216 1px solid;
+    min-height: 50px;
+}
+
+.flex-item .body-copy {
+    color: #000;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    /* 127.273% */
+}
+
+.three-column-flex .flex-item {
+
+}
+.hbox {
+    display: flex;
+    max-width: fit-content;
+    flex-flow: row;
+    gap: 40px;
+    margin: 0 auto;
+}
+
 #focus-text li{
     color:  #BB3216;
     font-family: NeuzeitGroT;
@@ -25,6 +111,7 @@ section{
     text-indent: -1.6em;
     border-top: 1px solid #BB3216;
 }
+
 
 #focus-text li::before {
     border-top: 1px solid #BB3216;
@@ -51,4 +138,14 @@ section{
     font-style: normal;
     font-weight: 400;
     line-height: 38px; /* 190% */
+}
+.full-width-image img {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+@media (max-width: 768px) {
+.hbox {
+flex-wrap: wrap;
+}
 }

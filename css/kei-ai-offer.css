@@ -144,7 +144,6 @@ section {
 }
 
 .hbox {
-    margin: 0 auto;
 }
 
 .case-study {
@@ -179,16 +178,14 @@ section {
     max-width: fit-content;
     flex-flow: row;
     gap: 40px;
+    margin: 0 auto;
+
 }
 .body-Copy-Title{
     margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
-    #hero {
-        padding-bottom: 0;
-    }
-
     .sidebar {
         margin: 0 auto;
     }
