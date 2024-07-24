@@ -1,0 +1,45 @@
+header{
+    background: #F5C445;
+}
+p {
+    max-width: 880px;
+}
+.hero{
+    background-color: #F5C445;
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+.hero .content-wrapper{
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+}
+.hero h1{
+    text-align: left;
+    width: 100%;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 64px; /* 100% */
+}
+.body-Copy-Title p{
+    color: #BB3216;
+}
+section a{
+    color: #BB3216;
+}
+#top-border{
+    border-top: 1px solid #BB3216;
+    width: 100%;
+}
+section{
+    padding: 35px 0;
+}
+ul li{
+    color: #BB3216;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px;
+    margin-left: -35px;
+}

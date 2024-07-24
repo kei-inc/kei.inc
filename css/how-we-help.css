@@ -129,7 +129,7 @@ nav a {
   color: black;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 450px) {
   #services .column {
     min-width: 250px;
   }
