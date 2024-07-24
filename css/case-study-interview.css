@@ -330,7 +330,7 @@ main{
 
 
 .quote p{
-    margin: 20px;
+    margin: 20px 40px;
     color: #BB3216;
     font-family: SourceSerif4;
     font-size: 36px;
@@ -440,7 +440,16 @@ main{
     width: 100%;
     height: fit-content;
 }
-
+ .quoteBlock .content{
+     margin:0;
+ }
+ .quoteBlock .sidebar{
+     display:block;
+ }
+ .quoteBlock .sidebar div{
+     
+     margin-bottom:10px;
+ }
 
 @media only screen and (max-width: 768px) {
     body,
@@ -472,9 +481,48 @@ main{
     .open-quote, .close-quote{
         width: 15%;
     }
+    .quote {
+        padding-left: 0px;
+    }
+    .quote p{
+        margin: 20px 0px;
+        font-size: 24px;
+        line-height: 32px;
+    }
     #quote .sidebar{
         order: 2;
     }
+    .quoteBlock .sidebar{
+        order: 2;
+    }
+ 
+    .two-column.quoteBlock  .sidebar{
+        max-width:fit-content;
+    }
+    .quoteBlock .sidebar{
+         display:flex;
+         justify-content:space-between;
+         margin-top:-50px;
+     }
+    .quoteBlock .sidebar div:nth-child(1){
+        margin-right:20px;
+        width:30%;
+    }
+   
+    .quoteBlock .sidebar div:nth-child(2){
+        width:60%;
+        margin-right:20px;
+        align-content: center;
+        vertical-align: center;
+    }
+    .quoteBlock .sidebar div:nth-child(3){
+        align-content: center;
+         vertical-align: center;
+        text-align: right;
+    }
+    .quoteBlock .sidebar div{
+         margin-bottom:0px;
+     }
     .example-image-container .content {
         padding: 40px 10px;
     }
