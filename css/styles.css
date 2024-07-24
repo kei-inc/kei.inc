@@ -160,11 +160,12 @@ nav a:hover {
 }
 
 #focus-text p, #focus-text li {
+    font-family: NeuzeitGroT;
     color: #BB3216;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
-    line-height: 52px;
+    line-height: 46px;
     /* 144.444% */
 }
 

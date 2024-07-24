@@ -136,7 +136,7 @@ main{
 .download-button{
     text-decoration: none;
 }
-.section-subtitle{
+.main-section p.section-subtitle{
     color: #BB3216;
     font-family: NeuzeitGroT;
     font-size: 20px;
@@ -148,7 +148,7 @@ main{
 
 .body-Copy{
     color: black;
-    font-family: "Source Serif Pro";
+   
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -161,10 +161,22 @@ main{
     display: flex;
     flex-direction: column;
     gap: 20px;
+  
+}
+.main-section p, .main-section ul{
+      font-family: SourceSerif4;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 38px;
+}
+#focus-text p{
+    font-family: NeuzeitGroT;
 }
 .main-section .content {
     margin: 0 auto;
     display: flex;
+    
 }
 .not-aligned{
     margin: unset;
@@ -197,7 +209,10 @@ main{
 .single-column, .double-image{
     margin: 0 auto;
 }
+.main-section .listStyle>p{
+    font-family: NeuzeitGroT;
 
+}
 
 /* Two Column Section */
 .two-column {
@@ -211,7 +226,17 @@ main{
     flex: 1;
     margin: unset;
 }
+.main-section .sidebar p{
+    font-family: NeuzeitGroT;
+}
+.main-section p.small{
+    font-family: NeuzeitGroT;
+    font-weight: 400;
+    font-size: 20px;
+    line-height:28px;
+}
 .sidebar{
+   
     padding-bottom: 20px;
 }
 .two-column .sidebar {
@@ -303,20 +328,19 @@ main{
     right: -10px;
 }
 
-.quote p {
-    margin: 20px;
-}
+
 .quote p{
+    margin: 20px 40px;
     color: #BB3216;
-    font-family: "Source Serif Pro";
+    font-family: SourceSerif4;
     font-size: 36px;
     font-style: normal;
     font-weight: 400;
     line-height: 46px; /* 127.778% */
 }
-.quote strong{
+.quote p strong{
     color: #BB3216;
-    font-family: "Source Serif Pro";
+    font-family: SourceSerif4;
     font-size: 64px;
     font-style: italic;
     font-weight: 400;
@@ -416,7 +440,24 @@ main{
     width: 100%;
     height: fit-content;
 }
-
+ .quoteBlock .content{
+     margin:0;
+ }
+ .quoteBlock .sidebar{
+     display:block;
+ }
+ .quoteBlock .sidebar div{
+     
+     margin-bottom:10px;
+ }
+ h3.section-subtitle{
+     color: #BB3216;
+     font-family: NeuzeitGroT;
+     font-size: 20px;
+     font-style: normal;
+     font-weight: 400;
+     line-height:20px;
+ }
 
 @media only screen and (max-width: 768px) {
     body,
@@ -426,6 +467,10 @@ main{
     }
     footer {
         background: white;
+    }
+    .main-section p, .main-section ul{
+        font-size:18px;
+        line-height:32px;
     }
     .intro-text {
         padding-top: 50px;
@@ -448,9 +493,52 @@ main{
     .open-quote, .close-quote{
         width: 15%;
     }
+    .quote {
+        padding-left: 0px;
+    }
+    .quote p{
+        margin: 20px 0px;
+        font-size: 24px;
+        line-height: 32px;
+    }
+    .quote p strong{
+        font-size:36px;
+        line-height: 42px;
+    }
     #quote .sidebar{
         order: 2;
     }
+    .quoteBlock .sidebar{
+        order: 2;
+    }
+ 
+    .two-column.quoteBlock  .sidebar{
+        max-width:fit-content;
+    }
+    .quoteBlock .sidebar{
+         display:flex;
+         justify-content:space-between;
+         margin-top:-50px;
+     }
+    .quoteBlock .sidebar div:nth-child(1){
+        margin-right:20px;
+        width:30%;
+    }
+   
+    .quoteBlock .sidebar div:nth-child(2){
+        width:60%;
+        margin-right:20px;
+        align-content: center;
+        vertical-align: center;
+    }
+    .quoteBlock .sidebar div:nth-child(3){
+        align-content: center;
+         vertical-align: center;
+        text-align: right;
+    }
+    .quoteBlock .sidebar div{
+         margin-bottom:0px;
+     }
     .example-image-container .content {
         padding: 40px 10px;
     }
