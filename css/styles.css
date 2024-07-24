@@ -11,6 +11,17 @@
     font-weight: bold;
     font-style: normal;
 }
+@font-face {
+    font-family: 'SourceSerif4';
+    src: url('../fonts/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype');
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SourceSerif4Italic';
+    src: url('../fonts/SourceSerif4-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
 
 body {
     font-family: 'NeuzeitGroT', sans-serif;

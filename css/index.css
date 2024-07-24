@@ -1,11 +1,4 @@
 
-@font-face {
-    font-family: 'PoppinsSemi';
-    src: url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body, html {
     margin: 0;
     padding: 0;
@@ -19,7 +12,9 @@ header {
 }
 
 main {
-    font-family: PoppinsSemi;
+    font-family: NeuzeitGroT;
+   
+    font-weight: 700;
     font-size: 36px;
     line-height: 1.5em;
     width: 100%;
@@ -88,10 +83,11 @@ main {
     pointer-events: none;
     z-index: 1;
 }
-.formlessHolder{
+.finalSlide{
    display: none;
-   top:150px;
+   margin-top:50px;
 }
+
 em{
     font-style: normal; 
     display: inline;
@@ -113,12 +109,7 @@ em{
 .slide {
     position: relative;
 }
-.formless-embed{
-   width:100%;
-   height:1000px;
-   border: 0; 
-   display: block";
-}
+
 .light{
    color: #f7cbc1;
    font-size: .3em;
@@ -134,26 +125,32 @@ nav a {
 .homeSections{
    display:flex;
    width:100%;
-   justify-content:space-evenly;
+   justify-content:space-between;
    flex-wrap:wrap;
+   margin-top:50px;
 }
  .homeSections div{
-    margin:20px 0;
-    text-align: center;
-    padding:1%;
-    width:18%;
-    min-width:250px;
+    margin:20px 0 50px 0;
+    
+    padding-right:3%;
+    width:17%;
+    min-width:240px;
   
  }
+ .homeSections div:last-child{
+    padding-right:0%;
+ }
  .homeSections p{
-    font-family: PoppinsSemi;
+   
      color:white;
      font-size: 18px;
      line-height: 1.5em;
  }
  .homeSections p.homeSub{
-    
+    font-weight: 400;
     font-size: 14px;
+    border-top:1px solid white;
+    padding-top:16px;
 
 }
  .homeSections a:link,  .homeSections a:visited{
@@ -165,8 +162,41 @@ nav a {
     color:black;
     cursor: pointer;
  }
-.homeSub:before{content:"–";display:Block;}
+ 
+.homeSections>div::before{
+   height:40px; 
+   background-position: left; 
+    background-repeat: no-repeat; 
+    display:Block;
+    margin-bottom:30px;
 
+}
+
+#homeWho::before{
+   content:url('/images/home_secticons_who.svg');
+}
+#homeHow::before{
+   content:url('/images/home_secticons_how.svg');
+}
+#homeWorkshop::before{
+   content:url('/images/home_secticons_workshop.svg');
+}
+#homeCase::before{
+   content:url('/images/home_secticons_case.svg');
+   fill: #ff0000;
+}
+#homeContact::before{
+   content:url('/images/home_secticons_contact.svg');
+}
+.homeTitle{
+   font-weight: 700;
+   background-image: url("/images/arrow_marker.svg");
+     height: 1em; 
+     background-position: right; 
+     background-repeat: no-repeat; 
+    
+}
+ 
 @media (max-width: 768px) {
    [id^="slide"] {
         font-size: 20px;
@@ -180,12 +210,14 @@ nav a {
     .header-container {
         padding: 30px;
     }
-    .formless-embed{
-       margin:0;
-       height:500px;
-    }
+
     .light{
      font-size: .5em;
+    }
+    .finalSlide>span{
+       font-size:.75em;
+       line-height: .75em;
+       
     }
 
 }
