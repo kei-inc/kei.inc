@@ -64,15 +64,6 @@ header.sticky-header {
   transition: background-color 0.5s ease-out;
 }
 
-.header-container {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-  padding: 50px;
-}
-
 nav {
   display: flex;
   align-items: center;
@@ -133,6 +124,9 @@ nav a {
 }
 #services{
   background-color: #F5C445;
+}
+.dropdown a {
+  color: black;
 }
 
 @media (max-width: 768px) {

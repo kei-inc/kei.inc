@@ -99,9 +99,8 @@ nav a:hover {
     border: none;
     cursor: pointer;
     width: 40px;
-    /* Adjust size as needed */
     height: 40px;
-    /* Adjust size as needed */
+    border-radius: 40px;
 }
 
 .dropdown-content {
@@ -133,7 +132,7 @@ nav a:hover {
 }
 
 .dropdown:hover .dropbtn {
-    background-color: #FFD700;
+    background-color: transparent;
 }
 
 
@@ -343,7 +342,8 @@ footer {
     .menu {
         display: none;
     }
-
+    .header-container {
+        padding: 30px;}
     .dropdown {
         display: block;
     }
@@ -373,5 +373,8 @@ footer {
     }
     #numbered-list ul li{
         margin-left: 0px;
+    }
+    nav a:hover{
+        background-color: transparent;
     }
 }
