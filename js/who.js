@@ -6,9 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
     textContainers.forEach(container => {
       const rect = container.getBoundingClientRect();
       const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-      
+
       if (rect.top <= windowHeight * triggerPosition) {
         container.classList.add("fadein-visible");
+
+        // Animate focus words
+        const focusWords = container.querySelectorAll(".focus");
+        focusWords.forEach(word => {
+          word.classList.add("highlight");
+        });
       }
     });
   };

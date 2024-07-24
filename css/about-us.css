@@ -1,126 +1,74 @@
-:root {
-    --fadein-duration: .5s;
-    --fadein-delay: .1s;
-  }
-main,header{
-    background: #EFEDE4;
-}
-p {
-    max-width: 880px;
+body,
+main,
+header {
+  background-color: #000000;
 }
 
-  
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    50% {
-      opacity: 0.5;
-      transform: translateY(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .text-container {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity var(--fadein-duration) ease-out, transform var(--fadein-duration) ease-out;
-    animation-delay: var(--fadein-delay);
-    padding: 40px 0;
-  }
-  
-  .text-container.fadein-visible {
-    animation: fadeInUp var(--fadein-duration) ease-out forwards;
-  }
-
-  .body-text{
-    color: var(--Secondary-Black, #000);
-    font-family: NeuzeitGroT;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 46px;
-  }
-  .body-Copy-Title{
-    color: var(--Secondary-Black, #000);
-    font-family: NeuzeitGroT;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px; /* 100% */
-  }
-  .focus{
-    color: #BB3216;
-  }
-  .text-container a{
-    color: #BB3216;
-
-  }
-.who-text{
-    padding-bottom: 100px;
-}
-  
-section{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 50px;
-    padding: 30px 0;
-}
-#services .section{
-    padding: 100px 0;
-}
-#top-border{
-    width: 100%;
-    border-top: 1px solid black;
+.section {
+  height: 100vh;
+  /* Make each section full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 1s ease-out, color 3s ease-out;
+  position: relative;
+   gap: 40px;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
+.nav-link {
+  opacity: 50%;
 }
-.column {
-    flex: 1;
-    min-width: 300px;
-    max-width: 360px;
-    margin-top: 90px;
-    border-top: 1px solid black;
+
+.nav-link.current-page {
+  opacity: 1;
 }
-.column li{
-    color: black;
-    font-family: NeuzeitGroT;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 160% */
-    letter-spacing: -0.165px;
-    border-bottom:1px solid black;
+
+.vbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  max-width: 880px;
 }
-.column h2 {
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 26px; /* 130% */
+
+.hbox {
+  display: flex;
+  max-width: fit-content;
+  flex-flow: row;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 0 auto;
 }
-.column ul {
-    list-style-type: none;
-    padding: 0;
+
+.body-text {
+  color: white;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 48px;
+  /* 120% */
 }
-.column ul li {
-    margin: 5px 0;
+
+.body-Copy-Title {
+  color: white;
+  ;
 }
-#services{
-    background-color: #F5C445;
+
+.sidebar-text p{
+  color: #E2725B;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  max-width: 190px;
+  /* 120% */
 }
 
 .text-container {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 0.6s ease-out;
+  flex-wrap: wrap;
 }
 
 .text-container.fadein-visible {
@@ -128,12 +76,63 @@ section{
   transform: translateY(0);
 }
 
+header.sticky-header {
+  position: fixed;
+  /* Fix the header position */
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  transition: color 0.5s ease-out;
+  /* Added transition for smooth color change */
+}
+
+.focus {
+  transition: color .5s ease-in-out;
+  transition-delay: 1s; /* Added delay */
+}
+
+.highlight{
+  color: #E2725B;
+}
+
+
+
 @media (max-width: 1299px) {
-    #filler{
-        display: none;
-    }
-    .body-text{
-        font-size: 28px;
-        line-height: 36px;
-    }
+  #filler {
+    display: none;
+  }
+
+  .body-text {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+@media (max-width: 768px) {
+  .body-text {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .section{
+    padding: 30px 0;
+    height: fit-content;
+  }
+  .first-section{
+    padding: 0;
+    height: 100vh;
+  }
 }
