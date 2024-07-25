@@ -72,8 +72,12 @@ main{
     gap: 20px;
     justify-content: space-between;
 }
+.hero-text .first-row{
+    flex-direction: column;
+}
 .hero-text .text-container {
     padding: 20px 0;
+    flex: 1;
 }
 .hero-text .content .focus-number{
     color: #BB3216;
@@ -621,6 +625,11 @@ main{
 .hero-text .column:nth-child(3) ,
 .hero-text .column:nth-child(4){
     border-right: unset;
+    max-width: unset;
+}
+
+.hero-text .first-row{
+    flex-direction: row;
 }
 }
 
