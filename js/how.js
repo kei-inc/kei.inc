@@ -7,28 +7,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
 
+  let isScrolling = false;
+
   sections.forEach((section, index) => {
     ScrollTrigger.create({
       trigger: section,
       start: "top center",
       end: "bottom center",
-      delay: 1,
       onEnter: () => updateStyles(section),
       onLeave: () => section.classList.remove("fadein-visible"),
       onEnterBack: () => updateStyles(section),
       onLeaveBack: () => section.classList.remove("fadein-visible"),
     });
 
-    if (index < sections.length - 1) {
-      section.addEventListener("wheel", (e) => {
-        e.preventDefault();
-        if (e.deltaY > 0 && index < sections.length - 1) {
-          gsap.to(window, { duration: 1, scrollTo: sections[index + 1] });
-        } else if (e.deltaY < 0 && index > 0) {
-          gsap.to(window, { duration: 1, scrollTo: sections[index - 1] });
-        }
-      });
-    }
+    section.addEventListener("wheel", (e) => {
+      if (isScrolling) return;
+      e.preventDefault();
+      isScrolling = true;
+      if (e.deltaY > 0 && index < sections.length - 1) {
+        gsap.to(window, { duration: 0.5, scrollTo: sections[index + 1], onComplete: () => isScrolling = false });
+      } else if (e.deltaY < 0 && index > 0) {
+        gsap.to(window, { duration: 0.5, scrollTo: sections[index - 1], onComplete: () => isScrolling = false });
+      } else {
+        isScrolling = false;
+      }
+    });
   });
 
   function updateStyles(section) {
