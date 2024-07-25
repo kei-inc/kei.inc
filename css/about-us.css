@@ -126,14 +126,25 @@ nav a {
 .highlight {
   color: #E2725B;
 }
-
+#structure {
+  width:60%;
+  margin:0 auto;
+}
 #structure p{
+  font-family:SourceSerif4;
+  font-size:24px;
+  line-height:38px;
   color:white;
 }
 #structure .section-subtitle{
   color:white;
 }
-
+.structureImg ul{
+ font-family:NeuzGrot;
+ font-size:24px;
+ line-height:38px;
+ color:white;
+}
 @media (max-width: 1299px) {
   #filler {
     display: none;
