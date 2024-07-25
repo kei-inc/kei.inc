@@ -86,9 +86,19 @@ nav a {
     /* 187.5% */
 }
 
+.nav-link{
+    opacity: 50%;
+  }
+  
+  .nav-link.current-page{
+    opacity: 1;
+  }
+
 nav a:hover {
-    color: #FFD700;
+    color: #E2725B;
+    transition: color 0.5s ease-out;
 }
+
 
 .dropdown {
     display: none;
@@ -379,5 +389,10 @@ footer {
     }
     nav a:hover{
         background-color: transparent;
+    }
+
+    .nav-link {
+        color: black !important;
+        opacity: 1 !important;
     }
 }
