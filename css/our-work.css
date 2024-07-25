@@ -119,8 +119,13 @@ main img {
 
   .case-study-text {
     order: 1;
-  }
 
+  }
+  .case-study-text p{
+  
+    font-size:18px;
+    line-height:26px;
+  }
   .case-study-container a {
     order: 2;
   }
@@ -140,5 +145,9 @@ main img {
   .case-study-image.reveal {
     -webkit-filter: unset;
     filter: unset;
+  }
+  #hero p{
+   font-size:18px;
+   line-height: 26px; 
   }
 }

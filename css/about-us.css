@@ -127,7 +127,12 @@ nav a {
   color: #E2725B;
 }
 
-
+#structure p{
+  color:white;
+}
+#structure .section-subtitle{
+  color:white;
+}
 
 @media (max-width: 1299px) {
   #filler {
