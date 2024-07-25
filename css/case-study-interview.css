@@ -456,9 +456,31 @@ main{
      font-size: 20px;
      font-style: normal;
      font-weight: 400;
-     line-height:20px;
+     line-height:28px;
  }
-
+.main-section .brandStages p{
+     font-family: NeuzeitGroT;
+      font-size: 20px;
+      line-height:28px;
+      font-style: normal;
+      font-weight: 400;
+ }
+.three-column-flex .body-Copy-Title{
+     font-family: NeuzeitGroT;
+     font-weight: 400;
+     font-size: 20px;
+     line-height:28px;
+     padding-bottom:5px;
+     border-bottom:1px solid #BB3216;
+ }
+ .brandStages{
+     
+ }
+ .two-column img {
+     height: auto;
+     display: block;
+ }
+ 
 @media only screen and (max-width: 768px) {
     body,
     header {
@@ -511,14 +533,36 @@ main{
     .quoteBlock .sidebar{
         order: 2;
     }
+    .three-column-flex{
+     display:flex;   
+    }
+    
  
+    .three-column-flex .body-Copy-Title{
+        font-family: NeuzeitGroT;
+    }
+ #four-column p{
+      color: #BB3216;
+      font-family: NeuzeitGroT;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+  }
+ #four-column h3{
+     font-family: NeuzeitGroT;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px;
+ }
     .two-column.quoteBlock  .sidebar{
         max-width:fit-content;
     }
     .quoteBlock .sidebar{
          display:flex;
          justify-content:space-between;
-         margin-top:-50px;
+         
      }
     .quoteBlock .sidebar div:nth-child(1){
         margin-right:20px;
@@ -562,10 +606,7 @@ main{
     border-right: unset;
 }
 }
-.two-column img {
-    height: auto;
-    display: block;
-}
+
 
 
 

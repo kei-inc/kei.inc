@@ -103,7 +103,9 @@ padding-bottom: 40px;
     .hbox {
         flex-wrap: wrap;
     }
-
+.two-column {
+        width: 100%;
+    }
     .vbox img,
     .hbox img{
         margin: 0 auto;
