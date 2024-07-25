@@ -1,45 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
   const sections = document.querySelectorAll(".section");
   const header = document.querySelector(".sticky-header");
   const logo = header.querySelector(".logo img");
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
-  const triggerPosition = 0.5; // Adjust this value to control the appearance position
 
-  const handleScroll = () => {
-    sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-
-      if (rect.top <= windowHeight * triggerPosition && rect.bottom > windowHeight * triggerPosition) {
-        console.log(`Section in view: ${section.dataset.bgColor}, ${section.dataset.textColor}, ${section.dataset.navColor}, ${section.dataset.logoColor}`);
-
-        document.body.style.backgroundColor = section.dataset.bgColor;
-        section.style.color = section.dataset.textColor;
-        header.style.backgroundColor = section.dataset.bgColor;
-        logo.style.filter = `invert(${section.dataset.logoColor === 'white' ? 1 : 0})`;
-
-        navLinks.forEach(link => {
-          link.style.color = section.dataset.navColor;
-        });
-
-        currentNavLink.style.color = section.dataset.navColor; // Set the current-page link color
-        section.classList.add("fadein-visible");
-
-        // Change the color of all text within the section
-        const texts = section.querySelectorAll('p');
-        texts.forEach(text => {
-          text.style.color = section.dataset.textColor;
-        });
-
-      } else {
-        section.classList.remove("fadein-visible");
-      }
+  sections.forEach((section, index) => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top center",
+      end: "bottom center",
+      delay: 1,
+      onEnter: () => updateStyles(section),
+      onLeave: () => section.classList.remove("fadein-visible"),
+      onEnterBack: () => updateStyles(section),
+      onLeaveBack: () => section.classList.remove("fadein-visible"),
     });
-  };
 
-  handleScroll();
+    if (index < sections.length - 1) {
+      section.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        if (e.deltaY > 0 && index < sections.length - 1) {
+          gsap.to(window, { duration: 1, scrollTo: sections[index + 1] });
+        } else if (e.deltaY < 0 && index > 0) {
+          gsap.to(window, { duration: 1, scrollTo: sections[index - 1] });
+        }
+      });
+    }
+  });
 
-  window.addEventListener("scroll", handleScroll);
-  window.addEventListener("resize", handleScroll);
+  function updateStyles(section) {
+    const bgColor = section.dataset.bgColor;
+    const textColor = section.dataset.textColor;
+    const navColor = section.dataset.navColor;
+    const logoColor = section.dataset.logoColor;
+
+    document.body.style.backgroundColor = bgColor;
+    header.style.backgroundColor = bgColor;
+    logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
+
+    section.style.color = textColor;
+    section.classList.add("fadein-visible");
+
+    navLinks.forEach((link) => {
+      link.style.color = navColor;
+    });
+
+    currentNavLink.style.color = navColor;
+
+    const texts = section.querySelectorAll("p");
+    texts.forEach((text) => {
+      text.style.color = textColor;
+    });
+  }
 });
