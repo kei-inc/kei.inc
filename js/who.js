@@ -54,5 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
     texts.forEach((text) => {
       text.style.color = textColor;
     });
+
+    // Ensure vertical alignment consistency
+    sections.forEach(sec => {
+      sec.style.display = "flex";
+      sec.style.alignItems = "center";
+      sec.style.justifyContent = "center";
+      sec.style.height = "100vh";
+    });
   }
 });

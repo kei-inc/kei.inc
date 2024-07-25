@@ -12,7 +12,7 @@ header {
   justify-content: center;
   transition: background-color 1s ease-out, color 3s ease-out;
   position: relative;
-   gap: 40px;
+  gap: 40px;
 }
 
 .nav-link {
@@ -29,6 +29,7 @@ header {
   justify-content: center;
   text-align: left;
   max-width: 880px;
+  height: 100%;
 }
 
 .hbox {
@@ -51,10 +52,10 @@ header {
 
 .body-Copy-Title {
   color: white;
-  ;
 }
 
-.sidebar-text p{
+
+.sidebar-text p {
   color: #E2725B;
   font-size: 20px;
   font-style: normal;
@@ -66,7 +67,7 @@ header {
 
 .text-container {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(20px);
   transition: opacity 1s ease-out, transform 0.6s ease-out;
   flex-wrap: wrap;
 }
@@ -103,10 +104,11 @@ nav a {
 
 .focus {
   transition: color .5s ease-in-out;
-  transition-delay: 1s; /* Added delay */
+  transition-delay: 1s;
+  /* Added delay */
 }
 
-.highlight{
+.highlight {
   color: #E2725B;
 }
 
@@ -116,23 +118,27 @@ nav a {
   #filler {
     display: none;
   }
-
-  .body-text {
-    font-size: 28px;
-    line-height: 36px;
-  }
 }
+
 @media (max-width: 768px) {
   .body-text {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 24px;
   }
-  .section{
-    padding: 30px 0;
-    height: fit-content;
+  .hbox {
+    gap: 20px;
   }
-  .first-section{
-    padding: 0;
-    height: 100vh;
+  .body-Copy-title{
+    font-size: 18px;
   }
+  .icon{
+    width: 75%;
+  }
+  .sidebar-text{
+    margin-top: -300px;
+  }  
+  .sidebar-text p{
+max-width: unset;
+  }
+
 }

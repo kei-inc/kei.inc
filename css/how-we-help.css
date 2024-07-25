@@ -129,13 +129,25 @@ nav a {
     min-width: 250px;
   }
 }
-
 @media (max-width: 1194px) {
-#filler{
+  #filler {
     display: none;
+  }
 }
-.body-text{
-    font-size: 28px;
-    line-height: 36px;
-}
+
+@media (max-width: 768px) {
+  .body-text {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .hbox {
+    gap: 20px;
+  }
+  .body-Copy-title{
+    font-size: 18px;
+  }
+  .icon{
+    width: 75%;
+  }
+
 }
