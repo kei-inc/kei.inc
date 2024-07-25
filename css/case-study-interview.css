@@ -623,12 +623,28 @@ main{
 .hero-text .column:nth-child(1) ,
 .hero-text .column:nth-child(2) ,
 .hero-text .column:nth-child(3) ,
-.hero-text .column:nth-child(4){
+.hero-text .column:nth-child(4),
+.hero-text .column:nth-child(5){
     border-right: unset;
     max-width: unset;
+    border-top: #BB3216 solid 1px;
+}
+.hero-text .column:nth-child(1){
+    border-top: unset;
 }
 
+
+.hero-text .column:nth-child(2) .row{
+    border-bottom: #BB3216 solid 1px;
+}
+
+.hero-text .column:nth-child(2) .list{
+    border-bottom: unset;
+}
+
+
 .hero-text .first-row{
+    border-top: unset;
     flex-direction: row;
 }
 }
