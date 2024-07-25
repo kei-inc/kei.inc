@@ -1,0 +1,48 @@
+main {
+    background: #84E6B2;
+}
+
+header {
+    background: #84E6B2;
+}
+
+p {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+header nav a {
+    color: black;
+}
+.body-copy{
+    color: #000;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 40px;
+}
+.body-copy a{
+    color: #000;
+}
+.body-Copy-Title{
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px; /* 125% */
+}
+.center-text img{
+    padding: 20px 0;
+}
+@media (max-width: 768px) {
+    .body-copy, .body-copy a{
+        font-size: 28px;
+        line-height: 32px;
+
+    }
+    #center-text{
+        padding: 50px 20px;
+        width: unset;
+    }
+}
+
