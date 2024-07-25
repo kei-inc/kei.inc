@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Wheel event listener for desktop
     section.addEventListener("wheel", (e) => {
       if (isScrolling) return;
+      if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
       e.preventDefault();
       isScrolling = true;
       if (e.deltaY > 0 && index < sections.length - 1) {
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isScrolling) return;
       const endY = e.changedTouches[0].clientY;
       const deltaY = startY - endY;
+      if (index === sections.length - 1 && deltaY > 50) return; // Allow normal scrolling on the last section
       isScrolling = true;
       if (deltaY > 50 && index < sections.length - 1) { // Swipe up
         gsap.to(window, { duration: 0.5, scrollTo: sections[index + 1], onComplete: () => isScrolling = false });
