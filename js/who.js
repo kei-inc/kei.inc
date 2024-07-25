@@ -6,10 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const logo = header.querySelector(".logo img");
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
-<<<<<<< HEAD
-  let isScrolling = false;
-  let startY = 0;
-=======
 
   let isScrolling = false;
   let startY = 0;
@@ -58,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
->>>>>>> main
 
   function updateStyles(section) {
     const bgColor = section.dataset.bgColor;
