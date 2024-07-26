@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (i < rects.length - 1 && rects[i + 1].left > rect.right && progress === 1) {
         const nextStartX = rects[i + 1].left - containerRect.left;
         const connectingY = y + rect.height * 0.3;
-        
+
         rc.line(endX, y, nextStartX, connectingY, {
           roughness: 2,
           strokeWidth: 2,
@@ -115,12 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (direction === 'in') {
       gsap.set(section, { autoAlpha: 1 });
-      gsap.fromTo(textElements, 
-        { opacity: 0 }, 
-        { 
-          opacity: 1, 
+      gsap.fromTo(textElements,
+        { opacity: 0 },
+        {
+          opacity: 1,
           duration: 0.3,
-          onUpdate: function() {
+          onUpdate: function () {
             clearCanvas();
             focusElements.forEach(el => drawUnderline(el, this.progress()));
           },
@@ -152,9 +152,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
     isScrolling = true;
-    gsap.to(window, { 
-      duration: 0.5, 
-      scrollTo: sections[index], 
+    gsap.to(window, {
+      duration: 0.5,
+      scrollTo: sections[index],
       onComplete: () => {
         isScrolling = false;
         const focusElements = sections[index].querySelectorAll('.focus');
@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleWheel(e, index) {
     if (isScrolling) return;
+    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
     e.preventDefault();
     if (e.deltaY > 0 && index < sections.length - 1) {
       scrollToSection(index + 1);
@@ -178,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isScrolling) return;
     const endY = e.changedTouches[0].clientY;
     const deltaY = startY - endY;
+    if (index === sections.length - 1 && deltaY > 50) return; // Allow normal scrolling on the last section
     if (deltaY > 50 && index < sections.length - 1) { // Swipe up
       scrollToSection(index + 1);
     } else if (deltaY < -50 && index > 0) { // Swipe down

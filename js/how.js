@@ -6,19 +6,68 @@ document.addEventListener("DOMContentLoaded", function () {
   const logo = header.querySelector(".logo img");
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
-
   let isScrolling = false;
   let startY = 0;
 
+  function updateStyles(section) {
+    const bgColor = section.dataset.bgColor;
+    const textColor = section.dataset.textColor;
+    const navColor = section.dataset.navColor;
+    const logoColor = section.dataset.logoColor;
+
+    document.body.style.backgroundColor = bgColor;
+    header.style.backgroundColor = bgColor;
+    logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
+
+    section.style.color = textColor;
+
+    navLinks.forEach((link) => {
+      link.style.color = navColor;
+    });
+
+    currentNavLink.style.color = navColor;
+
+    const texts = section.querySelectorAll("p");
+    texts.forEach((text) => {
+      text.style.color = textColor;
+    });
+  }
+
+  function animateSection(section, focusElements, textElements, direction = 'in') {
+    if (currentSection === section && direction === 'in') return;
+    currentSection = section;
+
+    updateStyles(section);
+
+    gsap.killTweensOf(textElements);
+    gsap.killTweensOf(section);
+
+    if (direction === 'in') {
+      gsap.set(section, { autoAlpha: 1 });
+      gsap.fromTo(textElements,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.3,
+        }
+      );
+    } else {
+      gsap.to(section, { autoAlpha: 0, duration: 0.3 });
+    }
+  }
+
   sections.forEach((section, index) => {
+    const focusElements = section.querySelectorAll('.focus');
+    const textElements = section.querySelectorAll('p');
+
     ScrollTrigger.create({
       trigger: section,
       start: "top center",
       end: "bottom center",
-      onEnter: () => updateStyles(section),
-      onLeave: () => section.classList.remove("fadein-visible"),
-      onEnterBack: () => updateStyles(section),
-      onLeaveBack: () => section.classList.remove("fadein-visible"),
+      onEnter: () => animateSection(section, focusElements, textElements, 'in'),
+      onLeave: () => animateSection(section, focusElements, textElements, 'out'),
+      onEnterBack: () => animateSection(section, focusElements, textElements, 'in'),
+      onLeaveBack: () => animateSection(section, focusElements, textElements, 'out'),
     });
 
     // Wheel event listener for desktop
@@ -57,28 +106,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  function updateStyles(section) {
-    const bgColor = section.dataset.bgColor;
-    const textColor = section.dataset.textColor;
-    const navColor = section.dataset.navColor;
-    const logoColor = section.dataset.logoColor;
-
-    document.body.style.backgroundColor = bgColor;
-    header.style.backgroundColor = bgColor;
-    logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
-
-    section.style.color = textColor;
-    section.classList.add("fadein-visible");
-
-    navLinks.forEach((link) => {
-      link.style.color = navColor;
-    });
-
-    currentNavLink.style.color = navColor;
-
-    const texts = section.querySelectorAll("p");
-    texts.forEach((text) => {
-      text.style.color = textColor;
-    });
-  }
+  window.addEventListener('resize', () => {
+    if (currentSection) {
+      const focusElements = currentSection.querySelectorAll('.focus');
+      focusElements.forEach(el => drawUnderline(el));
+    }
+  });
 });

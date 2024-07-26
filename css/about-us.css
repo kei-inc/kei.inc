@@ -40,9 +40,10 @@ header {
   gap: 40px;
   margin: 0 auto;
 }
-.whoSlide{
-  display:flex;
-  align-items:flex-start;
+
+.whoSlide {
+  display: flex;
+  align-items: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -53,8 +54,8 @@ header {
   font-style: normal;
   font-weight: 400;
   line-height: 48px;
-  margin-right:40px;
-  max-width:880px;
+  margin-right: 40px;
+  max-width: 880px;
   /* 120% */
 }
 
@@ -62,7 +63,7 @@ header {
   color: #E2725B;
   flex-basis: 100%;
   flex: 0 0 100%;
-  margin-bottom:0px;
+  margin-bottom: 0px;
 }
 
 
@@ -81,14 +82,15 @@ p.sidebar-text {
   opacity: 0;
   transform: translateY(0px);
   transition: opacity 1s ease-out, transform 0.6s ease-out;
- 
-  
+
+
 }
 
 .text-container.fadein-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 1.5s ease-in-out, transform 0.5s ease; /* Adjust the duration as needed */
+  transition: opacity 1.5s ease-in-out, transform 0.5s ease;
+  /* Adjust the duration as needed */
 }
 
 
@@ -126,25 +128,43 @@ nav a {
 .highlight {
   color: #E2725B;
 }
-#structure {
-  width:60%;
-  margin:0 auto;
+
+#structure {}
+
+#structure p {
+  font-family: SourceSerif4;
+  font-size: 24px;
+  line-height: 38px;
+  color: white;
+  max-width: 880px;
+  margin: 0 auto;
+
 }
-#structure p{
-  font-family:SourceSerif4;
-  font-size:24px;
-  line-height:38px;
-  color:white;
+#structure h3{
+  max-width: 880px;
+  margin: 0 auto;
 }
-#structure .section-subtitle{
-  color:white;
+
+#structure .section-subtitle {
+  color: white;
 }
-.structureImg ul{
- font-family:NeuzGrot;
- font-size:24px;
- line-height:38px;
- color:white;
+
+#structure ul {
+  font-family: NeuzGrot;
+  font-size: 24px;
+  line-height: 38px;
+  color: white;
 }
+
+.structureImg {
+  width: 100%;
+}
+.structureImg img{
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
+}
+
 @media (max-width: 1299px) {
   #filler {
     display: none;
@@ -156,27 +176,31 @@ nav a {
     font-size: 20px;
     line-height: 24px;
   }
+
   .hbox {
     gap: 20px;
   }
-  .body-Copy-title{
+
+  .body-Copy-title {
     font-size: 18px;
   }
-  .icon{
+
+  .icon {
     width: 75%;
   }
 
-  p.sidebar-text{
-    font-size:16px;
-    line-height:20px;
+  p.sidebar-text {
+    font-size: 16px;
+    line-height: 20px;
     max-width: 60%;
   }
-  .whoSlide{
-    
+
+  .whoSlide {
+
     flex-direction: column;
-    
+
   }
-  
-  
+
+
 
 }
