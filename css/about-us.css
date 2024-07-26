@@ -81,17 +81,15 @@ p.sidebar-text {
 .text-container {
   opacity: 0;
   transform: translateY(0px);
-  transition: opacity 1s ease-out, transform 0.6s ease-out;
-
-
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .text-container.fadein-visible {
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 1.5s ease-in-out, transform 0.5s ease;
-  /* Adjust the duration as needed */
+  transform: translateY(0px);
+  transition: opacity 1.5s ease-in-out, transform 0.5s ease; /* Adjust the duration as needed */
 }
+
 
 
 header.sticky-header {

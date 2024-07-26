@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentSection = null;
 
   function animateSection(section, focusElements, textElements, direction = 'in') {
-    if (currentSection === section && direction === 'in') return;
+    if (currentSection === section ) return;
     currentSection = section;
 
     updateStyles(section);
