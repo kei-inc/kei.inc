@@ -35,3 +35,18 @@ footer{
 .vbox, .hbox{
     gap: 20px;
 }
+.three-column-flex p{
+    font-family: NeuzeitGroT;
+}
+.three-column-flex .body-Copy-Title {
+    border: unset;
+}
+.two-column{
+    gap: 40px;
+}
+.two-column .content{
+    margin: unset;
+}
+.body-Copy-Title{
+    font-weight: 700;
+}
