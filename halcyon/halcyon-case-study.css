@@ -80,7 +80,16 @@ footer {
     }
 
     #logos {
-        gap: 100px;
+        gap: unset;
     }
 
+#logos .flex-item {
+    align-content: center;
+    border-left: 1px solid #BB3216;
+    width: 50%;
+    min-width: 140px;
+}
+#logos .flex-item img{
+    width: 100%;
+}
 }
