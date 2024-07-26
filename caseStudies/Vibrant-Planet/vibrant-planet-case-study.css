@@ -56,6 +56,10 @@ footer {
     margin: 0;
 }
 
+.three-column-flex .body-Copy-Title {
+    border: unset;
+    padding-bottom: unset;
+}
 .three-column-flex ul {
     counter-reset: unset;
     margin-left: 0px;
@@ -74,11 +78,13 @@ footer {
 
 .hbox {
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .vbox {
     max-height: 700px;
     max-width: 320px;
+    gap: 20px;
 }
 
 .text-container {

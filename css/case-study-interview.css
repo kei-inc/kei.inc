@@ -1,5 +1,4 @@
 main{
-    padding-bottom: 100px;
 }
 .main-section ul {
     counter-reset: list-counter; 
@@ -166,13 +165,16 @@ main{
     margin-top: 0px;
 }
 
+
+
 /*Case Study Content*/
 .main-section {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  
+    gap: 90px;
+    padding: 100px 0;
 }
+
 .main-section p, .main-section ul{
       font-family: SourceSerif4;
       font-size: 24px;
@@ -245,6 +247,16 @@ main{
     font-size: 20px;
     line-height:28px;
 }
+
+.main-section .body-Copy-Title {
+    color: #BB3216;
+    font-family: NeuzeitGroT;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 38px;
+    /* 190% */
+}
 .sidebar{
    
     padding-bottom: 20px;
@@ -293,7 +305,6 @@ main{
 }
 
 .single-column, .two-column{
-    padding:75px 0;
 }
 
 .example-image-container .content{
@@ -475,14 +486,6 @@ main{
       font-style: normal;
       font-weight: 400;
  }
-.three-column-flex .body-Copy-Title{
-     font-family: NeuzeitGroT;
-     font-weight: 400;
-     font-size: 20px;
-     line-height:28px;
-     padding-bottom:5px;
-     border-bottom:1px solid #BB3216;
- }
  .brandStages{
      
  }
@@ -493,9 +496,7 @@ main{
  h1{
      
  }
- #title-text{
-     padding-bottom:0px;
- }
+
 @media only screen and (max-width: 768px) {
     body,
     header {
@@ -509,6 +510,10 @@ main{
          font-size:36px;
          line-height:44px;
      }
+     .main-section {
+        gap: 45px;
+        padding: 50px 0;
+    }
      .main-section #title p{
          font-size: 20px;
          line-height: 26px; 
@@ -520,9 +525,6 @@ main{
     .main-section p, .main-section ul{
         font-size:18px;
         line-height:32px;
-    }
-    .intro-text {
-        padding-top: 50px;
     }
     #focus-text {
         color: #BB3216;
@@ -563,8 +565,6 @@ main{
     .three-column-flex{
      display:flex;   
     }
-    
- 
     .three-column-flex .body-Copy-Title{
         font-family: NeuzeitGroT;
     }
@@ -621,9 +621,6 @@ main{
     }
     .two-column{
         flex-wrap: wrap;
-    }
-    .single-column, .two-column {
-        padding: 20px 0;
     }
 
 .hero-text .column:nth-child(1) ,

@@ -193,10 +193,10 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    gap: 30px;
     flex-direction: row;
     margin: 0 auto;
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 .three-column-flex .flex-item {
@@ -209,10 +209,9 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    gap: 20px;
     flex-direction: row;
     margin: 0 auto;
-    padding-top: 60px;
     width: 100%;
 }
 
