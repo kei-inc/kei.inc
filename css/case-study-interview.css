@@ -460,11 +460,9 @@ main{
 }
 .vbox > img {
   width: 100%;
-  height: fit-content;
 }
 .hbox > img {
   width: 100%;
-  height: fit-content;
 }
  .quoteBlock .content{
    margin:0;
