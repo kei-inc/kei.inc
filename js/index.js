@@ -370,7 +370,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
          //if wrapped on to 3 or more lines
          
          if(mobile){
-            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-8;
+            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-4;
          }else{
             secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
          }
@@ -388,6 +388,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
      
       if(mobile){
          linePos = element.offsetLeft - 0;
+         //console.log('regular line left aligned');
       }else{
         linePos = element.offsetLeft - 20; 
       }
