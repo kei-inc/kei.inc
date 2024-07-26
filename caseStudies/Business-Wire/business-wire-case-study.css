@@ -58,6 +58,7 @@ footer{
     font-style: normal;
     font-weight: 400;
     line-height: 22px; /* 110% */
+    min-height: 30px;
 }
 #validating-concept p{
     color: #BB3216;
@@ -91,4 +92,9 @@ font-size: 24px;
 font-style: normal;
 font-weight: 400;
 line-height: 30px; /* 125% */
+}
+@media screen and (max-width: 768px) {
+    #validating-concept h3{
+        min-height: 75px;
+    }
 }

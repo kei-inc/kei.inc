@@ -188,6 +188,9 @@ nav a:hover {
     line-height: 38px;
     /* 190% */
 }
+.flex-item{
+    min-height: 50px;
+}
 
 .three-column-flex {
     display: flex;
@@ -353,6 +356,12 @@ footer {
 @media (max-width: 768px) {
     .menu {
         display: none;
+    }
+    .three-column-flex {
+        gap: 10px;
+    }
+    .four-column-flex .flex-item{
+        min-width: none;
     }
     .header-container {
         padding: 30px;}
