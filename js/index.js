@@ -342,7 +342,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
     //console.log(element.offsetLeft);
     
     if (isFirstLine && (unscribbledHeight <= lineRect.height) && (unscribbledWidth < (parentDivRect.width-120))) {
-      //console.log("the first line of text but only one line and not the full width");
+    //console.log("the first line of text but only one line and not the full width");
       // the first line of text but only one line and not the full width
 
       canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
@@ -351,7 +351,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
       // the first line but it is the full width
       //console.log('the first line is the full width and all lines after that');
 
-      singleHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+      singleHeight =  ((lineRect.top-10) - parentDivRect.top) - unscribbledHeight;
       canvas.style.top = `${singleHeight}px`;
       canvas.style.left = `0px`;
         
@@ -366,16 +366,16 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
       //console.log('the following lines after the first has broken on to two or more lines');
       //console.log(unscribbledHeight-5+" "+lineRect.height*2);
       if((unscribbledHeight-5) > (lineRect.height*2)){
-         console.log('the following lines after the first has broken on to three or more lines');
+         //console.log('the following lines after the first has broken on to three or more lines');
          //if wrapped on to 3 or more lines
          
          if(mobile){
-            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-8;
+            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-4;
          }else{
             secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
          }
       }else{
-         console.log('the following lines after the first has broken on to two lines');
+         //console.log('the following lines after the first has broken on to two lines');
          //if wrapped onto two lines
         // secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
          
@@ -388,6 +388,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
      
       if(mobile){
          linePos = element.offsetLeft - 0;
+         //console.log('regular line left aligned');
       }else{
         linePos = element.offsetLeft - 20; 
       }

@@ -33,5 +33,46 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
+    
+    
+    /* --- vibrant planet carousel --- */
+    const imageSlides = document.querySelectorAll('.image-container .slide');
+    const textSlides = document.querySelectorAll('.text-content .slide');
+    let currentSlide = 0;
+    
+    const prevArrow = document.getElementById('prevArrow');
+    const nextArrow = document.getElementById('nextArrow');
+    
+    function updateSlide() {
+      imageSlides.forEach((slide, index) => {
+        if (index === currentSlide) {
+          slide.classList.add('active');
+          textSlides[index].classList.add('active');
+        } else {
+          slide.classList.remove('active');
+          textSlides[index].classList.remove('active');
+        }
+      });
+    }
+   
+    
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % imageSlides.length;
+      const slideNum = (currentSlide+1)+"/11";
+      document.getElementById("pgText").innerHTML = slideNum;
+      updateSlide();
+      
+    }
+    
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + imageSlides.length) % imageSlides.length;
+      const slideNum = (currentSlide+1)+"/11";
+      document.getElementById("pgText").innerHTML = slideNum;
+      updateSlide();
+      
+    }
+    
+    nextArrow.addEventListener('click', nextSlide);
+    prevArrow.addEventListener('click', prevSlide);
   });
   
