@@ -1,53 +1,86 @@
-main,header{
+main,
+header {
     background: #EFEDE4;
     font-family: NeuzeitGroT;
 }
-footer{
+
+footer {
     background: white;
 }
-.intro-text{
+
+.intro-text {
     padding-top: 100px;
 }
-#logos{
-    gap:unset
+
+#logos {
+    gap: unset
 }
-#logos .flex-item{
+
+#logos .flex-item {
     align-content: center;
     border-left: 1px solid #BB3216;
 }
-#logos .border-right{
+
+#logos .border-right {
     border-right: 1px solid #BB3216;
 }
 
-#logos .flex-item img{
+#logos .flex-item img {
     margin: 0 auto;
     display: flex;
 }
-#logos .flex-item{
+
+#logos .flex-item {
     min-width: none;
     max-width: none;
 }
-.two-column{
+
+.two-column {
     gap: 0px;
 }
+
+.main-section .brandStages .body-Copy-Title {
+    min-height: 70px;
+    margin-bottom: 10px;
+    border-bottom: #BB3216 1px solid;
+}
+
 @media screen and (max-width: 768px) {
     .wrap-on-mobile {
         flex-flow: wrap;
     }
+  
+    .main-section .brandStages p{
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px; /* 121.429% */
+    }
+    .main-section .brandStages .body-Copy-Title {
+        min-height: 50px;
+        font-size: 16px;
+    }
+    .sidebar{
+        max-width: unset;
+      }
     .vbox {
         gap: 20px;
     }
+
     .hbox {
         gap: 20px;
     }
-    #logos .flex-item{
+
+    #logos .flex-item {
         border-left: none;
     }
-    #logos .border-right{
+
+    #logos .border-right {
         border-right: none;
     }
-    #logos{
-        gap:100px;
+
+    #logos {
+        gap: 100px;
     }
-    
+
 }

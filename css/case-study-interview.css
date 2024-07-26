@@ -528,8 +528,15 @@ main{
      line-height: 28px; 
    }
   .main-section p, .main-section ul{
-    font-size:18px;
-    line-height:32px;
+    font-size:16px;
+    line-height:24px;
+  }
+  .main-section .body-Copy-Title {
+    line-height: 28px;
+  }
+  .main-section p.small{
+    font-size: unset;
+    line-height:unset;
   }
   #focus-text {
     color: #BB3216;
@@ -570,23 +577,29 @@ main{
   .three-column-flex{
    display:flex;   
   }
+  .three-column-flex .flex-item{
+    min-width: 150px;
+  }
   .three-column-flex .body-Copy-Title{
     font-family: NeuzeitGroT;
   }
  #four-column p{
     color: #BB3216;
     font-family: NeuzeitGroT;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
   }
  #four-column h3{
    font-family: NeuzeitGroT;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
+ }
+ .four-column-flex .flex-item {
+  min-width: unset;
  }
   .two-column.quoteBlock  .sidebar{
     max-width:fit-content;
@@ -626,6 +639,7 @@ main{
   }
   .two-column{
     flex-wrap: wrap;
+    gap: unset;
   }
 
 .hero-text .column:nth-child(1) ,
@@ -655,12 +669,27 @@ main{
 .hero-text .column:nth-child(2) .list{
   border-bottom: unset;
 }
-
+.sidebar{
+  max-width: unset;
+}
 
 .hero-text .first-row{
   border-top: unset;
   flex-direction: row;
 }
+.main-section ul {
+    margin-left: -40px;
+}
+.two-column .sidebar {
+  min-width: unset;
+  max-width: unset;
+  }
+  .double-image .image-container{
+    flex: 1;
+    min-width: 300px;
+  }
+  .main-section ul li {
+  text-indent: -3.1em;}
 }
 
 

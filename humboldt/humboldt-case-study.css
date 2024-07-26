@@ -133,6 +133,9 @@ footer {
 .hero-text .subtitle{
     margin-bottom: 0px;
 }
+.hbox #vimages img {
+    max-width: 400px;
+}
 @media screen and (max-width: 970px) {
     #sidebar-padding {
         padding-bottom: 0;
@@ -144,7 +147,11 @@ footer {
 
     .hbox #vimages img {
         margin: 0 auto;
+        max-width: unset;
     }
+    .sidebar{
+        max-width: unset;
+      }
 
     .hbox {
         flex-wrap: wrap;
@@ -158,11 +165,6 @@ footer {
 
     .two-column {
         width: 100%;
-    }
-
-    .vbox img,
-    .hbox img {
-        margin: 0 auto;
     }
     .hero-text .column:nth-child(5) .text-container{
         display: none;
