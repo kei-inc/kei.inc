@@ -24,11 +24,6 @@ footer {
     max-width: 880px;
 }
 
-.single-column,
-.two-column {
-    padding: 40px 0;
-}
-
 #four-column h3 {
     color: white;
     font-family: NeuzeitGroT;
@@ -88,7 +83,12 @@ footer {
     border-bottom: white 1px solid;
 }
 
-.hbox {}
+.hbox {
+    gap: 20px;
+}
+.vbox{
+    gap: 20px;
+}
 
 #sidebar-padding {
     padding-bottom: 230px;
