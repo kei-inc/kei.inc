@@ -54,15 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
+   
     
     function nextSlide() {
       currentSlide = (currentSlide + 1) % imageSlides.length;
+      const slideNum = (currentSlide+1)+"/11";
+      document.getElementById("pgText").innerHTML = slideNum;
       updateSlide();
+      
     }
     
     function prevSlide() {
       currentSlide = (currentSlide - 1 + imageSlides.length) % imageSlides.length;
+      const slideNum = (currentSlide+1)+"/11";
+      document.getElementById("pgText").innerHTML = slideNum;
       updateSlide();
+      
     }
     
     nextArrow.addEventListener('click', nextSlide);

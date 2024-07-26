@@ -181,22 +181,27 @@ ul {
     border: 1px solid white;
 }
 .slider-container {
-    
+    max-height:700px;
     
 }
 .slider-content {
     display: flex;
-    max-width: 880px;
+    max-width: 1200px;
     gap: 20px;
 }
 .image-container {
-    max-width:50%;
-    max-height: 600px;
+    width:40%;
     overflow: hidden;
 }
 .image-container img {
     width: 100%;
+    max-width:700px;
     height: 100%;
+    
+}
+#pgText{
+    color: #BB3216;
+    text-align: center;
     
 }
 .arrow {
@@ -206,7 +211,7 @@ ul {
 }
 .text-content {
     margin-top: 20px;
-    max-width: 400px;
+    width: 60%;
 }
 .text-content p{
     font-family:NeuzeitGroT;
