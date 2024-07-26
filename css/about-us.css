@@ -145,14 +145,18 @@ nav a {
   margin: 0 auto;
 }
 
-#structure .section-subtitle {
+#structure p.section-subtitle {
   color: white;
+  font-family: NeuzeitGrot;
+  font-weight: 700;
+  font-size: 20px;
+  line-height:38px;
 }
 .bullets{
   padding: 20px 0 80px 0;
 }
 #structure .bullets p{
-  font-family: NeuzGrot;
+  font-family: NeuzeitGrot;
   font-size: 32px;
   color: white;
   font-style: normal;
@@ -167,7 +171,8 @@ nav a {
 
 
 .structureImg {
-  width: 100%;
+  max-width: 1000px;
+  margin:0 auto;
 }
 .structureImg img{
   margin: 0 auto;
