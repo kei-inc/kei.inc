@@ -203,6 +203,7 @@ ul {
     width: 100%;
     max-width:700px;
     height: 100%;
+    mix-blend-mode: multiply;
     
 }
 #pgText{
