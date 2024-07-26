@@ -295,7 +295,9 @@ ul {
 }
 .slider-container {
     max-height:unset;
-    
 }
-
+.container .column {
+min-height: 300px;
+align-content: center;
+}
 }
