@@ -113,8 +113,14 @@ main{
 .hero-text .column:nth-child(1) ,
 .hero-text .column:nth-child(2) ,
 .hero-text .column:nth-child(3) ,
-.hero-text .column:nth-child(4){
+.hero-text .column:nth-child(4),
+.hero-text .column:nth-child(5){
     border-right: #BB3216 solid 1px;
+    border-bottom: 1px solid #BB3216;
+}
+
+.hero-text .column:nth-child(1){
+    border-left:#BB3216 1px solid ;
 }
 
 .download-button {
@@ -631,6 +637,7 @@ main{
 }
 .hero-text .column:nth-child(1){
     border-top: unset;
+    border-left: unset;
 }
 
 
