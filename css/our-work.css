@@ -36,6 +36,7 @@ main img {
 }
 
 .first-post-text {
+  margin-top:5px;
   color: #E2725B;
   text-align: right;
   font-family: NeuzeitGroT;

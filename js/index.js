@@ -342,28 +342,28 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
     //console.log(element.offsetLeft);
     
     if (isFirstLine && (unscribbledHeight <= lineRect.height) && (unscribbledWidth < (parentDivRect.width-120))) {
-      //console.log("the first line of text but only one line and not the full width");
+    console.log("the first line of text but only one line and not the full width");
       // the first line of text but only one line and not the full width
 
       canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
       canvas.style.left = '0px';
    }else if(unscribbledWidth > (parentDivRect.width - 150) && unscribbledHeight <= lineRect.height) {
       // the first line but it is the full width
-      //console.log('the first line is the full width and all lines after that');
+      console.log('the first line is the full width and all lines after that');
 
-      singleHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
+      singleHeight =  ((lineRect.top-10) - parentDivRect.top) - unscribbledHeight;
       canvas.style.top = `${singleHeight}px`;
       canvas.style.left = `0px`;
         
    }else if(isFirstLine && unscribbledHeight > lineRect.height ) {
       // the first line but it has broken on to two or more lines
-      //console.log('the first line but it has broken on to two or more lines');
+      console.log('the first line but it has broken on to two or more lines');
 
        canvas.style.top = `0px`;
        canvas.style.left = `0px`;
    }else if(!isFirstLine && unscribbledHeight > lineRect.height ) {
       // the following lines after the first has broken on to two or more lines 
-      //console.log('the following lines after the first has broken on to two or more lines');
+      console.log('the following lines after the first has broken on to two or more lines');
       //console.log(unscribbledHeight-5+" "+lineRect.height*2);
       if((unscribbledHeight-5) > (lineRect.height*2)){
          console.log('the following lines after the first has broken on to three or more lines');
