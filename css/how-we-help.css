@@ -3,7 +3,7 @@ body, main, header {
 }
 
 .section {
-  height: 120vh; /* Make each section full viewport height */
+  height: 100vh; /* Make each section full viewport height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,6 +136,9 @@ nav a {
 }
 
 @media (max-width: 768px) {
+  .section {
+    height: 120vh; /* Make each section full viewport height */
+  }
   .body-text {
     font-size: 20px;
     line-height: 24px;
