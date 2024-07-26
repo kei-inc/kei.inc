@@ -108,6 +108,10 @@ main img {
   min-width: 300px;
 }
 
+#triple-case-study p{
+  padding-top: 20px;
+}
+
 @media (max-width: 768px) {
   #single-case-study .case-study-text {
     width: unset;
