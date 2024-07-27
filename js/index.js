@@ -157,12 +157,42 @@ function wrapWords(element) {
              let span = slide.querySelector('span');
              if (isIn) {
                  wrapWords(span);
-                 // Scroll to top before starting new slide animation
-                 window.scrollTo({
-                     top: 0,
-                     behavior: 'smooth'
-                 });
-                 setTimeout(() => {
+                 const slideNumber = parseInt(slide.id.replace('slide', ''));
+                 let unscribbledSpan = span.querySelector('.unscribbled');
+                 let scribblableSpan = span.querySelector('.scribblable');
+                 let typedSpan = unscribbledSpan ? unscribbledSpan.querySelector('.typed') : null;
+                 
+                 if (slideNumber === 5 || slideNumber === 6 || slideNumber === 7) {
+                     // For slides 5, 6, and 7
+                     if (unscribbledSpan) {
+                         // Make unscribbled span and its words immediately visible, except for .typed
+                         unscribbledSpan.style.opacity = '1';
+                         unscribbledSpan.querySelectorAll('.word:not(.typed .word)').forEach(word => word.style.opacity = '1');
+                     }
+                     
+                     let animationPromises = [];
+                     
+                     if (typedSpan) {
+                         // Animate the typing effect for the .typed span
+                         animationPromises.push(new Promise(resolveTyped => {
+                             animateWordsIn(typedSpan, resolveTyped);
+                         }));
+                     }
+                     
+                     if (scribblableSpan) {
+                         // Animate the typing effect for the scribblable span
+                         animationPromises.push(new Promise(resolveScribblable => {
+                             animateWordsIn(scribblableSpan, resolveScribblable);
+                         }));
+                     }
+                     
+                     Promise.all(animationPromises).then(() => {
+                         span.appendChild(cursor);
+                         addRoughUnderlines(slide);
+                         resolve();
+                     });
+                 } else {
+                     // For all other slides, keep the original animation
                      animateWordsIn(span, () => {
                          span.appendChild(cursor);
                          
@@ -177,7 +207,7 @@ function wrapWords(element) {
                          addRoughUnderlines(slide);
                          resolve();
                      });
-                 }, 300); // Small delay to allow smooth scroll to complete
+                 }
              } else {
                  cursor.remove();
                  if (instructionSpan) {
@@ -185,19 +215,44 @@ function wrapWords(element) {
                      instructionSpan = null;
                  }
                  clearUnderlines(slide);
-                 animateWordsOut(span, () => {
-                     slide.style.display = 'none';
-                     resolve();
-                 });
+                 const slideNumber = parseInt(slide.id.replace('slide', ''));
+                 if (slideNumber === 5 || slideNumber === 6 || slideNumber === 7) {
+                     let unscribbledSpan = span.querySelector('.unscribbled');
+                     let scribblableSpan = span.querySelector('.scribblable');
+                     
+                     // Only animate out the scribblable span
+                     if (scribblableSpan) {
+                         animateWordsOut(scribblableSpan, () => {
+                             // After scribblable animation, hide everything at once
+                             if (unscribbledSpan) {
+                                 unscribbledSpan.style.opacity = '0';
+                                 unscribbledSpan.querySelectorAll('.word').forEach(word => word.style.opacity = '0');
+                             }
+                             slide.style.display = 'none';
+                             resolve();
+                         });
+                     } else {
+                         // If no scribblable span, just hide everything
+                         if (unscribbledSpan) {
+                             unscribbledSpan.style.opacity = '0';
+                             unscribbledSpan.querySelectorAll('.word').forEach(word => word.style.opacity = '0');
+                         }
+                         slide.style.display = 'none';
+                         resolve();
+                     }
+                 } else {
+                     // For all other slides, keep the original animation
+                     animateWordsOut(span, () => {
+                         slide.style.display = 'none';
+                         resolve();
+                     });
+                 }
              }
          });
      }
-
-
-    /**
-     * Changes to the next or previous slide
-     */
-async function changeSlide() {
+     
+     // Update the changeSlide function to remove the delay
+     async function changeSlide() {
          if (isAnimating) return;
      
          let currentSlideElement = slides[currentSlide];
@@ -222,17 +277,23 @@ async function changeSlide() {
              if (currentSlideElement.querySelector('.scribbled')) {
                  toggleScribble(currentSlideElement, false);
              }
-             // Remove instruction span when changing slides
-              if (instructionSpan) {
-                  instructionSpan.remove();
-                  instructionSpan = null;
-              }
+             if (instructionSpan) {
+                 instructionSpan.remove();
+                 instructionSpan = null;
+             }
              await animateSlide(currentSlideElement, false);
              currentSlide = nextSlide;
              currentSlideElement = slides[currentSlide];
              currentSlideElement.style.display = 'block';
-             let words = currentSlideElement.querySelectorAll('.word');
-             words.forEach(word => word.style.opacity = '1');
+             
+             let allWords = currentSlideElement.querySelectorAll('.word');
+             allWords.forEach(word => word.style.opacity = '1');
+             
+             let unscribbledSpan = currentSlideElement.querySelector('.unscribbled');
+             if (unscribbledSpan) {
+                 unscribbledSpan.style.opacity = '1';
+             }
+             
              if (currentSlideElement.querySelector('.scribblable')) {
                  toggleScribble(currentSlideElement, true);
                  animationStage = 1;
@@ -244,11 +305,11 @@ async function changeSlide() {
              return;
          }
      
-        let nextSlide = currentSlide + direction;
-        if (nextSlide >= slides.length) {
-            jumpToEnd();
-            return;
-        }
+         let nextSlide = currentSlide + direction;
+         if (nextSlide >= slides.length) {
+             jumpToEnd();
+             return;
+         }
      
          isAnimating = true;
      
