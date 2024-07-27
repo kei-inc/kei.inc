@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   function handleWheel(e, index) {
     if (isScrolling) return;
-    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
+    if (index == sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
     e.preventDefault();
     if (e.deltaY > 0 && index < sections.length - 1) {
       scrollToSection(index + 1);
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isScrolling) return;
     const endY = e.changedTouches[0].clientY;
     const deltaY = startY - endY;
-    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
+    if (index == sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
     if (deltaY > 50 && index < sections.length - 1) { // Swipe up
       scrollToSection(index + 1);
     } else if (deltaY < -50 && index > 0) { // Swipe down
