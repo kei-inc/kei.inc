@@ -140,17 +140,18 @@ nav a {
     height: 120vh; /* Make each section full viewport height */
   }
   .body-text {
-    font-size: 20px;
-    line-height: 24px;
-  }
-  .hbox {
-    gap: 20px;
-  }
-  .body-Copy-title{
     font-size: 18px;
+    line-height: 22px;
+}
+  .hbox {
+    gap: 10px;
+  }
+  .body-Copy-Title{
+    font-size: 18px;
+line-height: 28px;
   }
   .icon{
-    width: 75%;
+    width: 60%;
   }
 
 }
