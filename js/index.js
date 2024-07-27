@@ -173,6 +173,8 @@ function wrapWords(element) {
                      let animationPromises = [];
                      
                      if (typedSpan) {
+                         // Reset opacity of all words in .typed span to 0
+                         typedSpan.querySelectorAll('.word').forEach(word => word.style.opacity = '0');
                          // Animate the typing effect for the .typed span
                          animationPromises.push(new Promise(resolveTyped => {
                              animateWordsIn(typedSpan, resolveTyped);
