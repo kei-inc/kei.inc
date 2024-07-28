@@ -5,7 +5,7 @@ header {
 }
 
 .section {
-  height: 120vh;
+  height: 100vh;
   /* Make each section full viewport height */
   display: flex;
   align-items: center;
