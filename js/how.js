@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const logo = header.querySelector(".logo img");
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
+
   let isScrolling = false;
   let startY = 0;
   let currentSection = null;
@@ -136,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 0.3,
+          duration: 1,
           onUpdate: function () {
             clearCanvas();
             focusElements.forEach((el) => drawUnderline(el, this.progress()));
@@ -149,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       gsap.to(section, {
         autoAlpha: 0,
-        duration: 0.3,
+        duration: 1,
         onComplete: clearCanvas,
       });
     }
@@ -181,9 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
 
     e.preventDefault();
-    if (e.deltaY > 0 && index < sections.length - 1) {
+    if (e.deltaY > 20 && index < sections.length - 1) {
       scrollToSection(index + 1);
-    } else if (e.deltaY < 0 && index > 0) {
+    } else if (e.deltaY < -20 && index > 0) {
       scrollToSection(index - 1);
     }
   }
@@ -194,10 +195,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const deltaY = startY - endY;
     if (index === sections.length - 1 && deltaY > 50) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && deltaY < 0) return; // Allow normal scrolling on the last section
-    if (deltaY > 10 && index < sections.length - 1) {
+    if (deltaY > 20 && index < sections.length - 1) {
       // Swipe up
       scrollToSection(index + 1);
-    } else if (deltaY < -10 && index > 0) {
+    } else if (deltaY < -20 && index > 0) {
       // Swipe down
       scrollToSection(index - 1);
     }
