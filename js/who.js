@@ -212,13 +212,24 @@ document.addEventListener("DOMContentLoaded", function () {
       trigger: section,
       start: "top center",
       end: "bottom center",
-      onEnter: () => animateSection(section, focusElements, textElements, "in"),
-      onLeave: () =>
-        animateSection(section, focusElements, textElements, "out"),
-      onEnterBack: () =>
-        animateSection(section, focusElements, textElements, "in"),
-      onLeaveBack: () =>
-        animateSection(section, focusElements, textElements, "out"),
+      onEnter: () => {
+        gsap.set(section, { autoAlpha: 1 });
+        animateSection(section, focusElements, textElements, "in");
+      },
+      onLeave: () => {
+        if (index !== sections.length - 1) { // Prevent opacity change on last section
+          animateSection(section, focusElements, textElements, "out");
+        }
+      },
+      onEnterBack: () => {
+        gsap.set(section, { autoAlpha: 1 });
+        animateSection(section, focusElements, textElements, "in");
+      },
+      onLeaveBack: () => {
+        if (index !== sections.length - 1) { // Prevent opacity change on last section
+          animateSection(section, focusElements, textElements, "out");
+        }
+      },
     });
 
     section.addEventListener("wheel", (e) => handleWheel(e, index));

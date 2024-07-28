@@ -212,13 +212,24 @@ document.addEventListener("DOMContentLoaded", function () {
       trigger: section,
       start: "top center",
       end: "bottom center",
-      onEnter: () => animateSection(section, focusElements, textElements, "in"),
-      onLeave: () =>
-        animateSection(section, focusElements, textElements, "out"),
-      onEnterBack: () =>
-        animateSection(section, focusElements, textElements, "in"),
-      onLeaveBack: () =>
-        animateSection(section, focusElements, textElements, "out"),
+      onEnter: () => {
+        gsap.set(section, { autoAlpha: 1 });
+        animateSection(section, focusElements, textElements, "in");
+      },
+      onLeave: () => {
+        if (index !== sections.length - 1) { // Prevent opacity change on last section
+          animateSection(section, focusElements, textElements, "out");
+        }
+      },
+      onEnterBack: () => {
+        gsap.set(section, { autoAlpha: 1 });
+        animateSection(section, focusElements, textElements, "in");
+      },
+      onLeaveBack: () => {
+        if (index !== sections.length - 1) { // Prevent opacity change on last section
+          animateSection(section, focusElements, textElements, "out");
+        }
+      },
     });
 
     section.addEventListener("wheel", (e) => handleWheel(e, index));
@@ -227,6 +238,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     section.addEventListener("touchend", (e) => handleTouch(e, index));
   });
+  // Ensure final section is always fully visible
+  const lastSection = sections[sections.length - 1];
+  gsap.set(lastSection, { autoAlpha: 1 });
 
   if (footer) {
     ScrollTrigger.create({
@@ -234,15 +248,14 @@ document.addEventListener("DOMContentLoaded", function () {
       start: "top bottom",
       end: "bottom bottom",
       onEnter: () => {
-        const lastSection = sections[sections.length - 1];
         gsap.set(lastSection, { autoAlpha: 1 });
       },
       onLeaveBack: () => {
-        const lastSection = sections[sections.length - 1];
         gsap.set(lastSection, { autoAlpha: 1 });
       },
     });
   }
+
 
   window.addEventListener("resize", () => {
     setupCanvas();
