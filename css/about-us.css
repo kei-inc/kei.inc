@@ -190,7 +190,9 @@ nav a {
     font-size: 20px;
     line-height: 24px;
   }
-
+  .section {
+    height: 100vh;
+  }
   .hbox {
     gap: 20px;
   }

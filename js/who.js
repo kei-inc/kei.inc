@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
     isScrolling = true;
     const scrollToPosition =
       index === sections.length - 1
-        ? { y: sections[index], offsetY: 140 }
+        ? { y: sections[index], offsetY: 200 }
         : sections[index];
     gsap.to(window, {
       duration: 0.5,
@@ -210,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   function handleWheel(e, index) {
     if (isScrolling) return;
+
     if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
 
@@ -231,11 +232,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isScrolling) return;
     const endY = e.changedTouches[0].clientY;
     const deltaY = startY - endY;
-    if (index === sections.length - 1 && deltaY > 0) return; // Allow normal scrolling on the last section
-    if (deltaY > 50 && index < sections.length - 1) {
+    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
+    if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
+    if (deltaY > 10 && index < sections.length - 1) {
       // Swipe up
       scrollToSection(index + 1);
-    } else if (deltaY < -50 && index > 0) {
+    } else if (deltaY < -10 && index > 0) {
       // Swipe down
       scrollToSection(index - 1);
     }
