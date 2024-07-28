@@ -137,7 +137,7 @@ nav a {
 
 @media (max-width: 768px) {
   .section {
-    height: 100vh; /* Make each section full viewport height */
+    height: 120vh; 
   }
   .body-text {
     font-size: 18px;

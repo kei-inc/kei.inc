@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
   const sections = document.querySelectorAll(".section");
+  const footer = document.querySelector("footer"); // Assuming your footer is the last element
   const header = document.querySelector(".sticky-header");
   const logo = header.querySelector(".logo img");
   const navLinks = header.querySelectorAll("nav a");
@@ -10,11 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let startY = 0;
   let currentSection = null;
 
-  /**
-   * Updates the styles of the header, body, and section based on data attributes.
-   *
-   * @param {Element} section - The current section element.
-   */
   function updateStyles(section) {
     const bgColor = section.dataset.bgColor;
     const textColor = section.dataset.textColor;
@@ -39,18 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /**
-   * Draws an underline below the text elements.
-   *
-   * @param {Element} element - The element to underline.
-   * @param {number} [progress=1] - The progress of the underline animation.
-   */
   function drawUnderline(element, progress = 1) {
-    const containerRect = document
-      .getElementById("who-text")
-      .getBoundingClientRect();
+    const container = document.getElementById("who-text");
+    if (!container) return;
+
+    const containerRect = container.getBoundingClientRect();
     const canvas = document.querySelector(".rough-underline-canvas");
     if (!canvas) return;
+
     const rc = rough.canvas(canvas);
 
     const range = document.createRange();
@@ -90,13 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /**
-   * Sets up the canvas for drawing underlines.
-   *
-   * @returns {HTMLCanvasElement} - The canvas element.
-   */
   function setupCanvas() {
     const container = document.getElementById("who-text");
+    if (!container) return;
+
     let canvas = container.querySelector(".rough-underline-canvas");
     if (!canvas) {
       canvas = document.createElement("canvas");
@@ -115,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return canvas;
   }
 
-  /**
-   * Clears the canvas.
-   */
   function clearCanvas() {
     const canvas = document.querySelector(".rough-underline-canvas");
     if (canvas) {
@@ -126,14 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /**
-   * Animates the section when entering or leaving the viewport.
-   *
-   * @param {Element} section - The section to animate.
-   * @param {NodeListOf<Element>} focusElements - The elements to focus on.
-   * @param {NodeListOf<Element>} textElements - The text elements to animate.
-   * @param {string} [direction='in'] - The direction of the animation ('in' or 'out').
-   */
   function animateSection(
     section,
     focusElements,
@@ -157,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
         textElements,
         { opacity: 0 },
         {
-          top: 0,
           opacity: 1,
           duration: 0.3,
           onUpdate: function () {
@@ -178,11 +155,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /**
-   * Scrolls to the specified section.
-   *
-   * @param {number} index - The index of the section to scroll to.
-   */
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
     isScrolling = true;
@@ -202,12 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /**
-   * Handles the wheel event for scrolling between sections.
-   *
-   * @param {WheelEvent} e - The wheel event.
-   * @param {number} index - The index of the current section.
-   */
   function handleWheel(e, index) {
     if (isScrolling) return;
 
@@ -222,18 +188,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  /**
-   * Handles the touch event for scrolling between sections.
-   *
-   * @param {TouchEvent} e - The touch event.
-   * @param {number} index - The index of the current section.
-   */
   function handleTouch(e, index) {
     if (isScrolling) return;
     const endY = e.changedTouches[0].clientY;
     const deltaY = startY - endY;
-    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
-    if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
+    if (index === sections.length - 1 && deltaY > 50) return; // Allow normal scrolling on the last section
+    if (index === sections.length - 1 && deltaY < 0) return; // Allow normal scrolling on the last section
     if (deltaY > 10 && index < sections.length - 1) {
       // Swipe up
       scrollToSection(index + 1);
@@ -267,7 +227,21 @@ document.addEventListener("DOMContentLoaded", function () {
     section.addEventListener("touchend", (e) => handleTouch(e, index));
   });
 
-  setupCanvas();
+  if (footer) {
+    ScrollTrigger.create({
+      trigger: footer,
+      start: "top bottom",
+      end: "bottom bottom",
+      onEnter: () => {
+        const lastSection = sections[sections.length - 1];
+        gsap.set(lastSection, { autoAlpha: 1 });
+      },
+      onLeaveBack: () => {
+        const lastSection = sections[sections.length - 1];
+        gsap.set(lastSection, { autoAlpha: 1 });
+      },
+    });
+  }
 
   window.addEventListener("resize", () => {
     setupCanvas();
@@ -277,4 +251,12 @@ document.addEventListener("DOMContentLoaded", function () {
       focusElements.forEach((el) => drawUnderline(el));
     }
   });
+
+  // Initial setup
+  setupCanvas();
+  clearCanvas();
+  if (currentSection) {
+    const focusElements = currentSection.querySelectorAll(".focus");
+    focusElements.forEach((el) => drawUnderline(el));
+  }
 });
