@@ -401,87 +401,184 @@ function wrapWords(element) {
      * @param {number} unscribbledWidth - The width of the unscribbled span
      * @returns {HTMLCanvasElement} The created canvas element
      */
-function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan) {
-    const canvas = document.createElement('canvas');
-    canvas.className = 'scribble-canvas';
-    canvas.width = Math.max(1, lineRect.width);
-    canvas.height = Math.max(1, lineRect.height);
-    
-   const mobile =  isMobile();
-   
-   
-    unscribbledWidth = unscribbledSpan.getBoundingClientRect().width;
-    unscribbledHeight = unscribbledSpan.getBoundingClientRect().height;
-    unscribbledLeft = unscribbledSpan.getBoundingClientRect().left;
-    //console.log(unscribbledSpan.getBoundingClientRect().height);
+     function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan) {
+         const canvas = document.createElement('canvas');
+         canvas.className = 'scribble-canvas';
+         canvas.width = Math.max(1, lineRect.width);
+         
+         const mobile = isMobile();
+         
+         // Get dimensions and position of unscribbled span
+         const unscribbledRect = unscribbledSpan.getBoundingClientRect();
+         
+         // Get the computed line-height
+         const computedStyle = window.getComputedStyle(unscribbledSpan);
+         const lineHeightValue = computedStyle.lineHeight;
+         const lineHeight = lineHeightValue === 'normal' 
+             ? parseFloat(computedStyle.fontSize) * 1.2 
+             : parseFloat(lineHeightValue);
+         const leftPadding = parseFloat(computedStyle.paddingLeft) || 0;
 
-    //console.log(unscribbledHeight+ " "+lineRect.width+ " "+parentDivRect.width);
-    //console.log(element.offsetLeft);
-    
-    if (isFirstLine && (unscribbledHeight <= lineRect.height) && (unscribbledWidth < (parentDivRect.width-120))) {
-    //console.log("the first line of text but only one line and not the full width");
-      // the first line of text but only one line and not the full width
-
-      canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
-      canvas.style.left = '0px';
-   }else if(unscribbledWidth > (parentDivRect.width - 150) && unscribbledHeight <= lineRect.height) {
-      // the first line but it is the full width
-      //console.log('the first line is the full width and all lines after that');
-
-      singleHeight =  ((lineRect.top-10) - parentDivRect.top) - unscribbledHeight;
-      canvas.style.top = `${singleHeight}px`;
-      canvas.style.left = `0px`;
+         const unscribbledDetails = analyzeUnscribbledSpan(unscribbledSpan);
+         const isMultiLine = unscribbledDetails.wrappedLines > 1;
+         
+         
+         // Function to get the information of the last line
+         function getLastLineInfo(element) {
+             const range = document.createRange();
+             const wordSpans = element.querySelectorAll('.word');
+             let lastLineStart = unscribbledRect.right;
+             let lastLineTop = 0;
+             
+             wordSpans.forEach((span) => {
+                 range.selectNodeContents(span);
+                 const rects = range.getClientRects();
+                 if (rects.length > 0) {
+                     const rect = rects[0];
+                     if (rect.top >= lastLineTop) {
+                         if (rect.top > lastLineTop) {
+                             lastLineStart = rect.left;
+                             lastLineTop = rect.top;
+                             lastLineWidth = rect.width;
+                         } else {
+                             lastLineStart = Math.min(lastLineStart, rect.left);
+                         }
+                     }
+                 }
+             });
+             return {
+                 start: lastLineStart - parentDivRect.left,
+                 top: lastLineTop - parentDivRect.top,
+                 width: lastLineWidth
+             };
+         }
+         // Set canvas height to match line-height
+          canvas.height = lineHeight;
+          
+         let top, left, actualTop, actualWidth, offset;
+         
+         if (isFirstLine) {
+             if (isMultiLine) {
+                 const lastLineInfo = getLastLineInfo(unscribbledSpan);
+                 top = 0;
+                 left = lastLineInfo.start;
+             } else {
+                 top = lineRect.top - parentDivRect.top;
+                 left = unscribbledRect.left - parentDivRect.left;
+             }
+         } else {
+             top = lineRect.top - parentDivRect.top;
+             left = (unscribbledRect.left - unscribbledRect.width) - lineRect.left;
+             
+         }
+         
         
-   }else if(isFirstLine && unscribbledHeight > lineRect.height ) {
-      // the first line but it has broken on to two or more lines
-      //console.log('the first line but it has broken on to two or more lines');
+         // Center the canvas vertically within the line
+         top += (lineRect.height - canvas.height) / 2;
+         left -= leftPadding;
+         
+         if(isMobile){offset = 4;}else{offset=10;}
+         
+        if(unscribbledDetails.causesWrap){
+           actualTop = top - canvas.height*(unscribbledDetails.wrappedLines);
+           actualLeft = 0;
+         }else if(!isFirstLine && isMultiLine){
+   
+          actualTop = top - canvas.height*(unscribbledDetails.wrappedLines-1);
+          actualLeft = -Math.abs(unscribbledDetails.finalLineWidth)-offset;
+         //console.log(unscribbledDetails.finalLineWidth);
+        }else{
+          //console.log("in here");
+          actualTop = top;
+          actualLeft = left-offset;
+        }
+        
+         canvas.style.top = `${actualTop}px`;
+         canvas.style.left = `${actualLeft}px`;
+         
+         // Add canvas to the element
+         element.appendChild(canvas);
+         
+         return canvas;
+     }
+     function analyzeUnscribbledSpan(unscribbledSpan) {
+         const range = document.createRange();
+         const wordSpans = unscribbledSpan.querySelectorAll('.word');
+         const lines = [];
+         let currentLineTop = null;
+         let currentLineWidth = 0;
+         let currentLineStart = Infinity;
+         const unscribbledRect = unscribbledSpan.getBoundingClientRect();
+         const parentRect = unscribbledSpan.parentElement.getBoundingClientRect();
+     
+         // Calculate the available width for scribbles
+         const availableWidth = parentRect.width - (unscribbledRect.left - parentRect.left);
+     
+         // Function to check if there's scribbled content on the same line
+         function hasScribbledContentOnLine(lineTop) {
+             const scribbledElements = unscribbledSpan.parentElement.querySelectorAll('.scribbled, .scribblable');
+             for (let element of scribbledElements) {
+                 const elementRect = element.getBoundingClientRect();
+                 if (Math.abs(elementRect.top - lineTop) < 1) {
+                     return true;
+                 }
+             }
+             return false;
+         }
+     
+         wordSpans.forEach((span) => {
+             range.selectNodeContents(span);
+             const rects = range.getClientRects();
+             if (rects.length > 0) {
+                 const rect = rects[0];
+                 if (currentLineTop === null || rect.top > currentLineTop + 1) { // New line
+                     if (currentLineTop !== null) {
+                         const hasScribbledContent = hasScribbledContentOnLine(currentLineTop);
+                         lines.push({ 
+                             width: currentLineWidth, 
+                             start: currentLineStart - unscribbledRect.left,
+                             fullWidth: currentLineWidth > availableWidth * 0.9, // Consider it full width if it takes more than 90% of available width
+                             hasScribbledContent: hasScribbledContent
+                         });
+                     }
+                     currentLineTop = rect.top;
+                     currentLineWidth = rect.width;
+                     currentLineStart = rect.left;
+                 } else { // Same line
+                     currentLineWidth = rect.right - currentLineStart;
+                 }
+                 currentLineStart = Math.min(currentLineStart, rect.left);
+             }
+         });
+     
+         // Add the last line
+         if (currentLineTop !== null) {
+             const hasScribbledContent = hasScribbledContentOnLine(currentLineTop);
+             lines.push({ 
+                 width: currentLineWidth, 
+                 start: currentLineStart - unscribbledRect.left,
+                 fullWidth: currentLineWidth > availableWidth * 0.9,
+                 hasScribbledContent: hasScribbledContent
+             });
+         }
+     
+         const firstLine = lines[0] || { width: 0, start: 0, fullWidth: false, hasScribbledContent: false };
+         const lastLine = lines[lines.length - 1] || firstLine;
+         
+         // causesWrap is true only if there's exactly one line, it's full width, and there's no scribbled content on that line
+         const causesWrap = lines.length === 1 && firstLine.fullWidth && !firstLine.hasScribbledContent;
+     
+         return {
+             wrappedLines: lines.length,
+             finalLineWidth: lastLine.width,
+             finalLineStart: lastLine.start,
+             causesWrap: causesWrap,
+             requiresNewLine: lines.length > 1 || causesWrap,
+             availableWidth: availableWidth,
+             hasScribbledContentOnFirstLine: firstLine.hasScribbledContent
+         };
+     }
 
-       canvas.style.top = `0px`;
-       canvas.style.left = `0px`;
-   }else if(!isFirstLine && unscribbledHeight > lineRect.height ) {
-      // the following lines after the first has broken on to two or more lines 
-      //console.log('the following lines after the first has broken on to two or more lines');
-      //console.log(unscribbledHeight-5+" "+lineRect.height*2);
-      if((unscribbledHeight-5) > (lineRect.height*2)){
-         //console.log('the following lines after the first has broken on to three or more lines');
-         //if wrapped on to 3 or more lines
-         
-         if(mobile){
-            secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-4;
-            console.log("mobile section");
-         }else{
-            secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
-            console.log("Not mobile section");
-         }
-      }else{
-         //console.log('the following lines after the first has broken on to two lines');
-         //if wrapped onto two lines
-        // secondHeight = (lineRect.top - parentDivRect.top) - lineRect.height;
-         
-         if(mobile){
-            secondHeight =  ((lineRect.top+15) -parentDivRect.top) - unscribbledHeight;
-         }else{
-            secondHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
-         }
-      }
-     console.log("general message");
-      if(mobile){
-         linePos = element.offsetLeft - 0;
-         //console.log('regular line left aligned');
-      }else{
-        linePos = element.offsetLeft - 20; 
-      }
-      canvas.style.top = `${secondHeight}px`;
-      canvas.style.left = `-${linePos}px`;
-   }else{
-      //console.log('regular line left aligned');
-      canvas.style.top = `${lineRect.top - parentDivRect.top}px`;
-      canvas.style.left = `-${unscribbledWidth+8}px`;
-    }
-    
-    element.appendChild(canvas);
-    return canvas;
-}
 
 function resizeCanvases() {
     const scribbleElements = document.querySelectorAll('.scribbled');
