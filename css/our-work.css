@@ -110,6 +110,7 @@ main img {
 
 #triple-case-study p{
   padding-top: 20px;
+  min-height: 150px;
 }
 
 @media (max-width: 768px) {
