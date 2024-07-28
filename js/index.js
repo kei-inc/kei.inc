@@ -202,7 +202,12 @@ function wrapWords(element) {
                          if (currentSlide === 0) {
                              instructionSpan = document.createElement('span');
                              instructionSpan.className = 'light';
-                             instructionSpan.textContent = 'press Enter ↵ or click';
+                             mobile = isMobile();
+                             if(mobile){
+                              instructionSpan.textContent = 'Tap the screen';
+                            }else{
+                              instructionSpan.textContent = 'Any Key or Click';
+                            }
                              span.appendChild(instructionSpan);
                          }
                          
@@ -260,6 +265,15 @@ function wrapWords(element) {
          let currentSlideElement = slides[currentSlide];
          let hasScribbleable = currentSlideElement.querySelector('.scribblable');
          let hasScribbled = currentSlideElement.querySelector('.scribbled');
+     
+         // Scroll to top before starting the slide transition
+         window.scrollTo({
+             top: 0,
+             behavior: 'smooth'
+         });
+     
+         // Wait a short moment for the scroll to complete
+         await new Promise(resolve => setTimeout(resolve, 100));
      
          if (direction === 1 && hasScribbleable && animationStage === 0) {
              toggleScribble(currentSlideElement, true);
@@ -434,8 +448,10 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
          
          if(mobile){
             secondHeight = ((lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height)-4;
+            console.log("mobile section");
          }else{
             secondHeight = (lineRect.top - parentDivRect.top) - unscribbledHeight+lineRect.height;
+            console.log("Not mobile section");
          }
       }else{
          //console.log('the following lines after the first has broken on to two lines');
@@ -448,7 +464,7 @@ function createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, uns
             secondHeight =  (lineRect.top - parentDivRect.top) - unscribbledHeight;
          }
       }
-     
+     console.log("general message");
       if(mobile){
          linePos = element.offsetLeft - 0;
          //console.log('regular line left aligned');
@@ -857,7 +873,8 @@ function handleClick(event) {
     
         if (clickX < screenWidth / 2) {
             // Click on the left half of the screen, simulate left arrow
-            handleKeydown({ key: 'ArrowLeft' });
+            //handleKeydown({ key: 'ArrowLeft' });
+            handleKeydown({ key: 'ArrowRight' });
         } else {
             // Click on the right half of the screen, simulate right arrow
             handleKeydown({ key: 'ArrowRight' });
