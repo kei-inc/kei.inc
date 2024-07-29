@@ -4,6 +4,15 @@ document.addEventListener("DOMContentLoaded", function () {
 		const forms = document.querySelectorAll('.contactContainers > div');
 		forms.forEach(form => form.classList.remove('active'));
 		document.getElementById(`contact${formNumber}`).classList.add('active');
+		// Update button states
+		const buttons = document.querySelectorAll('.button-container button');
+		buttons.forEach((btn, index) => {
+			if (index + 1 === formNumber) {
+				btn.classList.remove('inactive');
+			} else {
+				btn.classList.add('inactive');
+			}
+		});
 	}
 	
 	function initializeForms() {

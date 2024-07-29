@@ -43,13 +43,34 @@ header nav a {
 .button-container {
     margin-top:40px;
     text-align: center;
+    margin-bottom:10px;
 }
-.button-container button {
-    margin-right: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+
+button.btn{
+  background-color:white;
+  border-radius:4px;
+  font-family: NeuzeitGroT;
+  font-weight: 700;
+  font-size: 18px;
+  color:#307C54;
+  padding:10px 20px 10px 20px;
+  margin:0 10px;
+  border: none;
+  outline: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
+button.btn.inactive{
+  background-color:#bed;
+  color:#7a9586;
+}
+button.btn:hover, button.btn.inactive:hover{
+  background-color:#307C54;
+  color:white;
+  box-shadow: 0px 12px 15px rgba(46, 229, 157, 0.4);
+  transform: translateY(-5px);
+}
+
 
 @media (max-width: 768px) {
     .body-copy, .body-copy a{
