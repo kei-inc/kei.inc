@@ -34,6 +34,23 @@ header nav a {
 .center-text img{
     padding: 20px 0;
 }
+ .contactContainers > div {
+    display: none;
+}
+.contactContainers > div.active {
+    display: block;
+}
+.button-container {
+    margin-top:40px;
+    text-align: center;
+}
+.button-container button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .body-copy, .body-copy a{
         font-size: 28px;
