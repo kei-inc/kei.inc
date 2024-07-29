@@ -112,6 +112,9 @@ main img {
   padding-top: 20px;
   min-height: 150px;
 }
+#triple-case-study img{
+  max-height: 215px;
+}
 
 @media (max-width: 768px) {
   #single-case-study .case-study-text {
