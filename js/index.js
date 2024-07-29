@@ -478,8 +478,9 @@ function wrapWords(element) {
          left -= leftPadding;
          
          if(isMobile){offset = 4;}else{offset=10;}
+         //console.log(left+" "+unscribbledDetails.finalLineWidth);
          
-        if(unscribbledDetails.causesWrap){
+        if(unscribbledDetails.causesWrap && left != unscribbledDetails.finalLineWidth){
            actualTop = top - canvas.height*(unscribbledDetails.wrappedLines);
            actualLeft = 0;
          }else if(!isFirstLine && isMultiLine){
@@ -487,8 +488,13 @@ function wrapWords(element) {
           actualTop = top - canvas.height*(unscribbledDetails.wrappedLines-1);
           actualLeft = -Math.abs(unscribbledDetails.finalLineWidth)-offset;
          //console.log(unscribbledDetails.finalLineWidth);
+        }else if(!unscribbledDetails.causesWrap && left == unscribbledDetails.finalLineWidth){
+            console.log("good place");
+            actualTop = top;
+            
+            actualLeft = 0-offset;
         }else{
-          //console.log("in here");
+          console.log("in here");
           actualTop = top;
           actualLeft = left-offset;
         }
