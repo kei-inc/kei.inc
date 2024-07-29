@@ -238,10 +238,17 @@ main{
   padding: 20px;
 }
 .two-column .column {
-  flex: 1;
+  
   box-sizing: border-box;
   flex: 1;
   margin: unset;
+}
+
+.two-column.doubleSideBy div{
+    width:50%;
+}
+.two-column.doubleSideBy img{
+    max-width:50%;
 }
 .main-section .sidebar p{
   font-family: NeuzeitGroT;
