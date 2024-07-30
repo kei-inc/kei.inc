@@ -76,9 +76,12 @@ main img {
 
 #double-case-study .first-post,
 #double-case-study .second-post {
-  min-width: 300px;
+  min-width: 300px;;
   border-top: 2px solid #000000;
   flex-grow: 1; /* Allows the posts to grow */
+}
+#double-case-study .case-study-text{
+  min-height: 150px;
 }
 
 #double-case-study .first-post {
@@ -112,15 +115,23 @@ main img {
   padding-top: 20px;
   min-height: 150px;
 }
+#triple-case-study img{
+  max-height: 215px;
+}
 
 @media (max-width: 768px) {
   #single-case-study .case-study-text {
     width: unset;
     padding-bottom: unset;
+    padding-top: 20px;
   }
 
   .case-study-container {
     display: grid;
+  }
+  #double-case-study .case-study-text{
+    min-height: unset;
+    padding-top: 20px;
   }
 
   .case-study-text {
@@ -155,5 +166,8 @@ main img {
   #hero p{
    font-size:18px;
    line-height: 26px; 
+  }
+  #triple-case-study p{
+    min-height: unset;
   }
 }

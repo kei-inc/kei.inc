@@ -176,7 +176,7 @@ main{
 .main-section {
   display: flex;
   flex-direction: column;
-  gap: 90px;
+  gap: 60px;
   padding: 100px 0;
 }
 
@@ -266,7 +266,8 @@ main{
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  line-height: 38px;
+  line-height: 28px;
+  margin-bottom: 5px;
   /* 190% */
 }
 .sidebar{
