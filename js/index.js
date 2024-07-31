@@ -893,7 +893,68 @@ function toggleScribble(slide, scribble) {
         }
     }
 /* --------- END OF SCRIBBLE RELATED STUFF ---------- */
+const specialChars = "!@#$%^&*";
 
+function animateCurseText(element, speed = 100) {
+  const originalText = element.textContent;
+  const textLength = originalText.length;
+  
+  // Create a container for fixed-width characters
+  const container = document.createElement('span');
+  container.style.display = 'inline-block';
+  container.style.fontFamily = 'monospace'; // Use a monospace font
+  element.textContent = '';
+  element.appendChild(container);
+
+  // Create individual spans for each character
+  const charSpans = [];
+  for (let i = 0; i < textLength; i++) {
+    const span = document.createElement('span');
+    span.textContent = originalText[i];
+    span.style.display = 'inline-block';
+    span.style.width = '1ch'; // Set a fixed width
+    container.appendChild(span);
+    charSpans.push(span);
+  }
+
+  function animate() {
+    charSpans.forEach((span, i) => {
+      if (originalText[i] !== ' ') {
+        const randomChar = specialChars[Math.floor(Math.random() * specialChars.length)];
+        span.textContent = randomChar;
+      }
+    });
+    element.animationTimeout = setTimeout(() => {
+      element.animationId = requestAnimationFrame(animate);
+    }, speed);
+  }
+
+  animate();
+}
+
+function stopAnimation(element) {
+  if (element.animationId) {
+    cancelAnimationFrame(element.animationId);
+    element.animationId = null;
+  }
+  if (element.animationTimeout) {
+    clearTimeout(element.animationTimeout);
+    element.animationTimeout = null;
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCurseText(entry.target, 200); // You can adjust the speed here (in milliseconds)
+    } else {
+      stopAnimation(entry.target);
+    }
+  });
+}, { threshold: 0 });
+
+// Start observing all .curse elements
+document.querySelectorAll('.curse').forEach(el => observer.observe(el));
 
     /**
      * Handles keyboard events for navigation
