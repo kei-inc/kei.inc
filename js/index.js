@@ -489,12 +489,12 @@ function wrapWords(element) {
           actualLeft = -Math.abs(unscribbledDetails.finalLineWidth)-offset;
          //console.log(unscribbledDetails.finalLineWidth);
         }else if(!unscribbledDetails.causesWrap && left == unscribbledDetails.finalLineWidth){
-            console.log("good place");
+            //console.log("good place");
             actualTop = top;
             
             actualLeft = 0-offset;
         }else{
-          console.log("in here");
+         // console.log("in here");
           actualTop = top;
           actualLeft = left-offset;
         }
