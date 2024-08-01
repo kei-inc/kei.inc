@@ -71,12 +71,15 @@ footer {
     margin: 0;
 }
 
-#border-top {
+.border-top {
     border-top: #BB3216 1px solid;
+    
+
 }
 
-#border-top a {
+.border-top a {
     text-decoration: none;
+    
 }
 
 #four-column h3 {
