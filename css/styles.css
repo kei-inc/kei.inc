@@ -352,6 +352,25 @@ footer {
     margin-right:20px;
     
 }
+
+#placeItems{
+  color:#fff;
+  margin-bottom:0px;
+  
+}
+#placeItems .body-Copy-Title{
+  color: #BB3216;
+}
+#placeItems .center-text{
+  margin-top:40px;
+  color: #BB3216;
+}
+#placeItems .body-copy{
+  color: black;
+  font-size:18px;
+  line-height:32px;
+  margin-bottom:20px;
+}
   
 /* Mobile Styles */
 @media (max-width: 768px) {
