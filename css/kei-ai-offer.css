@@ -143,11 +143,11 @@ section {
     /* 127.273% */
 }
 
-.hbox {
-}
+
 
 .case-study {
     max-width: 420px;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
 }
@@ -198,5 +198,8 @@ section {
     }
     #text{
         order: 1;
+    }
+    .center-text .hbox {
+        flex-flow: column;
     }
 }
