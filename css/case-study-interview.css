@@ -509,6 +509,11 @@ main{
  h1{
    
  }
+ .main-section p.placeLink a{
+     color: #BB3216;
+     font-family: NeuzeitGroT;
+     font-weight: 400;
+ }
 
 @media only screen and (max-width: 768px) {
   body,
