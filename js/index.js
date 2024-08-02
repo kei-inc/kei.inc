@@ -162,8 +162,8 @@ function wrapWords(element) {
                  let scribblableSpan = span.querySelector('.scribblable');
                  let typedSpan = unscribbledSpan ? unscribbledSpan.querySelector('.typed') : null;
                  
-                 if (slideNumber === 5 || slideNumber === 6 || slideNumber === 7) {
-                     // For slides 5, 6, and 7
+                 if (slideNumber === 4 || slideNumber === 5 || slideNumber === 6) {
+                     // For slides 4, 5, and 6
                      if (unscribbledSpan) {
                          // Make unscribbled span and its words immediately visible, except for .typed
                          unscribbledSpan.style.opacity = '1';
@@ -223,7 +223,7 @@ function wrapWords(element) {
                  }
                  clearUnderlines(slide);
                  const slideNumber = parseInt(slide.id.replace('slide', ''));
-                 if (slideNumber === 5 || slideNumber === 6 || slideNumber === 7) {
+                 if (slideNumber === 4 || slideNumber === 5 || slideNumber === 6) {
                      let unscribbledSpan = span.querySelector('.unscribbled');
                      let scribblableSpan = span.querySelector('.scribblable');
                      
@@ -258,7 +258,6 @@ function wrapWords(element) {
          });
      }
      
-     // Update the changeSlide function to remove the delay
      async function changeSlide() {
          if (isAnimating) return;
      
@@ -318,6 +317,12 @@ function wrapWords(element) {
              }
              currentSlideElement.querySelector('span').appendChild(cursor);
              isAnimating = false;
+             
+             // Track slide transition
+             gtag('event', 'home_sequence', {
+                 'event_category': 'User Interaction',
+                 'event_label': `Slide ${currentSlide + 1}`
+             });
              return;
          }
      
@@ -354,6 +359,11 @@ function wrapWords(element) {
          // Show the finalSlide
          const finalSlide = document.getElementById('finalSlide');
          if (finalSlide) {
+            // Trigger the GA4 event for reaching the final slide
+            gtag('event', 'reached_final_slide', {
+                'event_category': 'User Interaction',
+                'event_label': 'Completed The Homepage Sequence'
+            });
              finalSlide.style.display = 'block';
          }
          
@@ -643,64 +653,60 @@ const scribbleCache = new WeakMap();
  * @param {HTMLCanvasElement} canvas - The canvas to draw on
  * @param {number} progress - The current progress of the animation (0 to 1)
  */
-function animateScribbleIn(canvas, progress) {
-    const rc = rough.canvas(canvas);
-    const width = canvas.width;
-    const height = canvas.height;
-    const mobile =  isMobile();
-    // Check if canvas has valid dimensions
-    if (width <= 0 || height <= 0) {
-        console.error('Invalid canvas dimensions:', width, height);
-        return;
-    }
-
-    if (scribbleCache.has(canvas)) {
-        scribblePoints = scribbleCache.get(canvas);
-    } else {
-        // Generate scribble points only once per canvas
-  
-        const amplitudeRange = { min: 6, max: 12 };
-        const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
-        scribblePoints = generateScribblePoints(
-            0,
-            width,
-            height / 2,
-            amplitude,
-            0.1 // frequency is not used in the new implementation, but kept for consistency
-        );
-        scribbleCache.set(canvas, scribblePoints);
-    }
-
-    // Check if scribblePoints is not empty
-    if (scribblePoints.length === 0) {
-        console.error('No scribble points generated');
-        return;
-    }
-
-    // Calculate how many points to draw based on progress
-    const pointsToDraw = Math.max(2, Math.floor(scribblePoints.length * progress));
-
-    // Clear the canvas before redrawing
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, width, height);
-
-    try {
-     
-        rc.curve(scribblePoints.slice(0, pointsToDraw), {
-            roughness: randomInRange(1, 2),
-            strokeWidth: mobileStroke(),
-            stroke: '#435861',
-            bowing: randomInRange(0.5, 1.5)
-        });
-    } catch (error) {
-        console.error('Error drawing curve:', error);
-        return;
-    }
-
-    if (progress < 1) {
-        requestAnimationFrame(() => animateScribbleIn(canvas, progress + scribbleInSpeed / 100));
-    }
-}
+function animateScribbleIn(canvas, progress, callback) {
+     const rc = rough.canvas(canvas);
+     const width = canvas.width;
+     const height = canvas.height;
+     const mobile = isMobile();
+ 
+     if (width <= 0 || height <= 0) {
+         console.error('Invalid canvas dimensions:', width, height);
+         return;
+     }
+ 
+     if (scribbleCache.has(canvas)) {
+         scribblePoints = scribbleCache.get(canvas);
+     } else {
+         const amplitudeRange = { min: 6, max: 12 };
+         const amplitude = randomInRange(amplitudeRange.min, amplitudeRange.max);
+         scribblePoints = generateScribblePoints(
+             0,
+             width,
+             height / 2,
+             amplitude,
+             0.1
+         );
+         scribbleCache.set(canvas, scribblePoints);
+     }
+ 
+     if (scribblePoints.length === 0) {
+         console.error('No scribble points generated');
+         return;
+     }
+ 
+     const pointsToDraw = Math.max(2, Math.floor(scribblePoints.length * progress));
+ 
+     const ctx = canvas.getContext('2d');
+     ctx.clearRect(0, 0, width, height);
+ 
+     try {
+         rc.curve(scribblePoints.slice(0, pointsToDraw), {
+             roughness: randomInRange(1, 2),
+             strokeWidth: mobileStroke(),
+             stroke: '#435861',
+             bowing: randomInRange(0.5, 1.5)
+         });
+     } catch (error) {
+         console.error('Error drawing curve:', error);
+         return;
+     }
+ 
+     if (progress < 1) {
+         requestAnimationFrame(() => animateScribbleIn(canvas, progress + scribbleInSpeed / 100, callback));
+     } else {
+         if (callback) callback();
+     }
+ }
 
 function generateScribblePoints(startX, endX, y, amplitude, frequency) {
     const points = [];
@@ -735,14 +741,14 @@ function generateScribblePoints(startX, endX, y, amplitude, frequency) {
     function animateScribbleOut(canvas, progress) {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
         if (progress < 1) {
             ctx.globalAlpha = 1 - progress;
-            animateScribbleIn(canvas, 1); // Redraw the full scribble with decreasing opacity
+            animateScribbleIn(canvas, 1);
             ctx.globalAlpha = 1;
             requestAnimationFrame(() => animateScribbleOut(canvas, progress + scribbleOutSpeed / 100));
         } else {
-            canvas.remove(); // Remove the canvas when fully erased
+            canvas.remove();
         }
     }
 
@@ -778,33 +784,50 @@ function generateScribblePoints(startX, endX, y, amplitude, frequency) {
      * @param {boolean} scribble - True to add scribble, false to remove
      */
 function toggleScribble(slide, scribble) {
-    let scribbleElements = slide.querySelectorAll('.scribblable, .scribbled');
-    scribbleElements.forEach(element => {
-        if (scribble) {
-            element.classList.remove('scribblable');
-            element.classList.add('scribbled');
-            const lineRects = getLineRects(element);
-            const parentDiv = element.closest('div');
-            const parentDivRect = parentDiv.getBoundingClientRect();
-            
-            const unscribbledSpan = parentDiv.querySelector('.unscribbled');
-            //console.log(parentDiv.querySelector('.unscribbled').getBoundingClientRect().right);
-            //const unscribbledWidth = unscribbledSpan ? unscribbledSpan.getBoundingClientRect().width : 0;
+         let scribbleElements = slide.querySelectorAll('.scribblable, .scribbled');
+         let editorialDirection = slide.querySelector('.editorialDirection');
          
-         //console.log(unscribbledWidth);
-            lineRects.forEach((lineRect, index) => {
-                const isFirstLine = index === 0;
-                const canvas = createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan);
-                animateScribbleIn(canvas, 0); // Start the scribble animation
-            });
-        } else {
-            element.classList.remove('scribbled');
-            element.classList.add('scribblable');
-            const canvases = element.querySelectorAll('.scribble-canvas');
-            canvases.forEach(canvas => animateScribbleOut(canvas, 0)); // Start the erase animation
-        }
-    });
-}
+         if (editorialDirection) {
+             editorialDirection.style.display = 'none'; // Hide editorial direction initially
+         }
+         
+         scribbleElements.forEach(element => {
+             if (scribble) {
+                 element.classList.remove('scribblable');
+                 element.classList.add('scribbled');
+                 const lineRects = getLineRects(element);
+                 const parentDiv = element.closest('div');
+                 const parentDivRect = parentDiv.getBoundingClientRect();
+                 
+                 const unscribbledSpan = parentDiv.querySelector('.unscribbled');
+                 
+                 let totalCanvases = lineRects.length;
+                 let canvasesAnimated = 0;
+                 
+                 lineRects.forEach((lineRect, index) => {
+                     const isFirstLine = index === 0;
+                     const canvas = createScribbleCanvas(element, lineRect, parentDivRect, isFirstLine, unscribbledSpan);
+                     animateScribbleIn(canvas, 0, () => {
+                         canvasesAnimated++;
+                         if (canvasesAnimated === totalCanvases && editorialDirection) {
+                             setTimeout(() => {
+                                 editorialDirection.style.display = 'inline-block'; // Show editorial direction after all canvases are animated
+                             }, 100); // Add a small delay for better visual effect
+                         }
+                     });
+                 });
+             } else {
+                 element.classList.remove('scribbled');
+                 element.classList.add('scribblable');
+                 const canvases = element.querySelectorAll('.scribble-canvas');
+                 canvases.forEach(canvas => animateScribbleOut(canvas, 0));
+                 
+                 if (editorialDirection) {
+                     editorialDirection.style.display = 'none'; // Hide editorial direction when scribbles are removed
+                 }
+             }
+         });
+     }
 
     /**
      * Removes all scribbled classes from all slides

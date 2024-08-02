@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'manicReg';
+    src: url('../fonts/manic/manic-webfont.woff') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body, html {
     margin: 0;
@@ -26,6 +32,21 @@ main {
     box-sizing: border-box;
     cursor: pointer;
 
+}
+ul{
+   list-style-type: none;
+   padding:none;
+   margin:none;
+}
+.editorialDirection{
+   display:inline-block;
+   display:none;
+   font-family:NeuzeitGroT;
+   font-weight:400;
+   color:#435861;
+   margin-left:20px;
+   font-size:14px;
+   
 }
 
 /* Position slides at the top of the main container */
