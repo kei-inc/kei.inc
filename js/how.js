@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const textColor = section.dataset.textColor;
     const navColor = section.dataset.navColor;
     const logoColor = section.dataset.logoColor;
+   // document.querySelector("meta[name='theme-color']").setAttribute("content", bgColor);
 
     document.body.style.backgroundColor = bgColor;
     header.style.backgroundColor = bgColor;
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     texts.forEach((text) => {
       text.style.color = textColor;
     });
-    document.querySelector("meta[name='theme-color']").setAttribute("content", bgColor);
+    //document.body.style.backgroundColor = bgColor;
   }
 
   function drawUnderline(element, progress = 1) {
