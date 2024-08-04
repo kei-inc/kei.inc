@@ -321,7 +321,7 @@ function wrapWords(element) {
              // Track slide transition
              gtag('event', 'home_sequence', {
                  'event_category': 'User Interaction',
-                 'event_label': `Slide_${currentSlide + 1}`
+                 'slide_number': currentSlide + 1
              });
              return;
          }
