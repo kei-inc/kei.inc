@@ -33,11 +33,7 @@ main {
     cursor: pointer;
 
 }
-ul{
-   list-style-type: none;
-   padding:none;
-   margin:none;
-}
+
 .editorialDirection{
    display:inline-block;
    display:none;

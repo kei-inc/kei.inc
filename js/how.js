@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.body.style.backgroundColor = bgColor;
     header.style.backgroundColor = bgColor;
+    document.querySelector("meta[name='theme-color']").setAttribute("content", bgColor);
     logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
 
     section.style.color = textColor;

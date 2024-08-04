@@ -40,6 +40,11 @@ ul {
     /* 158.333% */
     margin-top: 0px;
 }
+ul{
+   list-style-type: none;
+   padding:none;
+   margin:none;
+}
 
 .content-wrapper {
     max-width: 1440px;
