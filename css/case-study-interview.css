@@ -288,6 +288,7 @@ main{
 }
 .two-column .sidebar img{
   width: 90%;
+  max-width: 190px;
 }
 .karot-container{
   display: flex;
