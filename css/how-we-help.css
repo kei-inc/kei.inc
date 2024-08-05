@@ -3,7 +3,7 @@ body, main, header {
 }
 
 .section {
-  height: 120vh; /* Make each section full viewport height */
+  height: 100vh; /* Make each section full viewport height */
   display: flex;
   align-items: center;
   justify-content: center;
