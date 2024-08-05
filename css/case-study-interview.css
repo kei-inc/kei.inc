@@ -220,7 +220,7 @@ main{
 
 .main-section .full-width-image img {
   width: 100%;
-  height: auto;
+  height: fit-content;
   display: block;
 }
 .single-column, .double-image{
@@ -303,7 +303,7 @@ main{
   flex-wrap: wrap;
 }
 #full-width img{
-  height: auto;
+  height: fit-content;
   display: block;
   margin: 0 auto;
   width: 100%;
