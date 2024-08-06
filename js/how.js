@@ -267,7 +267,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     },
     scrub: true,
-    markers: true,
   });
 
   if (footer) {
