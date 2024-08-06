@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ScrollTrigger.create({
       trigger: section,
       start: "top 50%", // Dynamic start point
-      end: "bottom center", // Dynamic end point
+      end: "bottom bottom", // Dynamic end point
       onEnter: () => {
         animateSection(section, focusElements, textElements, "in");
       },
