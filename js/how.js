@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const footer = document.querySelector("footer"); // Assuming your footer is the last element
   const header = document.querySelector(".sticky-header");
   const logo = header.querySelector(".logo img");
+  const mobileMenu = header.querySelector(".dropdown");
   const navLinks = header.querySelectorAll("nav a");
   const currentNavLink = document.querySelector("nav .current-page");
 
@@ -17,12 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const textColor = section.dataset.textColor;
     const navColor = section.dataset.navColor;
     const logoColor = section.dataset.logoColor;
+    const mobileMenuColor = section.dataset.logoColor;
    // document.querySelector("meta[name='theme-color']").setAttribute("content", bgColor);
 
     document.body.style.backgroundColor = bgColor;
     header.style.backgroundColor = bgColor;
     
     logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
+    mobileMenu.style.filter = `invert(${mobileMenuColor === "white" ? 1 : 0})`;
 
     section.style.color = textColor;
 
