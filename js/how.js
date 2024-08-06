@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ScrollTrigger.create({
     trigger: lastSection,
-    start: "top 30%",
+    start: "top 20%",
     end: "bottom bottom",
     scrub: 1,
     onLeaveBack: () => {
