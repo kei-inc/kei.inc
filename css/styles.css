@@ -407,7 +407,6 @@ footer {
     }
 
     .upper-footer-container .logo {
-        margin: 0 auto;
         padding-bottom: 20px;
     }
     .upper-footer-container .footer-text{
@@ -415,7 +414,6 @@ footer {
     }
 
     .footer-text p {
-        text-align: center;
     }
     #numbered-list ul li{
         margin-left: 0px;
