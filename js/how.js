@@ -257,9 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ScrollTrigger.create({
     trigger: lastSection,
-    start: "top 20%",
-    end: "bottom bottom",
-    scrub: 1,
+    start: "top 30%",
+    scrub: true,
     onLeaveBack: () => {
       gsap.to(window, {
         duration: 0.5,
