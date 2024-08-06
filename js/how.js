@@ -184,10 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleWheel(e, index) {
     if (isScrolling) return;
-
     if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
-
     e.preventDefault();
     if (e.deltaY > 20 && index < sections.length - 1) {
       scrollToSection(index + 1);
@@ -202,6 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deltaY = startY - endY;
     if (index === sections.length - 1 && deltaY > 0) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && deltaY < 0) return; // Allow normal scrolling on the last section
+    e.preventDefault();
     if (deltaY > 20 && index < sections.length - 1) {
       // Swipe up
       scrollToSection(index + 1);
@@ -210,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
       scrollToSection(index - 1);
     }
   }
+
   sections.forEach((section, index) => {
     const focusElements = section.querySelectorAll(".focus");
     const textElements = section.querySelectorAll("p");
@@ -234,8 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
           animateSection(section, focusElements, textElements, "out");
         }
       },
-      scrub:true,
-      scrub: 5,
+      scrub: 2,
     });
 
     section.addEventListener("wheel", (e) => handleWheel(e, index));
@@ -257,8 +256,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ScrollTrigger.create({
     trigger: lastSection,
-    start: "top 30%",
-    scrub: true,
+    start: "top center",
+    scrub: 1,
     onLeaveBack: () => {
       gsap.to(window, {
         duration: 0.5,
@@ -267,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     },
   });
+
   if (footer) {
     ScrollTrigger.create({
       trigger: footer,
