@@ -257,14 +257,17 @@ document.addEventListener("DOMContentLoaded", function () {
   ScrollTrigger.create({
     trigger: lastSection,
     start: "top center",
+    end: "bottom center",
     scrub: 1,
     onLeaveBack: () => {
       gsap.to(window, {
         duration: 0.5,
-        scrollTo: { y: secondLastSection.offsetTop },
+        scrollTo: { y: secondLastSection},
         ease: "power1.inOut",
       });
     },
+    scrub: true,
+    markers: true,
   });
 
   if (footer) {
