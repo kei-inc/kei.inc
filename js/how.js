@@ -216,8 +216,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ScrollTrigger.create({
       trigger: section,
-      start: "top top", // Dynamic start point
-      end: "bottom bottom", // Dynamic end point
+      start: "top 50%", // Dynamic start point
+      end: "bottom 50%", // Dynamic end point
       onEnter: () => {
         animateSection(section, focusElements, textElements, "in");
       },
@@ -234,7 +234,8 @@ document.addEventListener("DOMContentLoaded", function () {
           animateSection(section, focusElements, textElements, "out");
         }
       },
-      scrub: 2,
+      scrub: true,
+      markers: true,
     });
 
     section.addEventListener("wheel", (e) => handleWheel(e, index));
@@ -256,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   ScrollTrigger.create({
     trigger: lastSection,
-    start: "top center",
+    start: "top 50%",
     end: "bottom center",
     scrub: 1,
     onLeaveBack: () => {
@@ -267,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     },
     scrub: true,
+    markers: true,
   });
 
   if (footer) {
