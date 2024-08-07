@@ -164,14 +164,19 @@ document.addEventListener("DOMContentLoaded", function () {
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
     isScrolling = true;
-    const scrollToPosition =
-      index === sections.length - 1
-        ? { y: sections[index], offsetY: 200 }
-        : sections[index];
+  
+    const headerHeight = header.offsetHeight || 0; // Adjust for header height if needed
+    let scrollToPosition = sections[index].offsetTop;
+  
+    // Only add an offset for the final section
+    if (index === sections.length - 1) {
+      const additionalOffset = 20; // Your desired offset in pixels
+      scrollToPosition -= (headerHeight + additionalOffset);
+    }
+  
     gsap.to(window, {
       duration: 0.8,
-      scrollTo: scrollToPosition,
-      autoKill: false,
+      scrollTo: { y: scrollToPosition, autoKill: false },
       onComplete: () => {
         isScrolling = false;
         const focusElements = sections[index].querySelectorAll(".focus");
@@ -180,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     });
   }
+  
 
   function handleWheel(e, index) {
     if (isScrolling) return;
