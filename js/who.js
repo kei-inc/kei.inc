@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
     onEnter: () => {
       scrollDownSvg.style.display = "none";
     },
-    onLeaveBack: () => {
+    onEnterBack: () => {
       gsap.to(window, {
         duration: 0.5,
         scrollTo: { y: secondLastSection},
