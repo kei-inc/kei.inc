@@ -29,7 +29,7 @@ header {
   justify-content: center;
   text-align: left;
   max-width: 880px;
-  height: 100%;
+  margin: 0 auto;
 }
 
 .hbox {
@@ -167,8 +167,6 @@ nav a {
   width: 100%;
   list-style-type: none; /* Remove list decimal */
 }
-
-
 .structureImg {
   max-width: 1000px;
   margin:0 auto;
@@ -177,6 +175,17 @@ nav a {
   margin: 0 auto;
   display: flex;
   width: 100%;
+}
+
+.scroll-down-svg {
+  position: fixed;
+  bottom: 20px; /* Slightly above the bottom to avoid any overlaps */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+.first-section .scroll-down-svg{
+  display: none;
 }
 
 @media (max-width: 1299px) {
@@ -191,7 +200,7 @@ nav a {
     line-height: 24px;
   }
   .section {
-    height: 120vh;
+    height: 100vh;
   }
   .hbox {
     gap: 20px;
@@ -230,7 +239,13 @@ nav a {
   .bullets{
     padding: 20px 0;
   }
-
-
+.scroll-down-svg {
+  display: none;
+}
+.first-section .scroll-down-svg{
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+}
 
 }
