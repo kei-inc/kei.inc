@@ -351,6 +351,7 @@ footer {
     display:flex;
     padding:40px 0;
     overflow-y: scroll;
+    max-width:1440px;
 }
 .carousel img{
     height:400px;
@@ -405,7 +406,9 @@ footer {
     .upper-footer-container {
         padding-bottom: 200px;
     }
-
+.carousel{
+        max-width:108%;
+    }
     .upper-footer-container .logo {
         padding-bottom: 20px;
     }
