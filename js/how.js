@@ -160,9 +160,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
     if(currentIndex === index) {
+      console.error('*** should not scroll to index when its the current index');
       return;
     }
 
+    console.log('*** isScrolling set to true');
     isScrolling = true;
   
     const headerHeight = header.offsetHeight || 0; // Adjust for header height if needed
@@ -189,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   function handleWheel(e, index) {
+    console.log('*** handleWheel', index);
     if (isScrolling) return;
 
      // Allow normal scrolling on the last section
@@ -196,42 +199,34 @@ document.addEventListener("DOMContentLoaded", function () {
     if (index === sections.length - 1 && e.deltaY < 0) return;
     
     if (e.deltaY > 0 && index < sections.length - 1) {
+      console.log(`*** going to section`, index + 1);
       scrollToSection(index + 1);
     } else if (e.deltaY < 0 && index > 0) {
+      console.log(`*** (2)going to section`, index - 1);
       scrollToSection(index - 1);
     }
   }
 
   function handleTouch(e, index) {
     if (isScrolling) return;
-    
     const endY = e.changedTouches[0].clientY;
     const deltaY = startY - endY;
-
     if (index === sections.length - 1 && deltaY > 0) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && deltaY < 0) return; // Allow normal scrolling on the last section
+
     if (deltaY > 0 && index < sections.length - 1) {
+      // Swipe up
       scrollToSection(index + 1);
     } else if (deltaY < 0 && index > 0) {
+      // Swipe down
       scrollToSection(index - 1);
     }
   }
   
 
   if(initialized) {
+    console.error('*** already initialized');
     return
-  }
-
-  function addListeners(section, index){
-    section.addEventListener("wheel", (e) => handleWheel(e, index));
-    section.addEventListener("touchstart",(e) => {startY = e.touches[0].clientY;},{ passive: true });
-    section.addEventListener("touchend", (e) => handleTouch(e, index), { passive: true,});
-  }
-
-  function removeListeners(section, index){
-    section.removeEventListener("wheel", handleWheel);
-    section.removeEventListener("touchstart", handleTouch, { passive: true });
-    section.removeEventListener("touchend", handleTouch, { passive: true });
   }
 
   sections.forEach((section, index) => {
@@ -244,29 +239,28 @@ document.addEventListener("DOMContentLoaded", function () {
       end: "bottom center", // Dynamic end point
       onEnter: () => {
         animateSection(section, focusElements, textElements, "in");
-        addListeners(section, index);
       },
       onLeave: () => {
         if (index !== sections.length - 1) {
           animateSection(section, focusElements, textElements, "out");
         }
-        removeListeners(section, index);
       },
       onEnterBack: () => {
         animateSection(section, focusElements, textElements, "in");
-        addListeners(section, index);
       },
       onLeaveBack: () => {
         if (index !== sections.length - 1) {
           animateSection(section, focusElements, textElements, "out");
         }
-        removeListeners(section, index);
       },
       scrub: false,
     });
 
-
+    section.addEventListener("wheel", (e) => handleWheel(e, index));
+    section.addEventListener("touchstart",(e) => {startY = e.touches[0].clientY;},{ passive: true });
+    section.addEventListener("touchend", (e) => handleTouch(e, index), { passive: true,});
   });
+
 
 /*   // Snap back to the second-to-last section when scrolling up at the top of the final section
   const lastSection = sections[sections.length - 1];
@@ -325,5 +319,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initialized = true;
 
-
+  console.log('*** initialized');
 });

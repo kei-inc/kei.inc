@@ -160,8 +160,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
     if(currentIndex === index) {
+      console.error('*** should not scroll to index when its the current index');
       return;
     }
+
+    console.log('*** isScrolling set to true');
     isScrolling = true;
   
     const headerHeight = header.offsetHeight || 0; // Adjust for header height if needed
@@ -188,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   function handleWheel(e, index) {
+    console.log('*** handleWheel', index);
     if (isScrolling) return;
 
      // Allow normal scrolling on the last section
@@ -195,8 +199,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (index === sections.length - 1 && e.deltaY < 0) return;
     
     if (e.deltaY > 0 && index < sections.length - 1) {
+      console.log(`*** going to section`, index + 1);
       scrollToSection(index + 1);
     } else if (e.deltaY < 0 && index > 0) {
+      console.log(`*** (2)going to section`, index - 1);
       scrollToSection(index - 1);
     }
   }
@@ -219,6 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   if(initialized) {
+    console.error('*** already initialized');
     return
   }
 
@@ -249,6 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
       scrub: false,
     });
 
+    console.log('*** section', section, index);
     section.addEventListener("wheel", (e) => handleWheel(e, index));
     section.addEventListener("touchstart",(e) => {startY = e.touches[0].clientY;},{ passive: true });
     section.addEventListener("touchend", (e) => handleTouch(e, index), { passive: true,});
@@ -258,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const lastSection = sections[sections.length - 1];
   const secondLastSection = sections[sections.length - 2];
 
-  /* ScrollTrigger.create({
+  ScrollTrigger.create({
     trigger: lastSection,
     start: "top center",
     end: "bottom center",
@@ -289,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gsap.set(lastSection, { autoAlpha: 1 });
       },
     });
-  } */
+  }
 
   window.addEventListener("resize", () => {
     setupCanvas();
@@ -311,4 +319,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initialized = true;
 
+  console.log('*** initialized');
 });
