@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const currentNavLink = document.querySelector("nav .current-page");
   const scrollDownSvg = document.querySelector(".scroll-down-wrapper");
 
-
+  let initialized = false;
   let isScrolling = false;
+  let currentIndex = -1; // used to check if the current index is the same as the index we are trying to scroll to
   let startY = 0;
   let currentSection = null;
 
@@ -29,9 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     navLinks.forEach((link) => {
       link.style.color = navColor;
     });
-
     currentNavLink.style.color = navColor;
-
     const texts = section.querySelectorAll("p");
     texts.forEach((text) => {
       text.style.color = textColor;
@@ -45,9 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const containerRect = container.getBoundingClientRect();
     const canvas = document.querySelector(".rough-underline-canvas");
     if (!canvas) return;
-
     const rc = rough.canvas(canvas);
-
     const range = document.createRange();
     range.selectNodeContents(element);
     const rects = range.getClientRects();
@@ -116,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-
   function animateSection(
     section,
     focusElements,
@@ -163,6 +159,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function scrollToSection(index) {
     if (index < 0 || index >= sections.length) return;
+    if(currentIndex === index) {
+      return;
+    }
     isScrolling = true;
   
     const headerHeight = header.offsetHeight || 0; // Adjust for header height if needed
@@ -176,12 +175,13 @@ document.addEventListener("DOMContentLoaded", function () {
   
     gsap.to(window, {
       duration: 0.8,
-      scrollTo: { y: scrollToPosition, autoKill: false },
+      scrollTo: { y: scrollToPosition },
       onComplete: () => {
-        isScrolling = false;
         const focusElements = sections[index].querySelectorAll(".focus");
         const textElements = sections[index].querySelectorAll("p");
         animateSection(sections[index], focusElements, textElements, "in");
+        isScrolling = false;
+        currentIndex = index;
       },
     });
   }
@@ -189,12 +189,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function handleWheel(e, index) {
     if (isScrolling) return;
-    if (index === sections.length - 1 && e.deltaY > 0) return; // Allow normal scrolling on the last section
-    if (index === sections.length - 1 && e.deltaY < 0) return; // Allow normal scrolling on the last section
-    e.preventDefault();
-    if (e.deltaY > 20 && index < sections.length - 1) {
+
+     // Allow normal scrolling on the last section
+    if (index === sections.length - 1 && e.deltaY > 0) return;
+    if (index === sections.length - 1 && e.deltaY < 0) return;
+    
+    if (e.deltaY > 0 && index < sections.length - 1) {
       scrollToSection(index + 1);
-    } else if (e.deltaY < -20 && index > 0) {
+    } else if (e.deltaY < 0 && index > 0) {
       scrollToSection(index - 1);
     }
   }
@@ -205,23 +207,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const deltaY = startY - endY;
     if (index === sections.length - 1 && deltaY > 0) return; // Allow normal scrolling on the last section
     if (index === sections.length - 1 && deltaY < 0) return; // Allow normal scrolling on the last section
-    e.preventDefault();
-    if (deltaY > 20 && index < sections.length - 1) {
+
+    if (deltaY > 0 && index < sections.length - 1) {
       // Swipe up
       scrollToSection(index + 1);
-    } else if (deltaY < -20 && index > 0) {
+    } else if (deltaY < 0 && index > 0) {
       // Swipe down
       scrollToSection(index - 1);
     }
   }
+  
+
+  if(initialized) {
+    return
+  }
+
   sections.forEach((section, index) => {
     const focusElements = section.querySelectorAll(".focus");
     const textElements = section.querySelectorAll("p");
 
     ScrollTrigger.create({
       trigger: section,
-      start: "top 50%", // Dynamic start point
-      end: "bottom 50%", // Dynamic end point
+      start: "top center", // Dynamic start point
+      end: "bottom center", // Dynamic end point
       onEnter: () => {
         animateSection(section, focusElements, textElements, "in");
       },
@@ -238,29 +246,21 @@ document.addEventListener("DOMContentLoaded", function () {
           animateSection(section, focusElements, textElements, "out");
         }
       },
-      scrub: true,
+      scrub: false,
     });
 
     section.addEventListener("wheel", (e) => handleWheel(e, index));
-    section.addEventListener(
-      "touchstart",
-      (e) => {
-        startY = e.touches[0].clientY;
-      },
-      { passive: true }
-    );
-    section.addEventListener("touchend", (e) => handleTouch(e, index), {
-      passive: true,
-    });
+    section.addEventListener("touchstart",(e) => {startY = e.touches[0].clientY;},{ passive: true });
+    section.addEventListener("touchend", (e) => handleTouch(e, index), { passive: true,});
   });
 
   // Snap back to the second-to-last section when scrolling up at the top of the final section
   const lastSection = sections[sections.length - 1];
   const secondLastSection = sections[sections.length - 2];
 
-  ScrollTrigger.create({
+  /* ScrollTrigger.create({
     trigger: lastSection,
-    start: "top 50%",
+    start: "top center",
     end: "bottom center",
     scrub: 1,
     onEnter: () => {
@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gsap.set(lastSection, { autoAlpha: 1 });
       },
     });
-  }
+  } */
 
   window.addEventListener("resize", () => {
     setupCanvas();
@@ -308,4 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const focusElements = currentSection.querySelectorAll(".focus");
     focusElements.forEach((el) => drawUnderline(el));
   }
+
+  initialized = true;
+
 });
