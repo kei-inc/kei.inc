@@ -87,7 +87,8 @@ p.sidebar-text {
 .text-container.fadein-visible {
   opacity: 1;
   transform: translateY(0px);
-  transition: opacity 1.5s ease-in-out, transform 0.5s ease; /* Adjust the duration as needed */
+  transition: opacity 1.5s ease-in-out, transform 0.5s ease;
+  /* Adjust the duration as needed */
 }
 
 
@@ -136,10 +137,11 @@ nav a {
   color: white;
   max-width: 880px;
   margin: 0 auto 30px auto;
-  
+
 
 }
-#structure h3{
+
+#structure h3 {
   max-width: 880px;
   margin: 0 auto;
 }
@@ -149,12 +151,14 @@ nav a {
   font-family: NeuzeitGrot;
   font-weight: 700;
   font-size: 20px;
-  line-height:38px;
+  line-height: 38px;
 }
-.bullets{
+
+.bullets {
   padding: 20px 0 80px 0;
 }
-#structure .bullets p{
+
+#structure .bullets p {
   font-family: NeuzeitGrot;
   font-size: 32px;
   color: white;
@@ -165,13 +169,18 @@ nav a {
   margin: 0 auto;
   border-top: white 1px solid;
   width: 100%;
-  list-style-type: none; /* Remove list decimal */
+  list-style-type: none;
+  /* Remove list decimal */
 }
-.structureImg {
+
+.structure-img {
   max-width: 1000px;
-  margin:0 auto;
+  margin: 0 auto;
+  display: flex;
+  width: 100%;
 }
-.structureImg img{
+
+.structure-img img{
   margin: 0 auto;
   display: flex;
   width: 100%;
@@ -179,14 +188,22 @@ nav a {
 
 .scroll-down-svg {
   position: fixed;
-  bottom: 20px; /* Slightly above the bottom to avoid any overlaps */
+  bottom: 20px;
+  /* Slightly above the bottom to avoid any overlaps */
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
 }
-.first-section .scroll-down-svg{
+
+.first-section .scroll-down-svg {
   display: none;
 }
+
+/* Default - Desktop view */
+.structure-img.mobile-img {
+  display: none;
+}
+
 
 @media (max-width: 1299px) {
   #filler {
@@ -199,9 +216,11 @@ nav a {
     font-size: 20px;
     line-height: 24px;
   }
+
   .section {
     height: 100vh;
   }
+
   .hbox {
     gap: 20px;
   }
@@ -219,16 +238,18 @@ nav a {
     line-height: 20px;
     max-width: 60%;
   }
-  #structure .bullets p{
+
+  #structure .bullets p {
     font-size: 18px;
     line-height: 26px;
   }
+
   #structure p {
-  
+
     font-size: 18px;
     line-height: 26px;
-    margin-bottom:20px;
-  
+    margin-bottom: 20px;
+
   }
 
   .whoSlide {
@@ -236,16 +257,34 @@ nav a {
     flex-direction: column;
 
   }
-  .bullets{
+
+  .bullets {
     padding: 20px 0;
   }
-.scroll-down-svg {
-  display: none;
-}
-.first-section .scroll-down-svg{
-  display: flex;
-  position: absolute;
-  bottom: 20px;
-}
+
+  .scroll-down-svg {
+    display: none;
+  }
+
+  .first-section .scroll-down-svg {
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+  }
+
+  .structure-img.desktop-img {
+    display: none;
+  }
+
+  .structure-img.mobile-img {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  /* Add spacing between the two images */
+  .structure-img.mobile-img.part-1 {
+    margin-bottom: 1rem;
+  }
 
 }
