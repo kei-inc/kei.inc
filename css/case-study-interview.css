@@ -25,6 +25,11 @@ main{
   font-weight: 400;
   line-height: 38px; /* 190% */
 }
+.case-hero {
+  width: 100%;
+  aspect-ratio: 2 / 1; 
+  background-color: #f0f0f0;
+}
 
 .case-hero img{
   width: 100%;
