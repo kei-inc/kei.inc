@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+	:root {
+	  --color-bg: #151518;
+	  --color-purple: #4B367C;
+	  --color-deep-purple: #2A1B54;
+	  --color-pink: #FF5B94;
+	  --color-light-pink: #FF8FB2;
+	  --circle-blur: 130px;
+	  --glass-blur: 80px;
+	  --glass-opacity: 0.1;
+	  --base-speed: 50s;
+	  --slide-margin: 40px;
+	  --slide-height: calc(100vh - var(--slide-margin) * 2);
+	}
+
+	body, html {
+	  margin: 0;
+	  padding: 0;
+	  width: 100%;
+	  height: 100vh;
+	  background: var(--color-bg);
+	  font-family: system-ui, -apple-system, sans-serif;
+	  -webkit-font-smoothing: antialiased;
+	  color: white;
+	  overflow-x: hidden;
+	}
+
+	.background-container {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  overflow: hidden;
+	  z-index: 1;
+	}
+
+	.circle {
+	  position: absolute;
+	  border-radius: 50%;
+	  opacity: 0.7;
+	  filter: blur(var(--circle-blur));
+	  -webkit-filter: blur(var(--circle-blur));
+	  animation: float var(--base-speed) infinite linear;
+	  -webkit-animation: float var(--base-speed) infinite linear;
+	}
+
+	.glass {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: rgba(255, 255, 255, var(--glass-opacity));
+	  backdrop-filter: blur(var(--glass-blur));
+	  -webkit-backdrop-filter: blur(var(--glass-blur));
+	  z-index: 1;
+	}
+
+	.slides-container {
+	  position: relative;
+	  z-index: 2;
+	  scroll-behavior: smooth;
+	  height: 100vh;
+	  overflow-y: auto;
+	  scroll-snap-type: y mandatory;
+	}
+
+	.slide-wrapper {
+	  height: 100vh;
+	  scroll-snap-align: start;
+	  scroll-snap-stop: always;
+	  padding-top: var(--slide-margin);
+	  box-sizing: border-box;
+	}
+
+	.slide {
+	  height: var(--slide-height);
+	  margin: 0 var(--slide-margin);
+	  border-radius: 20px;
+	  padding: 40px;
+	  box-sizing: border-box;
+	}
+
+	.slide.dark {
+	  background-color: rgba(21, 21, 24, 0.9);
+	  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.slide.clear {
+	  background-color: transparent;
+	}
+
+	.slide h2 {
+	  font-size: 2.5rem;
+	  margin-bottom: 1rem;
+	}
+
+	.slide p {
+	  font-size: 1.2rem;
+	  line-height: 1.6;
+	}
+
+	@keyframes float {
+	  0% { transform: translate(0, 0); }
+	  25% { transform: translate(100%, 100%); }
+	  50% { transform: translate(200%, 0); }
+	  75% { transform: translate(100%, -100%); }
+	  100% { transform: translate(0, 0); }
+	}
+
+	@-webkit-keyframes float {
+	  0% { -webkit-transform: translate(0, 0); }
+	  25% { -webkit-transform: translate(100%, 100%); }
+	  50% { -webkit-transform: translate(200%, 0); }
+	  75% { -webkit-transform: translate(100%, -100%); }
+	  100% { -webkit-transform: translate(0, 0); }
+	}
+  </style>
+</head>
+<body>
+  <div class="background-container">
+	<div id="background"></div>
+	<div class="glass"></div>
+  </div>
+
+  <div class="slides-container">
+	<div class="slide-wrapper">
+	  <div class="slide clear">
+		<h2>Samba AI</h2>
+		<p>Is the Heartbeat of Global Video</p>
+	  </div>
+	</div>
+	<div class="slide-wrapper">
+	  <div class="slide dark">
+		<h2>Second Slide</h2>
+		<p>This slide has a dark, semi-transparent background.</p>
+	  </div>
+	</div>
+	<div class="slide-wrapper">
+	  <div class="slide clear">
+		<h2>Third Slide</h2>
+		<p>Back to a transparent background for this slide.</p>
+	  </div>
+	</div>
+	<div class="slide-wrapper">
+	  <div class="slide dark">
+		<h2>Fourth Slide</h2>
+		<p>Another dark background slide.</p>
+	  </div>
+	</div>
+  </div>
+
+  <script>
+	const CONFIG = {
+	  numCircles: 20,
+	  colors: [
+		'#4B367C',  // Purple
+		'#2A1B54',  // Deep Purple
+		'#FF5B94',  // Pink
+		'#FF8FB2',  // Light Pink
+	  ],
+	  speedMultiplier: 0.8
+	};
+
+	class Circle {
+	  constructor() {
+		this.element = document.createElement('div');
+		this.element.className = 'circle';
+		this.reset();
+	  }
+
+	  reset() {
+		const minSize = window.innerHeight / 8;
+		const maxSize = window.innerHeight;
+		const size = minSize + Math.random() * (maxSize - minSize);
+		
+		this.element.style.width = `${size}px`;
+		this.element.style.height = `${size}px`;
+		this.element.style.backgroundColor = CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
+		
+		this.element.style.left = `${Math.random() * window.innerWidth - size/2}px`;
+		this.element.style.top = `${Math.random() * window.innerHeight - size/2}px`;
+		
+		const baseSpeed = parseFloat(getComputedStyle(document.documentElement)
+		  .getPropertyValue('--base-speed')) * CONFIG.speedMultiplier;
+		
+		const duration = baseSpeed + (Math.random() * baseSpeed * 0.4 - baseSpeed * 0.2);
+		const delay = Math.random() * -baseSpeed;
+		
+		this.element.style.animationDuration = `${duration}s`;
+		this.element.style.webkitAnimationDuration = `${duration}s`;
+		this.element.style.animationDelay = `${delay}s`;
+		this.element.style.webkitAnimationDelay = `${delay}s`;
+	  }
+	}
+
+	const background = document.getElementById('background');
+	const circles = [];
+
+	for (let i = 0; i < CONFIG.numCircles; i++) {
+	  const circle = new Circle();
+	  background.appendChild(circle.element);
+	  circles.push(circle);
+	}
+
+	window.addEventListener('resize', () => {
+	  circles.forEach(circle => circle.reset());
+	});
+  </script>
+</body>
+</html>
