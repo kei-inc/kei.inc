@@ -1,6 +1,6 @@
 
 main,header{
-    background: black;
+    background: #151515;
     font-family: NeuzeitGroT;
     
 }
@@ -44,7 +44,7 @@ nav a {
 .sixColLayout{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  gap: 0px;
   width: 100%;
   margin-bottom:100px;
 }
@@ -57,6 +57,8 @@ nav a {
 .introText p{
   font-size:14px;
   line-height: 21px;
+  margin-bottom:0px;
+  padding-right:40px;
 }
 .listItems ul{
   font-size:14px;
@@ -65,6 +67,19 @@ nav a {
 .listItems ul li{
 margin-bottom:3px;
 border-bottom:1px #666 solid;
+}
+.listItems ul li:last-child{
+
+border-bottom:0px;
+}
+.listItems ul li a:any-link{
+  color:#C3C3C3;
+}
+.listItems ul li a:hover{
+  color:#fff;
+}
+.listItems ul{
+  padding-inline-start:0px;
 }
 .conversationInfo{
  
@@ -141,6 +156,9 @@ border-bottom:1px #666 solid;
   display: inline;
   font-size: 24px;
   color: #BBC0B6;
+}
+.rightRail .quote a{
+  color:#fff;
 }
 
 .speaker{
