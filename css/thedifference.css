@@ -136,7 +136,6 @@ border-bottom:0px;
   line-height: 36px;
   font-family: 'SourceSerif4', serif;
   position: relative;
-  /* Remove any padding/margin that would push the text */
 }
 
 .rightRail .quote p:first-child::before {
@@ -224,4 +223,92 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+footer {
+    background-color: #000;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .introText p{
+    
+    padding-right:0px;
+  }
+  
+  .sixColLayout{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0px;
+    margin-bottom:40px;
+  }
+  
+
+  .sixColLayout > .oneCol {
+    grid-column: span 1;
+    margin-top:20px;
+  }
+  
+
+  .sixColLayout > .twoCol + .oneCol {
+    grid-column: span 2;
+    margin-top:20px;
+  }
+  .twoCol{
+    grid-column: span 2;
+  }
+  .epTitle{
+    padding-left: 60px;
+    margin-bottom:40px;
+  }
+  .epTitle p{
+    font-size:24px;
+    line-height:30px;
+  }
+  .partLine{
+    width:40px;
+  
+  }
+  .partLine img{
+    width:40px;
+  
+  }
+  .partTitle {
+    margin-bottom:20px;
+  }
+  .partTitle p{
+    font-size:24px;
+    margin-bottom:0;
+  }
+  
+  .leftRail {
+    margin-left:60px;
+    flex:2;
+  }
+  .partConversation{
+    flex-direction: column;
+  }
+  .rightRail {
+   padding-left:60px;
+    flex:1;
+  }
+  .rightRail .quote p {
+    font-size: 18px;
+    line-height: 28px;
+    
+  }
+  .rightRail .quote p:first-child::before {
+    
+    left: -18px;
+    font-size: 32px;
+  }
+  .sideItem{
+    margin-top:0px;
+    border-radius: 6px;
+    filter:grayscale(0%);
+    width:200px;
+    transition: filter 0.5s ease-in-out;
+  }
+  .quote{
+    margin-bottom:40px;
+  }
+  
 }
