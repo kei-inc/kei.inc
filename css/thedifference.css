@@ -1,0 +1,209 @@
+
+main,header{
+    background: black;
+    font-family: NeuzeitGroT;
+    
+}
+p, ul{
+  color:#C3C3C3;
+}
+nav a {
+    color: white;
+}
+.intro-text{
+    padding-top: 100px;
+}
+.hero-text .column{
+    color: white;
+}
+.hero-text .column:nth-child(2) p,
+.hero-text .column:nth-child(3) p,
+.hero-text .column:nth-child(4) p,
+.hero-text .column:nth-child(5) p {
+    border-top: white solid 1px;
+}
+.hero-text .column:nth-child(4) p,
+.hero-text .column:nth-child(5) p{
+    border-bottom: white solid 1px;
+}
+#focus-text{
+    color: white;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 52px; /* 144.444% */
+}
+
+.main-section .content {
+    margin: unset;
+}
+
+.content{
+    gap:40px;
+}
+.sixColLayout{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-bottom:100px;
+}
+.oneCol{
+  grid-column: span 1;
+}
+.twoCol{
+  grid-column: span 2;
+}
+.introText p{
+  font-size:14px;
+  line-height: 21px;
+}
+.listItems ul{
+  font-size:14px;
+  line-height: 21px;
+}
+.listItems ul li{
+margin-bottom:3px;
+border-bottom:1px #666 solid;
+}
+.conversationInfo{
+ 
+}
+.partHeader{
+  display:flex;
+  gap:20px;
+}
+.partLine{
+  width:190px;
+
+}
+.partTitle {
+  margin-bottom:100px;
+}
+.partTitle p{
+  font-size:36px;
+  margin-bottom:0;
+}
+
+.conversation{
+  
+}
+.epTitle{
+  padding-left: 210px;
+  margin-bottom:100px;
+}
+.epTitle p{
+  font-size:36px;
+  margin-bottom:0;
+  font-weight:700;
+}
+.partConversation{
+  display:flex;
+  gap:20px;
+}
+.leftRail {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.rightRail {
+  min-width: 0; 
+  flex: 1;
+}
+.quote{
+  margin-bottom:80px;
+}
+.rightRail .quote p {
+  overflow-wrap: break-word; 
+  word-wrap: break-word;
+  color: #BBC0B6;
+  font-size: 24px;
+  line-height: 36px;
+  font-family: 'SourceSerif4', serif;
+  position: relative;
+  /* Remove any padding/margin that would push the text */
+}
+
+.rightRail .quote p:first-child::before {
+  content: "\201C"; /* Unicode for opening double quote */
+  display: inline-block;
+  position: absolute;
+  left: -25px;
+  top: 0;
+  font-size: 48px;
+  color: #BBC0B6;
+  font-family: 'SourceSerif4', serif;
+  line-height: 1;
+}
+
+.rightRail .quote p:last-child::after {
+  content: "\201D"; /* Unicode for closing double quote */
+  display: inline;
+  font-size: 24px;
+  color: #BBC0B6;
+}
+
+.speaker{
+  margin-bottom:5px;
+}
+.speaker p {
+  font-size: 20px;
+  color:#ffffff;
+  margin-bottom:0;
+}
+.sideItem{
+  margin-top:50px;
+  border-radius: 6px;
+  filter:grayscale(100%);
+  width:120px;
+  transition: filter 0.5s ease-in-out;
+}
+.sideItem:hover{
+  filter:grayscale(0%);
+  
+}
+
+.hero-container {
+  width: 100%;
+  position: relative;
+}
+
+.video-thumbnail {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.video-thumbnail img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-thumbnail:hover img {
+  filter: brightness(0.8);
+}
+
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
