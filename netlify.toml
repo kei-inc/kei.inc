@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/workshop"
+  to = "/workshop/the_difference
+  status = 301
+  force = false
