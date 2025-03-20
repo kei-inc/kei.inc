@@ -379,5 +379,45 @@ footer {
   .quote{
     margin-bottom:40px;
   }
+  #hero h1{
+    font-size: 36px;
+    margin-bottom:10px;
+  }
+  #hero p{
+    font-size:16px;
+    line-height:24px;
+  }
   
+  .episodeInfo{
+
+    grid-template-columns: repeat(1, 1fr);
+    
+    
+  }
+  .episodeInfo p, .episodeInfo ul{
+    font-size:16px;
+    line-height:24px;
+    margin-bottom:5px;
+    padding:0;
+  }
+  
+  .episodeTitle p{
+    font-size:24px;
+    line-height:32px;
+  }
+  .episodeTitle{
+    grid-column: span 1;
+  
+  }
+  .episodesHead{
+    font-size:24px;
+    margin-bottom:16px;
+  }
+  
+  .episodeDescription{
+    grid-column: span 1;
+  }
+  .episodeDate{
+    grid-column: span 1;
+  }
 }
