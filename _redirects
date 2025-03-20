@@ -1,3 +1,2 @@
 # Redirects from what the browser requests to what we serve
-/workshop/              /workshop/the_difference/
-/workshop                /workshop/the_difference
+/workshop	/workshop/the_difference	302!
