@@ -138,6 +138,7 @@ border-bottom:0px;
 }
 .quote{
   margin-bottom:80px;
+  padding-right:30%;
 }
 .rightRail .quote p {
   overflow-wrap: break-word; 
@@ -378,6 +379,7 @@ footer {
   }
   .quote{
     margin-bottom:40px;
+    padding-right:0%;
   }
   #hero h1{
     font-size: 36px;
