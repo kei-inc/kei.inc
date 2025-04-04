@@ -242,13 +242,21 @@ footer {
 #episodes{
   padding-bottom:80px;
 }
+.epHolder{
+  display:flex;
+  margin-bottom:40px;
+  padding-bottom:40px;
+  gap:40px;
+  border-bottom:1px #666 solid;
+}
 .episode-thumbnail{
-  position: relative;
+
   cursor: pointer;
-  width: 100%;
+  
   border-radius: 10px;
   overflow: hidden;
-  display:inline-block;
+  box-sizing: border-box;
+  flex: 0 0 66%;
   
 }
 .episode-thumbnail a img{
@@ -256,18 +264,17 @@ footer {
   width: 100%;
   height: auto;
   transition: transform 0.3s ease;
+  
 }
 .episode-thumbnail a:hover img{
   transform: scale(1.02);
 }
 .episodeInfo{
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  flex:1;
   margin-bottom:40px;
   padding-bottom:20px;
   padding-top:20px;
-  border-bottom:1px #666 solid;
+  
   
 }
 .episodeInfo p, .episodeInfo ul{
@@ -281,7 +288,7 @@ footer {
   line-height:32px;
 }
 .episodeTitle{
-  grid-column: span 2;
+margin-bottom:20px;
 
 }
 .episodesHead{
@@ -292,10 +299,10 @@ footer {
 }
 
 .episodeDescription{
-  grid-column: span 2;
+margin-bottom:20px;
 }
-.episodeDate{
-  grid-column: span 1;
+.episodeDate ul{
+padding:0;
 }
 
 /* Mobile Styles */
@@ -389,17 +396,25 @@ footer {
     font-size:16px;
     line-height:24px;
   }
-  
-  .episodeInfo{
-
-    grid-template-columns: repeat(1, 1fr);
-    
-    
+  .epHolder{
+    flex-direction: column;
+    margin-bottom:20px;
+    padding-bottom:20px;
+    gap:20px;
   }
+  .episodeThumbnail{
+    flex: 0 0 100%;
+  }
+  .episodeInfo{
+    margin-bottom:0px;
+    padding-bottom:0px;
+    padding-top:00px;
+  }
+
   .episodeInfo p, .episodeInfo ul{
     font-size:16px;
     line-height:24px;
-    margin-bottom:5px;
+    margin-bottom:0px;
     padding:0;
   }
   
@@ -407,19 +422,11 @@ footer {
     font-size:24px;
     line-height:32px;
   }
-  .episodeTitle{
-    grid-column: span 1;
-  
-  }
+
   .episodesHead{
     font-size:24px;
     margin-bottom:16px;
   }
   
-  .episodeDescription{
-    grid-column: span 1;
-  }
-  .episodeDate{
-    grid-column: span 1;
-  }
+
 }
