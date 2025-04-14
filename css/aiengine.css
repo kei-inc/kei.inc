@@ -445,7 +445,9 @@ nav a {
 	letter-spacing: -2%;
 	margin: 40px auto;
 }
-
+.ben-box h2, #faq h2{
+	margin: 40px 0;
+}
 
 #faq{
 	color:white;
