@@ -423,9 +423,9 @@ nav a {
 }
 
 .section p {
-	font-size: 16px;
+	font-size: 20px;
 	line-height: 1.4;
-	max-width: 600px;
+	max-width: 700px;
 	color:#848484;
 }
 
@@ -627,14 +627,14 @@ nav a {
 		/* Create the vertical line */
 		.rows-container::after {
 		  
-		  left: 42px;
+		  left: 44px;
 		
 		}
 		
 		/* Remove text content from dots and style as circles */
 		.dot {
 	
-		  width: 8px; /* Size of your circle */
+		  width: 20px; /* Size of your circle */
 		  height: 8px; /* Size of your circle */
 		  border-radius: 50%; /* Make it a circle */
 
@@ -657,6 +657,12 @@ nav a {
 		
 		.section {
 			padding-left: 20px;
+		}
+		.section p {
+			font-size: 16px;
+			line-height: 1.4;
+			max-width: 700px;
+			color:#848484;
 		}
 		
 		#teams{
