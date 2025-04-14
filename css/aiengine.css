@@ -1,0 +1,800 @@
+body,main,header{
+	background: #151515;
+	font-family: NeuzeitGroT;
+	
+}
+nav a {
+	color: white;
+}
+
+.container {
+	 
+	  width: 100%;
+	  margin: 0 auto;
+	  position: relative;
+	  overflow: hidden;
+	  background-image: url('/images/aiengine/topBG.png');
+	  background-size: cover;
+	  background-position: center;
+	  margin-bottom:40px;
+	  border-collapse: collapse;
+	  border-radius: 20px;
+  }
+  
+  .header {
+	  color:#fff;
+	  text-align: center;
+	  padding: 30px 0px;
+  }
+  
+  .header h1 {
+	  font-size: 80px;
+	  font-weight: 700;
+	  margin-bottom: 10px;
+	  letter-spacing: 1px;
+  }
+  
+  .header h2 {
+	  font-size: 40px;
+	  font-weight: 400;
+	  margin-top: 0;
+  }
+  
+  .image-wrapper {
+	  width: 78%; 
+	  margin: 0 auto;
+	  position: relative;
+	  overflow: hidden;
+	  
+  }
+  .image-wrapper:has(.topVideo) {
+	  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .masked-image {
+	  width: 100%;
+	  height: auto;
+	  display: block;
+	  margin-bottom: -50px; /* Creates the mask effect */
+	 
+		
+  }
+
+.topVideo{
+	  overflow: hidden;
+		border-radius: 12px 12px 0 0; /* Rounded corners only on top */
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+		
+		
+  }
+  .topVideo .masked-image{width:102%;margin: 0 -10px -100px -10px;}
+
+  #intro{
+	 width:100%;
+	 padding-bottom:60px;
+  }
+
+  #intro>div>p.redIntro{
+	 
+	  	width:78%;
+		color:#E2725B;
+	    font-size: 36px;
+		line-height: 52px;
+	    font-weight: 400;
+		padding-right:2%;
+		box-sizing: border-box;
+		letter-spacing: -2%;
+		margin: 40px auto;
+  }
+  
+  #intro>div>p:not(.redIntro){
+		color:#fff;
+		width:78%;
+		padding-right:15%;
+		box-sizing: border-box;
+		font-size: 26px;
+		line-height: 40px;
+		margin: 40px auto;
+	}
+
+
+.ben-box{
+	padding:40px 0;
+	width:78%;
+	margin: 40px auto;
+	box-sizing: border-box;
+}
+.benefitContainer{
+	display: flex;
+	flex-wrap: wrap;
+	gap:40px;
+}
+.benefitContainer div{
+	border-top: 1px solid #E2725B;
+	
+	flex: 0 0 30%; /* 3 equal columns with gap compensation */
+	
+	box-sizing: border-box;
+}
+.benefitContainer h3{
+	color:#E2725B;
+	font-size:24px;
+}
+.benefitContainer div p{
+	color:#E2725B;
+	font-size: 18px;
+	line-height:28px;
+}
+ #teams{
+	 padding:0 0 40px 0;
+ }
+#teams  h2{
+	font-size:64px;
+	text-align:center;
+	color:#fff;
+}
+.teams-box{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap:40px;
+}
+.gridBox{
+	border: 1px solid #444444;
+	border-radius:16px;
+	height:535px;
+	position: relative;
+	  border-radius: 10px;
+	  overflow: hidden;
+	  color: white;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-end;
+	  z-index: 0;
+	
+}
+.gridBox::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color:#343434;
+
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  filter:grayscale(100%);
+  transition: filter 0.5s ease-in-out;
+}
+
+.gridBox#teams1::before {
+	background-image: url('/images/aiengine/teams1.png');
+}
+.gridBox#teams2::before {
+	background-image: url('/images/aiengine/teams2.png');
+}
+.gridBox#teams3::before {
+	background-image: url('/images/aiengine/teams3.png');
+}
+.gridBox#teams4::before {
+	background-image: url('/images/aiengine/teams4.png');
+}
+
+.gridBox:hover::before{
+  filter:grayscale(0%);
+  
+}
+
+.gridBox::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 230px;
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  z-index:2;
+}
+.gridBox>div{
+	padding: 25px;
+	  z-index: 3;
+	  position: relative;
+	  text-align:center;
+}
+.gridBox h3{
+	text-transform: uppercase;
+	margin-bottom:3px;
+}
+.gridBox p{
+	color:#fff;
+	font-size:16px;
+	line-height:28px;
+}
+
+#pricing {
+	padding:80px 0 100px 0;
+}
+
+#pricing h2{
+	color:white;
+	  font-size: 64px;
+	 font-weight:700;
+	 margin-bottom:80px;
+	 text-align: center;
+}
+
+.pricingMatrix{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap:80px;
+	
+}
+
+.pricingMatrix > div{
+	border-right:1px solid #5F5F5F;
+	padding-right:80px;
+	display: flex;
+	  flex-direction: column;
+}
+.pricingMatrix > div:nth-child(3){
+	border-right:0;
+}
+.pricingMatrix h3{
+	color:white;
+	  font-size: 32px;
+	 font-weight:700;
+	 padding-bottom:26px;
+	 border-bottom:1px solid #5F5F5F;
+	 margin-bottom:26px;
+}
+.pricingMatrix ul{
+	padding:0;
+	width:80%;
+}
+.pricingMatrix li{
+	color:white;
+	  font-size: 18px;
+	  line-height:28px;
+	  list-style-type: disc;
+	 margin-bottom:10px;
+}
+.pricingMatrix p{
+	color:#ABABAB;
+	  font-size: 24px;
+	 font-weight:400;
+	 padding-bottom:30px;
+	
+}
+.pricingMatrix p:last-child{
+	margin-top: auto;
+	padding-bottom:0px;
+
+}
+#prodFeatures{
+	color:#fff;
+	
+}
+#prodFeatures h3{
+	margin:0;
+	 font-size: 64px;
+	 font-weight:700;
+	 text-align: center;
+}
+#prodFeatures p{
+		color:#fff;
+	 font-size: 28px;
+	 font-weight:400;
+	 text-align: center;
+	 margin-bottom:60px;
+}
+#prodFeatures>div>div{
+	display:flex;
+}
+#prodFeatures img{
+	
+}
+
+#prodFeatures ul{
+	margin:10px 40px;
+}
+#prodFeatures li{
+	color:#fff;
+	font-size:18px;
+	line-height:26px;
+	margin-bottom:10px;
+	list-style-type: disc;
+}
+
+
+#prodFeatures>div{
+	padding-top:60px;
+	background-color:#343434;
+	  background-size: cover;
+	  background-position: center;
+	  border-radius: 20px;
+	  margin-bottom:60px;
+}
+#feat1{
+	background-image: url('/images/aiengine/feat1.png');
+}
+#feat2{
+	background-image: url('/images/aiengine/feat2.png');
+}
+#feat3{
+	background-image: url('/images/aiengine/feat3.png');
+}
+
+
+
+		/* Process component */
+#processWrapper {
+	
+	width: 100%;
+}
+
+#processComponent {
+	
+	width: 100%;
+	z-index: 100;
+	background-color: #353535;
+	overflow: hidden;
+}
+
+.process-container {
+	display: flex;
+	max-width: 1200px;
+	height: 100%;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+
+
+.rows-container {
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+/* Create the vertical line */
+.rows-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Adjust this value to move the line to the right */
+  left: 86px; /* Change this to position the line */
+  width: 1px;
+  background-color: #636363;
+  z-index: 0;
+}
+
+/* Remove text content from dots and style as circles */
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 13px; /* Size of your circle */
+  height: 13px; /* Size of your circle */
+  background-color: #E2725B; /* Match page background */
+  border-radius: 50%; /* Make it a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px; /* Add spacing around the dot */
+}
+
+/* Remove the text content */
+.dot::before {
+  content: "";
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+/* Adjust the number position if needed */
+.number {
+  margin-right: 20px; /* Space between number and dot */
+}
+
+.number {
+	font-size: 24px;
+	width: 50px;
+	text-align: center;
+	transition: color 0.3s ease;
+	cursor: pointer;
+	color:#636363;
+
+}
+
+.section {
+	padding-left: 50px;
+	color:#fff;
+}
+
+.section h3 {
+	font-size: 24px;
+	margin-bottom: 5px;
+}
+
+.section p {
+	font-size: 16px;
+	line-height: 1.4;
+	max-width: 600px;
+	color:#848484;
+}
+
+
+
+
+#howItWorks{
+	padding:40px 0;
+}
+
+.excellence h2, #whatYouGet h2, #howItWorks h2, .ben-box h2, #faq h2{
+	width:78%;
+	color:#fff;
+	font-size: 48px;
+	font-weight:400;
+	box-sizing: border-box;
+	letter-spacing: -2%;
+	margin: 40px auto;
+}
+
+
+#faq{
+	color:white;
+	width:78%;
+	padding-right:15%;
+	box-sizing: border-box;
+	padding-bottom:80px;
+}
+
+#faq h4{
+	font-size: 28px;
+	 font-weight:700;
+	 line-height: 42px;
+	 margin-bottom:10px;
+}
+#faq p{
+	color:white;
+	  font-size: 24px;
+	 font-weight:400;
+	 line-height: 36px;
+	  font-family: 'SourceSerif4', serif;
+	  margin-bottom:80px;
+}
+#faq ul{
+	color:white;
+	  font-size: 24px;
+	 font-weight:400;
+	 line-height: 36px;
+	  font-family: 'SourceSerif4', serif;
+	  margin-bottom:80px;
+}
+#faq li{
+	list-style-type: disc;
+	  margin-bottom:6px;
+}
+  footer {
+	  background-color: #000;
+  }
+  .quote p{
+	  line-height:52px;
+  }
+  
+  
+  @media (max-width: 768px) {
+	  body,
+		header {
+		  background: #151515;
+		}
+		footer {
+		  background: #000;
+		}
+	  .header {
+			padding: 15px 0px;
+		}
+	  .header h1 {
+		  font-size: 24px;
+		  margin-bottom: 0px;
+	  }
+	  
+	  .header h2 {
+		  font-size: 16px;
+	  }
+	  
+	  .masked-image {
+		  margin-bottom: -30px;
+	  }
+	  .image-wrapper {
+			width: 90%; 
+
+		}
+		.image-wrapper:has(.topVideo) {
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+		}
+
+	  .topVideo{
+			  border-radius: 5px 5px 0 0; /* Rounded corners only on top */
+			  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+			  
+			  
+		}
+		.topVideo .masked-image{margin: 0 -5px -30px -5px;}
+		
+  	  #intro>div>p.redIntro{
+			 
+				  width:90%;
+				font-size: 22px;
+				line-height:30px;
+				margin-bottom:0px;
+				margin: 20px auto;
+		  }
+		  
+		  #intro>div>p:not(.redIntro){
+				font-size: 16px;
+				line-height:28px;
+				width:90%;
+				padding-right:0;
+				margin: 20px auto;
+				
+			}
+			.quote p{
+				font-size:20px;
+				  line-height:30px;
+			  }
+		.excellence h2, #whatYouGet h2, #howItWorks h2, .ben-box h2, #faq h2{
+			width:90%;
+			
+			font-size: 28px;
+			
+			margin: 20px 0;
+		}
+		.excellence h2{
+			margin: 20px auto;
+		}
+		.ben-box{
+			padding:20px 0;
+			width:90%;
+			margin: 20px auto;
+		}
+		.benefitContainer{
+			display: flex;
+			flex-wrap: wrap;
+			gap:40px;
+		}
+		.benefitContainer div{
+			
+			flex: 0 0 90%; /* 3 equal columns with gap compensation */
+			
+		}
+		#prodFeatures>div{
+			padding:20px 10px 0 20px;
+			
+			  border-radius: 16px;
+			  margin-bottom:20px;
+		}
+		#prodFeatures h3{
+			margin:0 0 8px 0;
+			 font-size: 36px;
+
+		}
+		#prodFeatures p{
+			 font-size: 20px;
+			 line-height:26px;
+			 margin-bottom:20px;
+		}
+		#prodFeatures>div>div{
+			display:flex;
+			flex-wrap: wrap;
+		}
+		#prodFeatures ul{
+			margin:10px 10px 20px 10px;
+		}
+		#prodFeatures li{
+			
+			font-size:14px;
+			line-height:20px;
+			margin-bottom:10px;
+			
+		}
+		#feat2 .image-wrapper{
+			border:1 solid #red;
+			  order: 2; /* Higher number appears later */
+			
+		}
+		
+		
+
+		
+		.process-container {
+	
+			padding: 0 10px;
+		}
+		
+		
+		
+
+		
+		/* Create the vertical line */
+		.rows-container::after {
+		  
+		  left: 42px;
+		
+		}
+		
+		/* Remove text content from dots and style as circles */
+		.dot {
+	
+		  width: 8px; /* Size of your circle */
+		  height: 8px; /* Size of your circle */
+		  border-radius: 50%; /* Make it a circle */
+
+		  margin: 0 8px; /* Add spacing around the dot */
+		}
+		
+
+		
+
+		
+		.number {
+		  margin-right: 20px; /* Space between number and dot */
+		}
+		
+		.number {
+			width: 20px;
+	
+		
+		}
+		
+		.section {
+			padding-left: 20px;
+		}
+		
+		#teams{
+			 padding:0 0 20px 0;
+		 }
+		#teams  h2{
+			font-size:36px;
+			
+		}
+		.teams-box{
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap:20px;
+		}
+	.gridBox{
+		height:400px;
+
+	}
+	.gridBox>div{
+		padding: 10px;
+		  
+	}
+	.gridBox::before {
+	 
+	  filter:grayscale(0%);
+	  
+	}
+
+	.gridBox h3{
+		text-transform: uppercase;
+		margin-bottom:3px;
+	}
+	.gridBox p{
+		font-size:12px;
+		line-height:18px;
+	}
+	#pricing {
+		padding: 40px 0 60px 0;
+		overflow: hidden;
+	}
+	
+	#pricing h2 {
+		font-size: 32px;
+		margin-bottom: 40px;
+		padding: 0 20px;
+	}
+	
+	.pricingMatrix {
+		display: flex;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none; /* Firefox */
+		padding: 0;
+		margin: 0;
+		padding-left: 10px;
+	}
+	
+	/* Hide scrollbar */
+	.pricingMatrix::-webkit-scrollbar {
+		display: none;
+	}
+	
+	.pricingMatrix > div {
+		flex: 0 0 90%;
+		scroll-snap-align: start;
+		margin-right: -60px;
+		border-right: none;
+		padding: 20px;
+		border: 1px solid #5F5F5F;
+		border-radius: 12px;
+		box-sizing: border-box;
+	}
+	
+	.pricingMatrix > div:last-child {
+		margin-right: 0px; 
+		
+	}
+	
+	/* Interactive card indicators */
+	.card-indicator {
+		display: flex;
+		justify-content: center;
+		margin-top: 30px;
+	}
+	
+	.marker {
+		height: 8px;
+		width: 8px;
+		margin: 0 5px;
+		background-color: #5F5F5F;
+		border-radius: 50%;
+		display: inline-block;
+		transition: background-color 0.3s ease;
+	}
+	
+	.marker.active {
+		background-color: white;
+	}
+	
+	.pricingMatrix h3{
+		  font-size: 28px;
+		 padding-bottom:16px;
+		 margin-bottom:16px;
+	}
+	.pricingMatrix ul{
+		width:100%;
+		list-style-position: inside;
+	}
+	
+	.pricingMatrix p{
+		  font-size: 24px;
+		 padding-bottom:24px;
+		
+	}
+	#faq{
+		color:white;
+		width:90%;
+		padding-right:0%;
+		box-sizing: border-box;
+		padding-bottom:20px;
+	}
+	
+	#faq h4{
+		font-size: 20px;
+		 line-height: 30px;
+
+		 margin-bottom:10px;
+	}
+	#faq p{
+		
+		  font-size: 20px;
+		 line-height: 30px;
+		  margin-bottom:20px;
+	}
+	#faq ul{
+		color:white;
+		  font-size: 20px;
+		 line-height: 30px;
+		  margin-bottom:20px;
+	}
+		
+  }
