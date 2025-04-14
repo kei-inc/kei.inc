@@ -34,4 +34,18 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 		});
 	});
+	const video = document.querySelector('.masked-image');
+	  const preloadImage = document.querySelector('.preload-image');
+	  
+	  // When video can play, fade it in and fade out the preload image
+	  video.addEventListener('canplay', function() {
+		video.style.opacity = 1;
+		preloadImage.style.opacity = 0;
+	  });
+	  
+	  // In case video is already loaded when this script runs
+	  if (video.readyState >= 3) {
+		video.style.opacity = 1;
+		preloadImage.style.opacity = 0;
+	  }
 });
