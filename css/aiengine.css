@@ -464,7 +464,7 @@ nav a {
 	padding:40px 0;
 }
 
-.excellence h2, #whatYouGet h2, #howItWorks h2, .ben-box h2, #faq h2{
+.excellence h2, #whatYouGet h2, #howItWorks h2, .ben-box h2, #faq h2, #getStarted h2{
 	width:78%;
 	color:#fff;
 	font-size: 48px;
@@ -473,7 +473,7 @@ nav a {
 	letter-spacing: -2%;
 	margin: 40px auto;
 }
-.ben-box h2, #faq h2{
+.ben-box h2, #faq h2, #getStarted h2{
 	margin: 40px 0;
 }
 
@@ -517,7 +517,50 @@ nav a {
   .quote p{
 	  line-height:52px;
   }
-  
+  #getStarted{
+	  color:#fff;
+	  padding:30px 0 80px 0 ;
+  }
+  #getStarted p{
+		color:#fff;
+		
+	}
+  .demo-button {
+	  background-color: #e97e65; /* Coral/orange color from your image */
+	  color: white;
+	  font-weight: bold;
+	  font-size: 24px;
+	  padding: 20px 40px;
+	  border: none;
+	  border-radius: 12px;
+	  cursor: pointer;
+	  text-transform: uppercase;
+	  letter-spacing: 1px;
+	  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	  transition: background-color 0.3s, transform 0.2s;
+	  
+	  
+	}
+	.button{
+		margin-top:80px;
+		margin-bottom:40px;
+	}
+	.demo-button:link{
+		text-decoration:none;
+	}
+	.demo-button:hover {
+	  background-color: #d46e56; /* Slightly darker on hover */
+	  transform: translateY(-2px);
+	}
+	
+	.demo-button:active {
+	  transform: translateY(1px);
+	}
+	
+	.demo-button:focus {
+	  outline: none;
+	  box-shadow: 0 0 0 3px rgba(233, 126, 101, 0.4);
+	}
   
   @media (max-width: 768px) {
 	  body,
