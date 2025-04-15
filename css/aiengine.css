@@ -526,7 +526,7 @@ nav a {
 		
 	}
   .demo-button {
-	  background-color: #e97e65; /* Coral/orange color from your image */
+	  background-color: #E2725B; 
 	  color: white;
 	  font-weight: bold;
 	  font-size: 24px;
@@ -549,7 +549,7 @@ nav a {
 		text-decoration:none;
 	}
 	.demo-button:hover {
-	  background-color: #d46e56; /* Slightly darker on hover */
+	  background-color: #E2725B; /* Slightly darker on hover */
 	  transform: translateY(-2px);
 	}
 	

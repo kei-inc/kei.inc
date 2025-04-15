@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vertically Aligned Scroll Solution</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #333;
+			color: #777;
+			overflow-x: hidden;
+		}
+		
+		/* Demo page content */
+		.content-before, .content-after {
+			height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			color: #555;
+		}
+		
+		/* Process component */
+		#processWrapper {
+			position: relative;
+			height: 500vh; /* 5 sections × 100vh */
+			width: 100%;
+		}
+		
+		#processComponent {
+			position: sticky;
+			top: 0;
+			height: 100vh;
+			width: 100%;
+			z-index: 100;
+			background-color: #333;
+			overflow: hidden;
+		}
+		
+		.process-container {
+			display: flex;
+			max-width: 1200px;
+			height: 100%;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+		
+		.timeline {
+			width: 150px;
+			position: relative;
+		}
+		
+		.progress-bar {
+			position: absolute;
+			left: 74px;
+			top: 0;
+			width: 2px;
+			height: 100%;
+			background-color: #555;
+		}
+		
+		.indicator {
+			position: absolute;
+			left: 70px;
+			width: 10px;
+			height: 80px;
+			background-color: #e67e73;
+			z-index: 2;
+			transition: transform 0.3s ease;
+		}
+		
+		/* Row-based layout for better alignment */
+		.rows-container {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 60px 0;
+			width: 100%;
+		}
+		
+		.row {
+			display: flex;
+			align-items: center;
+		}
+		
+		.number {
+			font-size: 24px;
+			width: 50px;
+			text-align: center;
+			transition: color 0.3s ease;
+			cursor: pointer;
+		}
+		
+		.section {
+			padding-left: 50px;
+			transition: color 0.3s ease;
+		}
+		
+		.section h2 {
+			font-size: 24px;
+			margin-bottom: 10px;
+		}
+		
+		.section p {
+			font-size: 16px;
+			line-height: 1.4;
+			max-width: 600px;
+		}
+		
+		/* Active state */
+		.active {
+			color: #fff;
+		}
+		
+		/* Position markers for the indicator */
+		.position-marker {
+			position: absolute;
+			width: 10px;
+			height: 2px;
+			background-color: transparent;
+		}
+	</style>
+</head>
+<body>
+	<!-- Content before the process component -->
+	<div class="content-before">
+		<p>Scroll down to see the process component</p>
+	</div>
+	
+	<!-- Process component wrapper -->
+	<div id="processWrapper">
+		<!-- Sticky process component -->
+		<div id="processComponent">
+			<div class="process-container">
+				<div class="timeline">
+					<div class="progress-bar"></div>
+					<div class="indicator" id="indicator"></div>
+				</div>
+				
+				<div class="rows-container">
+					<div class="row">
+						<div class="number" data-index="0">1</div>
+						<div class="section" data-index="0">
+							<h2>Discovery & Setup</h2>
+							<p>We work with your team to understand your specific industry challenges, strategic priorities, and key questions about AI</p>
+						</div>
+						<div class="position-marker" data-index="0"></div>
+					</div>
+					
+					<div class="row">
+						<div class="number" data-index="1">2</div>
+						<div class="section" data-index="1">
+							<h2>Customization</h2>
+							<p>We tailor the insight library to your context, combining broadly relevant examples with industry-specific cases that address your unique challenges</p>
+						</div>
+						<div class="position-marker" data-index="1"></div>
+					</div>
+					
+					<div class="row">
+						<div class="number" data-index="2">3</div>
+						<div class="section" data-index="2">
+							<h2>Platform Configuration</h2>
+							<p>We set up your dedicated web-based environment with the customized example library, analysis tools, and collaboration features</p>
+						</div>
+						<div class="position-marker" data-index="2"></div>
+					</div>
+					
+					<div class="row">
+						<div class="number" data-index="3">4</div>
+						<div class="section" data-index="3">
+							<h2>Team Enablement</h2>
+							<p>We provide orientation sessions to ensure your team can effectively use the insights for research, education, strategy, and implementation</p>
+						</div>
+						<div class="position-marker" data-index="3"></div>
+					</div>
+					
+					<div class="row">
+						<div class="number" data-index="4">5</div>
+						<div class="section" data-index="4">
+							<h2>Knowledge Evolution</h2>
+							<p>The platform can be updated by your team, our team, or both as new examples and approaches emerge, ensuring the insights remain current and valuable</p>
+						</div>
+						<div class="position-marker" data-index="4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Content after the process component -->
+	<div class="content-after">
+		<p>Content after the process component</p>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const processWrapper = document.getElementById('processWrapper');
+			const processComponent = document.getElementById('processComponent');
+			const indicator = document.getElementById('indicator');
+			const rows = document.querySelectorAll('.row');
+			const sections = document.querySelectorAll('.section');
+			const numbers = document.querySelectorAll('.number');
+			const markers = document.querySelectorAll('.position-marker');
+			
+			const totalSections = sections.length;
+			let currentActive = 0;
+			let wrapperHeight;
+			let sectionHeight;
+			
+			// Calculate dimensions
+			function updateDimensions() {
+				wrapperHeight = processWrapper.offsetHeight;
+				sectionHeight = wrapperHeight / totalSections;
+				
+				// Position markers for indicator
+				rows.forEach((row, index) => {
+					const rect = row.getBoundingClientRect();
+					const marker = markers[index];
+					const markerTop = rect.top + (rect.height / 2) - (indicator.offsetHeight / 2) - processComponent.getBoundingClientRect().top;
+					
+					marker.style.top = `${markerTop}px`;
+					marker.style.left = '74px';
+				});
+			}
+			
+			// Update active section and indicator
+			function updateActive(index) {
+				if (index < 0) index = 0;
+				if (index >= totalSections) index = totalSections - 1;
+				
+				currentActive = index;
+				
+				// Get the vertical center of the active row
+				const markerPosition = markers[index].style.top;
+				
+				// Update indicator position
+				indicator.style.transform = `translateY(${markerPosition})`;
+				
+				// Update section highlights
+				sections.forEach(section => section.classList.remove('active'));
+				numbers.forEach(number => number.classList.remove('active'));
+				rows.forEach(row => row.classList.remove('active'));
+				
+				for (let i = 0; i <= index; i++) {
+					sections[i].classList.add('active');
+					numbers[i].classList.add('active');
+					rows[i].classList.add('active');
+				}
+			}
+			
+			// Initialize
+			updateDimensions();
+			updateActive(0);
+			
+			// Handle scroll events
+			window.addEventListener('scroll', function() {
+				// Get position within the wrapper
+				const wrapperRect = processWrapper.getBoundingClientRect();
+				const scrollProgress = -wrapperRect.top / (wrapperHeight - window.innerHeight);
+				
+				// Only process when wrapper is visible
+				if (scrollProgress >= 0 && scrollProgress <= 1) {
+					// Calculate which section we're on
+					const rawIndex = scrollProgress * totalSections;
+					const sectionIndex = Math.floor(rawIndex);
+					
+					if (sectionIndex !== currentActive) {
+						updateActive(sectionIndex);
+					}
+				}
+			});
+			
+			// Make numbers clickable
+			numbers.forEach((number, index) => {
+				number.addEventListener('click', () => {
+					// Calculate scroll position for this section
+					const scrollTarget = processWrapper.offsetTop + (index * sectionHeight);
+					
+					window.scrollTo({
+						top: scrollTarget,
+						behavior: 'smooth'
+					});
+					
+					updateActive(index);
+				});
+			});
+			
+			// Make rows clickable too
+			rows.forEach((row, index) => {
+				row.addEventListener('click', () => {
+					// Calculate scroll position for this section
+					const scrollTarget = processWrapper.offsetTop + (index * sectionHeight);
+					
+					window.scrollTo({
+						top: scrollTarget,
+						behavior: 'smooth'
+					});
+					
+					updateActive(index);
+				});
+			});
+			
+			// Handle window resize
+			window.addEventListener('resize', function() {
+				updateDimensions();
+				updateActive(currentActive);
+			});
+		});
+	</script>
+</body>
+</html>
