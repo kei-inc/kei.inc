@@ -15,6 +15,7 @@
     font-family: 'SourceSerif4';
     src: url('../fonts/SourceSerif4-VariableFont_opsz,wght.ttf') format('truetype');
     font-style: normal;
+    font-weight: 100 900;
 }
 @font-face {
     font-family: 'SourceSerif4Italic';
