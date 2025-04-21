@@ -408,6 +408,13 @@ h2 {
 
 
 @media (max-width: 768px) {
+  * {
+    font-synthesis: none;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   .content-wrapper {
     padding: 0 20px;
   }
@@ -488,7 +495,7 @@ h2 {
   #intro h1 {
     font-size: 40px;
     line-height: 1.1;
-    font-weight: 600;
+    font-variation-settings: 'wght' 600;
     margin-top:0px;
     margin-bottom:10px;
   }
