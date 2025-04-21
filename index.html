@@ -15,9 +15,9 @@
   <link rel="mask-icon" href="/images/mask_icon.svg" color="black">
   
  <link rel="manifest" href="/site.webmanifest">
-  <meta name="msapplication-TileColor" content="#EF7354">
+  <meta name="msapplication-TileColor" content="#EFEDE4">
  <meta name="msapplication-config" content="/browserconfig.xml">
-  <meta name="theme-color" content="#EF7354">
+  <meta name="theme-color" content="#EFEDE4">
   
   <!-- Open Graph -->
   <meta property="og:site_name" content="Kei">
@@ -61,8 +61,10 @@
    </script>
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/index.css">
-  <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+  
   <link rel="icon" href="./images/link-logo.svg" type="image/svg+xml">
+
+
 </head>
 
 <body>
@@ -70,6 +72,14 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ9RNJQ9" height="0" width="0"
       style="display:none;visibility:hidden"></iframe>
   </noscript>
+
+  <div class="video-background">
+    <video id="background-video" autoplay muted loop playsinline>
+      <source id="desktop-video" src="kei_reel.mp4" type="video/mp4">
+      <source id="mobile-video" src="kei_reel_mobile.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <header class="sticky-header">
     <div class="header-container">
       <a href="index.html" class="logo">
@@ -77,102 +87,185 @@
       </a>
       <nav>
         <ul class="menu">
-          <li><a href="/who.html">Who</a></li>
-          <li><a href="/how.html">How</a></li>
-          <li><a href="/case-studies/">Case Studies</a></li>
-          <li><a href="/ai_engine/">AI Insight Engine</a></li>
-          <li><a href="/workshop/">Workshop</a></li>
-          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/who.html" data-text="About Kei">About Kei</a></li>
+          <li><a href="/how.html" data-text="How We Work">How We Work</a></li>
+          <!--<li class="has-dropdown">
+            <a href="#" data-text="Practice Areas">Practice Areas</a>
+            <div class="practice-dropdown">
+              <div class="practice-dropdown-content">
+                <a href="/practices/future-opportunities" data-text="Defining Future Opportunities">Defining Future Opportunities</a>
+                <a href="/practices/brand-belief" data-text="Building Brand Belief Systems">Building Brand Belief Systems</a>
+                <a href="/practices/next-gen" data-text="Creating Next-Generation Experiences">Creating Next-Generation Experiences</a>
+                <a href="/practices/places" data-text="Shaping Places & Communities">Shaping Places & Communities</a>
+                <a href="/practices/change" data-text="Enabling Sustained Change">Enabling Sustained Change</a>
+              </div>
+            </div>
+          </li>-->
+          <li><a href="/case-studies/" data-text="Our Work">Our Work</a></li>
+          <li><a href="/ai_engine/" data-text="AI Insight Engine">AI Insight Engine</a></li>
+          <li><a href="/workshop/the_difference/" data-text="The Difference">The Difference</a></li>
+          <li><a href="/contact.html" data-text="Contact">Contact</a></li>
         </ul>
         <div class="dropdown">
           <img src="/images/mobile-menu-white.png" alt="Menu" class="dropbtn">
           <div class="dropdown-content">
-            <a href="/who.html">Who</a>
-            <a href="/how.html">How</a>
-            <a href="/case-studies/">Case Studies</a>
+            <a href="/who.html">About Kei</a>
+            <a href="/how.html">How We Work</a>
+            <a href="/case-studies/">Our Work</a>
             <a href="/ai_engine/">AI Insight Engine</a>
-            <a href="/workshop/">Workshop</a>
+            <a href="/workshop/the_difference/">The Difference</a>
             <a href="/contact.html">Contact</a>
           </div>
         </div>
       </nav>
     </div>
   </header>
-  <div class="content-wrapper">
 
+  <div class="content-wrapper">
     <main id="main-content">
       <div class="main-content">
-        <!-- Slide content -->
-        <div id="slide1" class="slide">
-          <span>We Are Kei.</span>
-        </div>
-        <div id="slide2" class="slide">
-          <span>Kei is a <em>difference</em> agency.</span>
-        </div>
-        <div id="slide3" class="slide">
-          <span><span class="unscribbled">Kei helps organizations</span> <span
-            class="scribblable">unlock actionable insights, gain competitive edges, seize untapped opportunities, predict future demand, and essentially just figure out what exactly is going on in the world and what can be done about it.</span></span><!-- <span class="editorialDirection">Nope</span>-->
-        </div>
-        <div id="slide4" class="slide">
-          <span><span class="unscribbled">Kei helps organizations <span class="typed">discover patterns, </span></span><span class="scribblable">identify the most effective areas of action, drive transformative impact through cutting-edge strategy and innovative business design solutions, and <em>did we already mention strategy</em> and solutions and innovative and impact and transformative...?</span></span><!-- <span class="editorialDirection">ugh... try again</span>-->
-        </div>
-        <div id="slide5" class="slide">
-          <span><span class="unscribbled">Kei helps organizations discover patterns, <span class="typed">find focus, </span></span><span class="scribblable">ideate, innovate, strategize, execute, conceptualize, optimize, synergize, disrupt, leverage, streamline, gamify, futureproof, blockchain-ify, growth-hack, paradigm-shift, thought-lead, cross-pollinate, mindshare-maximize, <em>holisti-harmonize</em>, quantum-leap, neuro-program, AI-ify, uber-ize, crypto-revolutionize, hyper-personalize, omni-orchestrate, meta-versify, cyber-synthesize, quantum-entangle, hyper-loop, singularity-approach, dark-disrupt, biohack, neuro-enhance, quantum-compute, hologram-project, time-warp, teleport, <em>inter-brainstorm</em>, gravity-defy, wormhole-traverse, multiverse-expand, antimatter-fuel, galactic-innovate, supernova-explode, black-hole-compress, cosmic-ray-infuse, parallel-pivot, <em>big-bangify</em>...</span>
-          </span><!-- <span class="editorialDirection">look, this is getting ridiculous</span> -->
-        </div>
-        <div id="slide6" class="slide">
-          <span><span class="unscribbled">Kei helps organizations discover patterns, find focus, <span class="typed">create experiences, </span></span><span class="scribblable">and leverage brand synergies, amplify value propositions, and nurture brand evangelists through immersive, omni-channel storytelling experiences that quantum-entangle consumer neurons, hyper-loop customer journeys through the metaverse, crypto-revolutionize brand loyalty with NFT-powered empathy tokens, and <em>hologram-project value bombs</em> directly into the limbic systems of target demographics while <em>AI-powered narrative swarms</em> colonize social media mindshare, blockchain-ifying every touchpoint into a singularity of brand love that transcends space-time, disrupts industry paradigms with antimatter-fueled innovation, and <em>telepathically implants USPs</em> into the collective unconscious of the global market, resulting in a supernova of viral engagement that black-hole-compresses sales funnels into instantaneous conversion events...</span></span><!--<span class="editorialDirection">are you for real?</span>-->
-        </div>
-        <div id="slide7" class="slide">
-          <span>Kei is a difference agency. </span>
-        </div>
-        <div id="slide8" class="slide">
-          <span>Seriously now, what the <span class="curse">!*#$</span> is a difference agency?<br><br>
-
-            Kei helps organizations find different ways of thinking, seeing and doing. Using systems thinking, we help detect patterns, uncover opportunities, create processes, and generally turn elusive ideas into <em>tangible realities</em> that make a difference.</span>
-        </div>
-        <div id="slide9" class="slide">
-          <span>We make a difference.<br><br>
-            <em>It's simple really.</em>
-          </span>
-        </div>
-        <div id="finalSlide" class="finalSlide">
-          <span>So, thats the deal. &#x1F609;<br><br>
-            Jump on in and check out what we have going on</span>
-          <div class="homeSections">
-            <div id="homeWho"><a href="/who.html">
-                <p class="homeTitle">Who We Are<p>
-                  <p class="homeSub">All your burning questions about us answered here!</p>
-              </a>
-            </div>
-            <div id="homeHow"><a href="/how.html">
-                <p class="homeTitle">How We Work<p>
-                  <p class="homeSub">Agencies are changing and we're coming at this from a new angle</p>
-              </a>
-            </div>
-            <div id="homeWorkshop"><a href="#">
-                <p class="homeTitle">Workshop<p>
-                  <p class="homeSub">It's a shame this hasn't launched yet, but hey, good things come to those who wait!
-                  </p>
-              </a>
-            </div>
-            <div id="homeCase"><a href="/case-studies.html">
-                <p class="homeTitle">Our Case Studies<p>
-                  <p class="homeSub">We made 'em nice and long so you don't have to buy books anymore.</p>
-              </a>
-            </div>
-            <div id="homeContact"><a href="/contact.html">
-                <p class="homeTitle">Contact Us<p>
-                  <p class="homeSub">Operators are standing by!</p>
-              </a>
+        <section id="intro" >
+          <h1>Kei is a strategic creative agency.</h1>
+          <div class="grid12">
+            <div class="intro">
+              <p>We move between seeing and doing, between thinking and making to envision what's possible.</p>
+              <p>Our work—spanning brands, products, and places—helps organizations define what's next.</p>
             </div>
           </div>
-        </div>
-
+        </section>
+        
+        
+        <section id="practices">
+          <h2>Our Practice Areas</h2>
+          
+          <div id="practiceGrid" class="grid12">
+            <div class="practiceItem grid-item left">
+              <h3>Defining Future Opportunities</h3>
+              <p>We help organizations discover which strategic directions will create distinctive advantage as markets evolve and possibilities multiply.</p>
+            </div>
+            <div class="practiceItem grid-item right">
+              <h3>Building Brand Belief Systems</h3>
+              <p>We create brand systems where promise meets proof at every touchpoint, building authentic connections between organizations and their audiences.</p>
+            </div>
+            <div class="practiceItem grid-item left">
+              <h3>Creating Next-Generation Experiences</h3>
+              <p>We design products and services that work the way people think, making complex capabilities feel intuitive and meaningful in everyday use.</p>
+            </div>
+            <div class="practiceItem grid-item right">
+              <h3>Shaping Places & Communities</h3>
+              <p>We develop places where community forms naturally, creating environments that strengthen connection while preserving and enhancing distinctive identity.</p>
+            </div>
+            <div class="practiceItem grid-item left">
+              <h3>Enabling Sustained Change</h3>
+              <p>We build systems that turn strategic vision into organizational reality, creating the capabilities needed for continuous evolution.</p>
+            </div>
+          </div>
+        </section>
+        
+        <section id="recentWork">
+          <h2>Recent Work</h2>
+          <div class="grid12">
+            <a href="/humboldt/" class="workContainer" style="display: none;">
+              <div class="fullLeft">
+                <img data-src="/images/humboldt-overhead.png">
+              </div>
+              <div class="fullRight">
+                <h3>A Bolder Humboldt</h3>
+                <p class="subhead">Shaping Places and Communities</p>
+                <p>Transforming a small Kansas town into a beacon of rural innovation and community-driven growth.</p>
+              </div>
+            </a>
+            <a href="/halcyon/" class="workContainer" style="display: none;">
+              <div class="fullLeft">
+                <img data-src="/Halcyon/billboard2.png">
+              </div>
+              <div class="fullRight">
+                <h3>Halcyon</h3>
+                <p class="subhead">Building Brand Belief Systems</p>
+                <p>Halcyon helps professionals navigating the energy transition make faster, more informed business decisions.</p>
+              </div>
+            </a>
+            <a href="/vibrant-planet/" class="workContainer" style="display: none;">
+              <div class="fullLeft">
+                <img data-src="/vibrant-planet/firefighter.png">
+              </div>
+              <div class="fullRight">
+                <h3>Vibrant Planet</h3>
+                <p class="subhead">Creating Next-Generation Experiences</p>
+                <p>Building tools to help forest managers make better decisions faster in the face of climate change.</p>
+              </div>
+            </a>
+          </div>
+        </section>
+        
+        <section id="theDifference">
+          <h2>The Difference</h2>
+          <div class="grid12">
+            <a href="/workshop/the_difference/ep2_paul_cloutier.html" class="episodeContainer">
+              <div class="diffImage">
+                <img src="/images/difference/paul_main.png">
+              </div>
+              <div>
+                <h3>Ep2: Paul Cloutier</h3>
+                <p class='subhead'>April 4th, 2025</p>
+                <p>As a partner in Kei, Paul is usually on the other side of the screen hosting this conversation, but today Paul and Kevin talk about Paul's placemaking work in Kansas and reimagining a future for rural America.</p>
+              </div>
+            </a>
+            <a href="/workshop/the_difference/ep1_robin_sloan.html" class="episodeContainer">
+              <div class="diffImage">
+                <img src="/images/difference/robin_main.png">
+              </div>
+              <div>
+                <h3>Ep1: Robin Sloan</h3>
+                <p class='subhead'>March 19th, 2025</p>
+                <p>Robin Sloan is a man of many talents, best selling novelist, olive oil entrepreneur, AI experimenter, generative musician. We sat down with him in our first episode to discuss what creativity means in the age of AI.</p>
+              </div>
+            </a>
+          </div>
+        </section>
       </div>
     </main>
   </div>
-    <script src="js/index.js"></script>
-</body>
 
+
+  <script src="./js/index.js"></script>
+</body>
+<footer>
+  <div class="content-wrapper">
+      <div class="upper-footer-container">
+          <a href="/index.html" class="logo">
+              <img src="/images/orange-logo.svg" alt="Logo" class="logo"></a>
+          <div class="footer-text">
+              <p>Kei is a full-service strategic creative agency that bridges the gap between visionary thinking and exceptional implementation.<br><br>
+                  We are a 100% employee-owned Public Benefit Corporation.
+              </p>
+          </div>
+      </div>
+      <div class="lower-footer-container">
+          <div class="left">
+              <p>2025© Kei.inc All Rights Reserved</p>
+              <div class="social-icons">
+                  <a href="https://www.linkedin.com" target="blank">
+                      <img src="/images/orange-linked.png" alt="LinkedIn">
+                  </a>
+                  <a href="https://www.instagram.com" target="blank">
+                      <img src="/images/orange-insta.png" alt="Instagram">
+                  </a>
+                  <a href="https://www.x.com" target="blank">
+                      <img src="/images/orange-x.png" alt="X">
+                  </a>
+              </div>
+          </div>
+          <div class="right">
+            <a href="/how.html" style="border-top: none;">How</a>
+            <a href="/who.html">Who</a>
+            <a href="/case-studies.html">Case Studies</a>
+            <a href="/contact.html">Contact</a>
+            <br>
+            <a href="/terms-of-service.html">Terms of Service</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+        </div>
+      </div>
+  </div>
+</footer>
 </html>

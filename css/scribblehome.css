@@ -1,0 +1,257 @@
+@font-face {
+    font-family: 'manicReg';
+    src: url('../fonts/manic/manic-webfont.woff') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #EF7354;
+    color: #fff;
+}
+
+header {
+    background-color: #EF7354;
+}
+
+main {
+    font-family: NeuzeitGroT;
+   
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.5em;
+    width: 100%;
+    height:600px;
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+}
+
+.editorialDirection{
+   display:inline-block;
+   display:none;
+   font-family:NeuzeitGroT;
+   font-weight:400;
+   
+
+  background-color: white;
+  color: black;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-size: 16px;
+  line-height: 1.4;
+  max-width: 80%;
+  margin: 10px 0 10px 20px;
+  position: relative;
+}
+
+.editorialDirection::before {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: 25px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+/* Position slides at the top of the main container */
+[id^="slide"] {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom:50px;
+    max-width: 1440px;
+    display: none;
+    padding: 0 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* Style for individual words */
+.word {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.0s ease;
+}
+/* Style for the blinking cursor */
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left:10px;
+    margin-top:2px;
+    background-color: black;
+    animation: blink 0.7s infinite;
+}
+/* Keyframes for cursor blinking animation */
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+/* Style for scribblable text */
+.scribblable {
+    color: #f7cbc1;
+    text-decoration: none;
+    position: relative;
+}
+/* Style for scribbled text */
+.scribbled {
+    display: inline;
+    color: #f7cbc1;
+    position: relative;
+}
+/* Style for scribble canvas overlay */
+.scribble-canvas {
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.finalSlide{
+   display: none;
+   margin-top:50px;
+}
+
+em{
+    font-style: normal; 
+    display: inline;
+    position: relative;
+    text-decoration: none;
+}
+.rough-underline {
+    pointer-events: none;
+    user-select: none;
+}
+.rough-underline-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.slide {
+    position: relative;
+}
+
+.light{
+   color: #f7cbc1;
+   font-size: .3em;
+   font-weight:normal;
+    font-weight: normal;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+nav a {
+    color: white;
+
+}
+.homeSections{
+   display:flex;
+   width:100%;
+   justify-content:space-between;
+   flex-wrap:wrap;
+   margin-top:50px;
+}
+ .homeSections div{
+    margin:20px 0 50px 0;
+    
+    padding-right:3%;
+    width:17%;
+    min-width:240px;
+  
+ }
+ .homeSections div:last-child{
+    padding-right:0%;
+ }
+ .homeSections p{
+   
+     color:white;
+     font-size: 18px;
+     line-height: 1.5em;
+ }
+ .homeSections p.homeSub{
+    font-weight: 400;
+    font-size: 14px;
+    border-top:1px solid white;
+    padding-top:16px;
+
+}
+ .homeSections a:link,  .homeSections a:visited{
+    text-decoration: none;
+    color:white;
+}
+ .homeSections a:hover{
+    text-decoration: none;
+    color:black;
+    cursor: pointer;
+ }
+ 
+.homeSections>div::before{
+   height:40px; 
+   background-position: left; 
+    background-repeat: no-repeat; 
+    display:Block;
+    margin-bottom:30px;
+
+}
+
+#homeWho::before{
+   content:url('/images/home_secticons_who.svg');
+}
+#homeHow::before{
+   content:url('/images/home_secticons_how.svg');
+}
+#homeWorkshop::before{
+   content:url('/images/home_secticons_workshop.svg');
+}
+#homeCase::before{
+   content:url('/images/home_secticons_case.svg');
+   fill: #ff0000;
+}
+#homeContact::before{
+   content:url('/images/home_secticons_contact.svg');
+}
+.homeTitle{
+   font-weight: 700;
+   background-image: url("/images/arrow_marker.svg");
+     height: 1em; 
+     background-position: right; 
+     background-repeat: no-repeat; 
+    
+}
+ 
+@media (max-width: 768px) {
+   [id^="slide"] {
+        font-size: 20px;
+        line-height: 1.5em;
+        padding: 0px 10px 50px 0;
+    }
+    .content-wrapper {
+
+        padding: 0px 0px;
+    }
+    .header-container {
+        padding: 30px;
+    }
+
+    .light{
+     font-size: .5em;
+    }
+    .finalSlide>span{
+       font-size:.75em;
+       line-height: .75em;
+       
+    }
+
+}

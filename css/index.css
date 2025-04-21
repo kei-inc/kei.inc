@@ -1,257 +1,518 @@
-@font-face {
-    font-family: 'manicReg';
-    src: url('../fonts/manic/manic-webfont.woff') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: #EF7354;
-    color: #fff;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	height: auto;
+	background-color: #F5F5F5;
+	color: #5D245D;
+	overflow-x: hidden;
 }
 
 header {
-    background-color: #EF7354;
+	background-color: #EFEDE4;
 }
 
 main {
-    font-family: NeuzeitGroT;
+	font-family: NeuzeitGroT;
    
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 1.5em;
-    width: 100%;
-    height:600px;
-    max-width: 1440px;
-    margin: 0 auto;
-    position: relative;
-    padding: 0 20px;
-    box-sizing: border-box;
-    cursor: pointer;
+	font-weight: 700;
+	font-size: 36px;
+	line-height: 1.5em;
+	width: 100%;
+
+	max-width: 1440px;
+	margin: 0 auto;
+	position: relative;
+	
+	box-sizing: border-box;
+	cursor: pointer;
 
 }
 
-.editorialDirection{
-   display:inline-block;
-   display:none;
-   font-family:NeuzeitGroT;
-   font-weight:400;
-   
 
-  background-color: white;
-  color: black;
-  padding: 10px 25px;
-  border-radius: 20px;
-  font-size: 16px;
-  line-height: 1.4;
-  max-width: 80%;
-  margin: 10px 0 10px 20px;
+
+em{
+	font-style: normal; 
+	display: inline;
+	position: relative;
+	text-decoration: none;
+}
+
+nav a {
+	color: white;
+
+}
+nav a:hover {
+  color: #5D245D;
+
+}
+.menu li {
   position: relative;
 }
 
-.editorialDirection::before {
+.menu li > a {
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Create a hidden bold version to measure width */
+.menu li > a::before {
+  content: attr(data-text);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.menu li > a:hover,
+.has-dropdown:hover > a {
+  font-weight: 700;
+}
+
+.menu > li > a {
+  font-weight: 400;
+  display: inline-block;
+  font-feature-settings: "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  transition: font-weight 0.4s ease;
+}
+
+.has-dropdown:hover > a {
+  font-weight: 700;
+  transition: font-weight 0.4s ease;
+}
+.video-background {
+  position: relative;
+  width: 100%;
+  height: 56.25vw; /* 16:9 aspect ratio (9/16 = 0.5625) */
+  max-height: 100vh; /* Don't exceed viewport height */
+  overflow: hidden;
+  background-color: #000;
+  margin-top: 0px; /* Add space for the header */
+}
+
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 1;
+}
+
+.video-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.sticky-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: transparent;
+  transition: background-color 0.3s ease;
+}
+
+
+
+.scrolled {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+#main-content {
+  min-height: 100vh;
+  height: auto;
+  padding-bottom: 100px; /* Add some padding to ensure scrollable content */
+}
+
+.main-content {
+  margin: 0 auto;
+  padding: 20px 0;
+  color: #5D245D;
+}
+
+.grid12{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 40px;
+  width: 100%;
+}
+.grid-item{
+
+}
+.left {
+  grid-column: 4 / span 4;
+}
+
+.right {
+  grid-column: 9 / span 4;
+}
+.intro{
+  grid-column: 4 / span 6;
+}
+.fullLeft{
+  grid-column: 1 / span 8;
+}
+.fullRight{
+  grid-column: 9 / span 4;
+}
+.fullLeft img{
+  width:100%;
+  height:auto;
+}
+#intro h1{
+  font-weight:900;
+  font-family: 'SourceSerif4', serif;
+  font-size:64px;
+}
+#intro p{
+ 
+  font-size:32px;
+  line-height:42px;
+}
+#practiceGrid {
+  counter-reset: section;
+  margin-top:-70px;
+}
+
+.practiceItem {
+  counter-increment: section;
+  position: relative;
+  padding-top: 24px; /* Space for the number and line above */
+  margin-bottom: 60px; /* Add space between items */
+  margin-left: 0; /* No left margin needed */
+}
+
+.practiceItem::before {
   content: "";
   position: absolute;
-  bottom: -9px;
-  left: 25px;
-  border-width: 10px 10px 0;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
+  top: 42px; /* Position for the line */
+  left: -40px; /* Start 60px to the left */
+  width: 60px; /* Width of the line */
+  height: 1px; /* Height of the line */
+  border-bottom: 1px solid #000; /* Line style */
 }
 
-/* Position slides at the top of the main container */
-[id^="slide"] {
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    margin-bottom:50px;
-    max-width: 1440px;
-    display: none;
-    padding: 0 20px;
-    box-sizing: border-box;
-    cursor: pointer;
+.practiceItem::after {
+  font-size: 20px;
+  font-weight: 400;
+  color: #000;
+  content: counter(section, decimal-leading-zero);
+  position: absolute;
+  top: 0px; /* Position for the number */
+  left: 0; /* Aligned with the content */
+  /* Removed padding-bottom as it doesn't affect layout in absolute positioning */
+}
+.practiceItem h3{
+	margin-top:20px;
+	font-family: 'SourceSerif4', serif;
+	font-size:24px;
+	color:#5D245D;
+	font-weight:400;
+	line-height:32px;
+}
+#recentWork h3, #theDifference h3{
+  margin:0px;
+  font-family: 'SourceSerif4', serif;
+  font-size:32px;
+  color:#5D245D;
+  font-weight:400;
+  line-height:44px;
+}
+.practiceItem p,  #recentWork p, #theDifference p{
+	margin-top:20px;
+	font-family: NeuzeitGroT, sans-serif;
+	font-size:20px;
+	color:#000;
+	font-weight:400;
+	line-height:26px;
+}
+ #recentWork img{
+   border-radius:8px;
+ }
+
+h2 {
+  border-top:1px solid #000;
+  padding-top:20px;
+  font-size:20px;
+  color:#000;
+}
+#theDifference{
+  margin-bottom: 40px;
+}
+.episodeContainer{
+  grid-column: span 4;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
-/* Style for individual words */
-.word {
-    display: inline-block;
-    opacity: 0;
-    transition: opacity 0.0s ease;
-}
-/* Style for the blinking cursor */
-.cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    margin-left:10px;
-    margin-top:2px;
-    background-color: black;
-    animation: blink 0.7s infinite;
-}
-/* Keyframes for cursor blinking animation */
-@keyframes blink {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-}
-/* Style for scribblable text */
-.scribblable {
-    color: #f7cbc1;
-    text-decoration: none;
-    position: relative;
-}
-/* Style for scribbled text */
-.scribbled {
-    display: inline;
-    color: #f7cbc1;
-    position: relative;
-}
-/* Style for scribble canvas overlay */
-.scribble-canvas {
-    position: absolute;
-    left: 0;
-    pointer-events: none;
-    z-index: 1;
-}
-.finalSlide{
-   display: none;
-   margin-top:50px;
+.episodeContainer:hover {
+  opacity: 0.9;
 }
 
-em{
-    font-style: normal; 
-    display: inline;
-    position: relative;
-    text-decoration: none;
-}
-.rough-underline {
-    pointer-events: none;
-    user-select: none;
-}
-.rough-underline-canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    z-index: 1;
+.diffImage{
+  height: 700px; /* Set your container height */
+  overflow: hidden; /* Hide overflow content */
+  position: relative; /* For absolute positioning of the image */
+  border-radius:8px;
+  margin-bottom: 20px;
 }
 
-.slide {
-    position: relative;
-}
-
-.light{
-   color: #f7cbc1;
-   font-size: .3em;
-   font-weight:normal;
-    font-weight: normal;
-    margin-left: 10px;
-    vertical-align: middle;
-}
-nav a {
-    color: white;
+.episodeContainer img{
+  height: 100%; /* Make image 100% of container height */
+  width: auto; /* Let width adjust automatically */
+  position: absolute; /* Take out of normal flow */
+  top: 0;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center correction */
+  object-fit: cover; 
 
 }
-.homeSections{
-   display:flex;
-   width:100%;
-   justify-content:space-between;
-   flex-wrap:wrap;
-   margin-top:50px;
+
+#recentWork p.subhead, #theDifference p.subhead {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0px;
+  color: #000;
 }
- .homeSections div{
-    margin:20px 0 50px 0;
-    
-    padding-right:3%;
-    width:17%;
-    min-width:240px;
+
+.has-dropdown {
+  position: relative;
+}
+
+.practice-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateX(0);
+  background: #EFEDE4;
+  padding: 0px;
+  border-radius: 12px;
+  border:1px solid #E6D9C7;
+  min-width: 300px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 10px;
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+
+
+.practice-dropdown-content {
+  background: #EFEDE4;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.practice-dropdown a {
+  display: block;
+  padding: 6px 10px;
+  color: #5D245D;
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.practice-dropdown a:hover {
+  background-color: rgba(93, 36, 93, 0.1);
+  border-radius: 6px;
+}
+
+.has-dropdown:hover .practice-dropdown {
+  display: block;
+}
+
+/* Hide dropdown in mobile menu */
+.dropdown-content .practice-dropdown {
+  display: none;
+}
+
+.menu > li > a {
+  font-weight: 400;
+  display: inline-block;
+  font-feature-settings: "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  transition: font-weight 0.2s ease;
+}
+
+.has-dropdown:hover > a {
+  font-weight: 700;
+}
+
+/* Keep dropdown text purple even when header is scrolled */
+.sticky-header.scrolled .menu > li > a {
+  color: #fff;
   
- }
- .homeSections div:last-child{
-    padding-right:0%;
- }
- .homeSections p{
-   
-     color:white;
-     font-size: 18px;
-     line-height: 1.5em;
- }
- .homeSections p.homeSub{
-    font-weight: 400;
-    font-size: 14px;
-    border-top:1px solid white;
-    padding-top:16px;
-
-}
- .homeSections a:link,  .homeSections a:visited{
-    text-decoration: none;
-    color:white;
-}
- .homeSections a:hover{
-    text-decoration: none;
-    color:black;
-    cursor: pointer;
- }
- 
-.homeSections>div::before{
-   height:40px; 
-   background-position: left; 
-    background-repeat: no-repeat; 
-    display:Block;
-    margin-bottom:30px;
-
 }
 
-#homeWho::before{
-   content:url('/images/home_secticons_who.svg');
+.sticky-header.scrolled .practice-dropdown a {
+  color: #5D245D;
 }
-#homeHow::before{
-   content:url('/images/home_secticons_how.svg');
+ nav .has-dropdown a{
+  font-weight:400;
+ }
+
+
+ .workContainer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 40px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  margin-bottom: 60px;
+  transition: opacity 0.3s ease;
 }
-#homeWorkshop::before{
-   content:url('/images/home_secticons_workshop.svg');
+
+.workContainer:hover {
+  opacity: 0.9;
 }
-#homeCase::before{
-   content:url('/images/home_secticons_case.svg');
-   fill: #ff0000;
+
+.workContainer .fullLeft img {
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
-#homeContact::before{
-   content:url('/images/home_secticons_contact.svg');
+
+.workContainer:hover .fullLeft img {
+  transform: scale(1.02);
 }
-.homeTitle{
-   font-weight: 700;
-   background-image: url("/images/arrow_marker.svg");
-     height: 1em; 
-     background-position: right; 
-     background-repeat: no-repeat; 
-    
-}
- 
+
+
+
 @media (max-width: 768px) {
-   [id^="slide"] {
-        font-size: 20px;
-        line-height: 1.5em;
-        padding: 0px 10px 50px 0;
-    }
-    .content-wrapper {
+  .content-wrapper {
+    padding: 0 20px;
+  }
 
-        padding: 0px 0px;
-    }
-    .header-container {
-        padding: 30px;
-    }
+  .header-container {
+    padding: 20px;
+  }
 
-    .light{
-     font-size: .5em;
-    }
-    .finalSlide>span{
-       font-size:.75em;
-       line-height: .75em;
-       
-    }
+  body, html {
+    min-height: 100vh;
+    height: auto;
+  }
 
+  #main-content {
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 100px;
+  }
+
+  .video-background {
+    height: 70vh;
+    width: 100vw;
+    left: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .grid12 {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+  }
+  .grid12:has(.workContainer){
+    gap: 5px;
+  }
+
+  .intro {
+    grid-column: 2 / span 4;
+  }
+ 
+  #practiceGrid {
+    margin-top:0px;
+  }
+  .practiceItem {
+    grid-column: 2 / span 4 !important;
+    margin-bottom: 0px;
+  }
+
+  .workContainer {
+    grid-column: 1 / span 6;
+    margin-bottom: 40px;
+  }
+
+  .workContainer .fullLeft {
+    grid-column: 1 / span 6;
+  }
+
+  .workContainer .fullRight {
+    margin-top:0px;
+    grid-column: 1 / span 5;
+  }
+
+  .episodeContainer {
+    grid-column: 1 / span 6;
+    margin-bottom: 40px;
+  }
+
+  .diffImage {
+    height: 400px;
+  }
+
+  #intro h1 {
+    font-size: 40px;
+    line-height: 1.2;
+    margin-top:0px;
+    margin-bottom:10px;
+  }
+
+  #intro p {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .practiceItem h3, #recentWork h3, #theDifference h3 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .practiceItem p, #recentWork p, #theDifference p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  #recentWork p.subhead, #theDifference p.subhead {
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 18px;
+    padding-top: 15px;
+  }
 }
