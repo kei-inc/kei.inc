@@ -1,130 +1,90 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM loaded, setting up events');
-
-  // Add background to header when scrolling
-  window.addEventListener('scroll', function() {
-    console.log('Scroll event fired');
-    const header = document.querySelector('.sticky-header');
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+  
+  // Intersection observer for sticky header
+  const header = document.querySelector('.sticky-header');
+  const sentinelElement = document.createElement('div');
+  sentinelElement.style.height = '50px';
+  sentinelElement.style.position = 'absolute';
+  sentinelElement.style.top = '0';
+  sentinelElement.style.left = '0';
+  sentinelElement.style.width = '100%';
+  document.body.prepend(sentinelElement);
+  
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    },
+    {
+      threshold: 0
     }
-  });
-
-  // Video source switching for mobile
+  );
+  
+  observer.observe(sentinelElement);
+  
+  // Lazy loading video with IntersectionObserver
   const video = document.getElementById('background-video');
   const desktopSource = document.getElementById('desktop-video');
   const mobileSource = document.getElementById('mobile-video');
   
-  // Check if iOS
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
-  function updateVideoSource() {
-    const isMobile = window.innerWidth <= 768;
-    const currentSource = isMobile ? mobileSource : desktopSource;
-    const otherSource = isMobile ? desktopSource : mobileSource;
-    
-    // Remove the unused source to prevent preloading
-    if (otherSource.parentNode) {
-      otherSource.parentNode.removeChild(otherSource);
-    }
-    
-    // Set the video source
-    video.src = currentSource.src;
-    video.load();
-    
-    // iOS specific handling
-    if (isIOS) {
-      // Force video to play inline
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
-      
-      // iOS requires user interaction to start video
-      const playVideo = () => {
-        video.play().catch(() => {});
-        document.removeEventListener('click', playVideo);
-        document.removeEventListener('touchstart', playVideo);
-      };
-      
-      document.addEventListener('click', playVideo, { once: true });
-      document.addEventListener('touchstart', playVideo, { once: true });
-    } else {
-      // Non-iOS devices can try to autoplay
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Video play failed:", error);
-          // Try to play again on user interaction
-          document.addEventListener('click', function playVideo() {
-            video.play().catch(() => {});
-            document.removeEventListener('click', playVideo);
-          }, { once: true });
+  // Set up lazy loading
+  function setupLazyVideo() {
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Video is in view, load source
+            const isMobile = window.innerWidth <= 768;
+            const currentSource = isMobile ? mobileSource : desktopSource;
+            
+            if (!video.src || video.src !== currentSource.dataset.src) {
+              video.src = currentSource.dataset.src;
+              video.load();
+              video.play().catch(error => {
+                console.log("Video play failed:", error);
+              });
+            }
+            
+            // Don't unobserve so we can restart if needed
+          }
         });
-      }
+      }, {
+        threshold: 0.1
+      });
+      
+      videoObserver.observe(video);
     }
   }
-
-  // Initial check
-  updateVideoSource();
-
-  // Update on resize with debounce
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(updateVideoSource, 250);
-  });
-
-  // Video debugging
-  video.addEventListener('loadeddata', function() {
-    console.log('Video loaded successfully');
-  });
-
-  video.addEventListener('error', function(e) {
-    console.error('Error loading video:', e);
-  });
-
-  // Additional video debugging
-  video.addEventListener('playing', function() {
-    //console.log('Video is playing');
-  });
-
-  video.addEventListener('waiting', function() {
-    //console.log('Video is waiting');
-  });
-
+  
+  setupLazyVideo();
+  
   // Get all work containers
   const workContainers = document.querySelectorAll('.workContainer');
   
   if (workContainers.length > 0) {
-    // Hide all containers first
     workContainers.forEach(container => {
       container.style.display = 'none';
     });
     
-    // Select a random container
     const randomIndex = Math.floor(Math.random() * workContainers.length);
     const selectedContainer = workContainers[randomIndex];
     
-    // Get the image element
     const img = selectedContainer.querySelector('img');
     if (img) {
-      // Create a new image for preloading
       const preloadImage = new Image();
       
-      // When the image is loaded, show the container
       preloadImage.onload = () => {
-        // Set the src attribute only after preloading
         img.src = img.dataset.src;
-        // Show the container
         selectedContainer.style.display = 'contents';
       };
       
-      // Start loading the image
       preloadImage.src = img.dataset.src;
     } else {
-      // If no image, just show the container
       selectedContainer.style.display = 'contents';
     }
   }
-}); 
+});

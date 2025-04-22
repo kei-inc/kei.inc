@@ -73,10 +73,15 @@
       style="display:none;visibility:hidden"></iframe>
   </noscript>
 
-  <div class="video-background">
-    <video id="background-video" autoplay muted loop playsinline>
-      <source id="desktop-video" src="kei_reel.mp4" type="video/mp4">
-      <source id="mobile-video" src="kei_reel_mobile.mp4" type="video/mp4">
+<div class="video-background">
+    <video id="background-video" 
+           autoplay 
+           muted 
+           loop 
+           playsinline 
+           style="pointer-events: auto;">
+      <source id="desktop-video" data-src="kei_reel.mp4" type="video/mp4">
+      <source id="mobile-video" data-src="kei_reel_mobile.mp4" type="video/mp4">
     </video>
   </div>
 
