@@ -101,44 +101,7 @@ section {
     margin: 0 auto;
 }
 
-#focus-text li{
-    color:  #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 45px;
-    text-indent: -1.6em;
-    border-top: 1px solid #BB3216;
-}
 
-
-#focus-text li::before {
-    border-top: 1px solid #BB3216;
-    padding-top: 8px;
-    margin-top: -1px;
-}
- ul li {
-    list-style: none;
-    counter-increment: list-counter;
-    text-indent: -2.1em;
-    padding-bottom: 15px;
-    margin-left: -40px;
-
-}
- ul li::before {
-    content: counter(list-counter, decimal-leading-zero) ".";
-    margin-right: 0.5em;
-    display: inline-block;
-    width: 2em;
-    text-indent: 0;
-    color: #BB3216;
-    font-family: NeuzeitGroT;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 38px; /* 190% */
-}
 .full-width-image img {
     width: 100%;
     max-width: 1440px;

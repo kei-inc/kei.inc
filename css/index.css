@@ -38,53 +38,7 @@ em{
 	text-decoration: none;
 }
 
-nav a {
-	color: white;
 
-}
-nav a:hover {
-  color: #5D245D;
-
-}
-.menu li {
-  position: relative;
-}
-
-.menu li > a {
-  position: relative;
-  display: inline-block;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Create a hidden bold version to measure width */
-.menu li > a::before {
-  content: attr(data-text);
-  display: block;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.menu li > a:hover,
-.has-dropdown:hover > a {
-  font-weight: 700;
-}
-
-.menu > li > a {
-  font-weight: 400;
-  display: inline-block;
-  font-feature-settings: "kern" 1;
-  -webkit-font-smoothing: antialiased;
-  transition: font-weight 0.4s ease;
-}
-
-.has-dropdown:hover > a {
-  font-weight: 700;
-  transition: font-weight 0.4s ease;
-}
 .video-background {
   position: relative;
   width: 100%;
@@ -300,83 +254,7 @@ h2 {
   color: #000;
 }
 
-.has-dropdown {
-  position: relative;
-}
 
-.practice-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translateX(0);
-  background: #EFEDE4;
-  padding: 0px;
-  border-radius: 12px;
-  border:1px solid #E6D9C7;
-  min-width: 300px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-top: 10px;
-  padding-top: 0px;
-  margin-top: 0px;
-}
-
-
-
-.practice-dropdown-content {
-  background: #EFEDE4;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.practice-dropdown a {
-  display: block;
-  padding: 6px 10px;
-  color: #5D245D;
-  text-decoration: none;
-  font-size: 16px;
-  white-space: nowrap;
-  transition: background-color 0.2s ease;
-}
-
-.practice-dropdown a:hover {
-  background-color: rgba(93, 36, 93, 0.1);
-  border-radius: 6px;
-}
-
-.has-dropdown:hover .practice-dropdown {
-  display: block;
-}
-
-/* Hide dropdown in mobile menu */
-.dropdown-content .practice-dropdown {
-  display: none;
-}
-
-.menu > li > a {
-  font-weight: 400;
-  display: inline-block;
-  font-feature-settings: "kern" 1;
-  -webkit-font-smoothing: antialiased;
-  transition: font-weight 0.2s ease;
-}
-
-.has-dropdown:hover > a {
-  font-weight: 700;
-}
-
-/* Keep dropdown text purple even when header is scrolled */
-.sticky-header.scrolled .menu > li > a {
-  color: #fff;
-  
-}
-
-.sticky-header.scrolled .practice-dropdown a {
-  color: #5D245D;
-}
- nav .has-dropdown a{
-  font-weight:400;
- }
 
 
  .workContainer {

@@ -30,26 +30,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const video = document.getElementById('background-video');
   const desktopSource = document.getElementById('desktop-video');
   const mobileSource = document.getElementById('mobile-video');
+  let lastVideoTime = 0;
+  let isVideoLoaded = false;
   
-  // Set up lazy loading
+  // Set up video with position memory
   function setupLazyVideo() {
     if ('IntersectionObserver' in window) {
       const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Video is in view, load source
+            // Video is in view
             const isMobile = window.innerWidth <= 768;
             const currentSource = isMobile ? mobileSource : desktopSource;
             
-            if (!video.src || video.src !== currentSource.dataset.src) {
+            if (!isVideoLoaded || video.src !== currentSource.dataset.src) {
               video.src = currentSource.dataset.src;
               video.load();
+              isVideoLoaded = true;
+              
+              video.addEventListener('loadedmetadata', () => {
+                if (lastVideoTime > 0) {
+                  video.currentTime = lastVideoTime;
+                }
+                video.play().catch(error => {
+                  console.log("Video play failed:", error);
+                });
+              }, { once: true });
+            } else {
+              // Video already loaded, just resume from last position
+              if (lastVideoTime > 0) {
+                video.currentTime = lastVideoTime;
+              }
               video.play().catch(error => {
                 console.log("Video play failed:", error);
               });
             }
-            
-            // Don't unobserve so we can restart if needed
+          } else {
+            // Video is out of view - save position and pause
+            if (isVideoLoaded && !video.paused) {
+              lastVideoTime = video.currentTime;
+              video.pause();
+            }
           }
         });
       }, {

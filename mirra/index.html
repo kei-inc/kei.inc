@@ -85,27 +85,9 @@
               <a href="/index.html" class="logo">
                 <img src="/images/full-logo.svg" alt="Logo" class="logo" style="border-radius: 0;"/>
               </a>
-              <nav>
-                <ul class="menu">
-                  <li><a href="/who.html" class="nav-link">Who</a></li>
-                    <li><a href="/how.html" class="nav-link ">How</a></li>
-                    <li><a href="/case-studies/" class="nav-link current-page">Case Studies</a></li>
-                    <li><a href="/ai_engine/" class="nav-link">AI Insight Engine</a></li>
-                    <li><a href="/workshop/" class="nav-link">Workshop</a></li>	
-                    <li><a href="/contact.html" class="nav-link ">Contact</a></li>
-                  </ul>
-                  <div class="dropdown">
-                    <img src="/images/mobile-menu.png" alt="Menu" class="dropbtn">
-                    <div class="dropdown-content">
-                      <a href="/who.html" class="nav-link">Who</a>
-                      <a href="/how.html" class="nav-link ">How</a>
-                      <a href="/case-studies/" class="nav-link">Case Studies</a>
-                      <a href="/ai_engine/" class="nav-link">AI Insight Engine</a>
-                      <a href="/workshop/" class="nav-link">Workshop</a>
-                      <a href="/contact.html" class="nav-link">Contact</a>
-                  </div>
-                </div>
-              </nav>
+              <nav class="purp">
+                    <!-- This will the nav inserted by JavaScript -->
+                </nav>
             </div>
           </header>
         <div class="content-wrapper">
@@ -631,6 +613,10 @@
             </div>
         </div>
     </footer>
+    <script src="/js/navbar.js"></script>
+      <script>
+        loadNavbar('work');
+      </script>
 </body>
 
 </html>

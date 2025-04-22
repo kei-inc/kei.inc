@@ -15,9 +15,9 @@
   <link rel="mask-icon" href="/images/mask_icon.svg" color="black">
   
  <link rel="manifest" href="/site.webmanifest">
-  <meta name="msapplication-TileColor" content="#EFEDE4">
+  <meta name="msapplication-TileColor" content="#000000">
  <meta name="msapplication-config" content="/browserconfig.xml">
-  <meta name="theme-color" content="#EFEDE4">
+  <meta name="theme-color" content="#000000">
   
   <!-- Open Graph -->
   <meta property="og:site_name" content="Kei">
@@ -85,46 +85,16 @@
     </video>
   </div>
 
-  <header class="sticky-header">
-    <div class="header-container">
-      <a href="index.html" class="logo">
-        <img src="./images/full-logo-white.svg" alt="Logo" class="logo">
-      </a>
-      <nav>
-        <ul class="menu">
-          <li><a href="/who.html" data-text="About Kei">About Kei</a></li>
-          <li><a href="/how.html" data-text="How We Work">How We Work</a></li>
-          <!--<li class="has-dropdown">
-            <a href="#" data-text="Practice Areas">Practice Areas</a>
-            <div class="practice-dropdown">
-              <div class="practice-dropdown-content">
-                <a href="/practices/future-opportunities" data-text="Defining Future Opportunities">Defining Future Opportunities</a>
-                <a href="/practices/brand-belief" data-text="Building Brand Belief Systems">Building Brand Belief Systems</a>
-                <a href="/practices/next-gen" data-text="Creating Next-Generation Experiences">Creating Next-Generation Experiences</a>
-                <a href="/practices/places" data-text="Shaping Places & Communities">Shaping Places & Communities</a>
-                <a href="/practices/change" data-text="Enabling Sustained Change">Enabling Sustained Change</a>
-              </div>
-            </div>
-          </li>-->
-          <li><a href="/case-studies/" data-text="Our Work">Our Work</a></li>
-          <li><a href="/ai_engine/" data-text="AI Insight Engine">AI Insight Engine</a></li>
-          <li><a href="/workshop/the_difference/" data-text="The Difference">The Difference</a></li>
-          <li><a href="/contact.html" data-text="Contact">Contact</a></li>
-        </ul>
-        <div class="dropdown">
-          <img src="/images/mobile-menu-white.png" alt="Menu" class="dropbtn">
-          <div class="dropdown-content">
-            <a href="/who.html">About Kei</a>
-            <a href="/how.html">How We Work</a>
-            <a href="/case-studies/">Our Work</a>
-            <a href="/ai_engine/">AI Insight Engine</a>
-            <a href="/workshop/the_difference/">The Difference</a>
-            <a href="/contact.html">Contact</a>
-          </div>
-        </div>
+ <header class="sticky-header">
+   <div class="header-container">
+     <a href="index.html" class="logo">
+      <img src="./images/full-logo-white.svg" alt="Logo" class="logo">
+     </a>
+      <nav class="light">
+        <!-- This will the nav inserted by JavaScript -->
       </nav>
-    </div>
-  </header>
+   </div>
+ </header>
 
   <div class="content-wrapper">
     <main id="main-content">
@@ -234,6 +204,10 @@
 
 
   <script src="./js/index.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script>
+    loadNavbar('home', true);
+  </script>
 </body>
 <footer>
   <div class="content-wrapper">
