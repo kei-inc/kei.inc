@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const desktopSource = document.getElementById('desktop-video');
   const mobileSource = document.getElementById('mobile-video');
   
+  // Check if iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  
   function updateVideoSource() {
     const isMobile = window.innerWidth <= 768;
     const currentSource = isMobile ? mobileSource : desktopSource;
@@ -31,17 +34,34 @@ document.addEventListener('DOMContentLoaded', () => {
     video.src = currentSource.src;
     video.load();
     
-    // Attempt to play the video
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.log("Video play failed:", error);
-        // Try to play again on user interaction
-        document.addEventListener('click', function playVideo() {
-          video.play().catch(() => {});
-          document.removeEventListener('click', playVideo);
-        }, { once: true });
-      });
+    // iOS specific handling
+    if (isIOS) {
+      // Force video to play inline
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      
+      // iOS requires user interaction to start video
+      const playVideo = () => {
+        video.play().catch(() => {});
+        document.removeEventListener('click', playVideo);
+        document.removeEventListener('touchstart', playVideo);
+      };
+      
+      document.addEventListener('click', playVideo, { once: true });
+      document.addEventListener('touchstart', playVideo, { once: true });
+    } else {
+      // Non-iOS devices can try to autoplay
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Video play failed:", error);
+          // Try to play again on user interaction
+          document.addEventListener('click', function playVideo() {
+            video.play().catch(() => {});
+            document.removeEventListener('click', playVideo);
+          }, { once: true });
+        });
+      }
     }
   }
 

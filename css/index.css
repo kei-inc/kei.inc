@@ -93,6 +93,9 @@ nav a:hover {
   overflow: hidden;
   background-color: #000;
   margin-top: 0px; /* Add space for the header */
+  -webkit-transform: translate3d(0,0,0); /* Force GPU acceleration */
+  transform: translate3d(0,0,0);
+  will-change: transform; /* Hint to browser about animation */
 }
 
 .video-background video {
@@ -103,6 +106,32 @@ nav a:hover {
   top: 0;
   left: 0;
   opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    z-index: -1;
+  }
+  
+  .video-background video {
+    position: fixed;
+    height: 100vh;
+  }
+  
+  .content-wrapper {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .video-background::after {
