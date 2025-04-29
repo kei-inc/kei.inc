@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Practice Areas: Enabling Sustained Changes</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16.png">
+	  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_32.png">
+	  <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon_48.png">
+	  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+	  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple_touch_icon.png">
+	  <link rel="mask-icon" href="/images/mask_icon.svg" color="black">
+	  
+	 <link rel="manifest" href="/site.webmanifest">
+	  <meta name="msapplication-TileColor" content="#EFEDE4">
+	 <meta name="msapplication-config" content="/browserconfig.xml">
+	  <meta name="theme-color" content="#EFEDE4">
+	  <meta name="description" content="Enabling Sustained Changes">
+	  <!-- Open Graph -->
+	  <meta property="og:site_name" content="Kei">
+	  <meta property="og:title" content="Kei's Practice Areas">
+	  <meta property="og:description" content="Enabling Sustained Changes">
+	  <meta property="og:image" content="https://kei.inc/images/halcyon_share_card.jpg?version=1">
+	  <meta property="og:url" content="https://kei.inc/practices/next-gen.html">
+	  <meta property="og:type" content="website">
+	  
+	  <!-- Twitter Card -->
+	  <meta name="twitter:card" content="summary_large_image">
+	  <meta name="twitter:site" content="@we_are_kei">
+	  <meta name="twitter:title" content="Kei's Practice Areas">
+	  <meta name="twitter:description" content="Enabling Sustained Changes">
+	  <meta name="twitter:image" content="https://kei.inc/images/halcyon_share_card.jpg?version=1">
+	  
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-6JLHBDS7J7');
+	</script>
+  <script>
+	  (function (w, d, s, l, i) {
+		w[l] = w[l] || [];
+		w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+		var f = d.getElementsByTagName(s)[0],
+		  j = d.createElement(s),
+		  dl = l != 'dataLayer' ? '&l=' + l : '';
+		j.async = true;
+		j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+		f.parentNode.insertBefore(j, f);
+	  })(window, document, 'script', 'dataLayer', 'GTM-KZ9RNJQ9');
+	</script>
+  <script>
+	  (function(ss,ex){
+		window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};
+		(function(d,s){
+		  fs=d.getElementsByTagName(s)[0];
+		  function ce(src){
+			var cs=d.createElement(s);
+			cs.src=src;
+			cs.async=1;
+			fs.parentNode.insertBefore(cs,fs);
+		  };
+		  ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');
+		})(document,'script');
+	  })('DzLR5a5bloW8BoQ2');
+	</script>
+	<link rel="stylesheet" href="/css/styles.css" >
+	<link rel="stylesheet" href="/css/practices.css" >
+	<link rel="icon" href="/images/link-logo.svg" type="image/svg+xml">
+	<script src="/js/practices.js"></script>
+<style>
+	#practices{
+		margin-top:60px;
+	}
+	#practiceGrid {
+	  counter-reset: section;
+	  margin-top:-40px;
+	}
+	
+	.practiceItem {
+	  counter-increment: section;
+	  position: relative;
+	  padding-top: 24px; /* Space for the number and line above */
+	  margin-bottom: 60px; /* Add space between items */
+	  margin-left: 0; /* No left margin needed */
+	}
+	
+	.practiceItem::before {
+	  content: "";
+	  position: absolute;
+	  top: 34px; /* Position for the line */
+	  left: -40px; /* Start 60px to the left */
+	  width: 60px; /* Width of the line */
+	  height: 1px; /* Height of the line */
+	  border-bottom: 1px solid #000; /* Line style */
+	}
+	
+	.practiceItem::after {
+	  font-size: 20px;
+	  font-weight: 400;
+	  color: #000;
+	  content: counter(section, decimal-leading-zero);
+	  position: absolute;
+	  top: 0px; /* Position for the number */
+	  left: 0; /* Aligned with the content */
+	}
+	.practiceItem h3{
+		margin-top:20px;
+		font-family: 'SourceSerif4', serif;
+		font-size:24px;
+		color:#5D245D;
+		font-weight:400;
+		line-height:32px;
+	}
+	.practiceItem a{
+	  text-decoration: none;
+	  color:#5D245D;
+	}
+	.practiceItem a:hover{
+	  text-decoration: underline;
+	  color:#BB3216;
+	}
+	.practiceItem a h3:hover{
+	  color:#BB3216;
+	}
+	.practiceItem p,  #recentWork p, #theDifference p{
+		margin-top:20px;
+		font-family: NeuzeitGroT, sans-serif;
+		font-size:20px;
+		color:#000;
+		font-weight:400;
+		line-height:26px;
+	}
+	.left {
+	  grid-column: 4 / span 4;
+	}
+	
+	.right {
+	  grid-column: 9 / span 4;
+	}
+	@media (max-width: 768px) {
+	.grid12 {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 20px;
+	  }
+	  #practiceGrid {
+		  margin-top:0px;
+		}
+		.practiceItem {
+		  grid-column: 2 / span 4 !important;
+		  margin-bottom: 0px;
+		}
+		.content-wrapper:has(#heroImage) {
+		  max-width: unset;
+		  padding:0;
+		  margin:0;
+		}
+		.practiceHero {
+		  width: 100%;
+		  border-radius: 0px;
+		}
+		h2 {
+			margin-left:40px;
+			
+			font-size: 22px;
+			padding-top: 0px;
+		  }
+		
+	}
+</style>
+	
+</head>
+
+
+<body>
+	<noscript>
+		<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZ9RNJQ9" height="0" width="0"
+			style="display:none;visibility:hidden"></iframe>
+	</noscript>
+	<main>
+		<header class="sticky-header">
+			<div class="header-container">
+			  <a href="/index.html" class="logo">
+				<img src="/images/full-logo-purple.svg" alt="Logo" class="logo" style="border-radius: 0;">
+			  </a>
+			 <nav class="purp">
+				 <!-- This will the nav inserted by JavaScript -->
+			 </nav>
+			</div>
+		  </header>
+		<div class="content-wrapper">
+			<section id="heroImage">
+				<div class="practiceHero">
+					<img src="/images/practice1.svg" alt="Hero Image" />
+				</div>
+			</section>
+			
+			<section id="practices">
+			  <h2>Our Practice Areas</h2>
+			  
+			  <div id="practiceGrid" class="grid12">
+				<div class="practiceItem grid-item left">
+				  <a href="./future-opportunities.html"><h3>Defining Future Opportunities</h3></a>
+				  <p>We help organizations discover which strategic directions will create distinctive advantage as markets evolve and possibilities multiply.</p>
+				</div>
+				<div class="practiceItem grid-item right">
+				  <a href="./brand-belief-systems.html"><h3>Building Brand Belief Systems</h3></a>
+				  <p>We create brand systems where promise meets proof at every touchpoint, building authentic connections between organizations and their audiences.</p>
+				</div>
+				<div class="practiceItem grid-item left">
+				  <a href="./next-gen.html"><h3>Creating Next-Generation Experiences</h3></a>
+				  <p>We design products and services that work the way people think, making complex capabilities feel intuitive and meaningful in everyday use.</p>
+				</div>
+				<div class="practiceItem grid-item right">
+				  <a href="./places.html"><h3>Shaping Places & Communities</h3></a>
+				  <p>We develop places where community forms naturally, creating environments that strengthen connection while preserving and enhancing distinctive identity.</p>
+				</div>
+				<div class="practiceItem grid-item left">
+				  <a href="./sustained-change.html"><h3>Enabling Sustained Change</h3></a>
+				  <p>We build systems that turn strategic vision into organizational reality, creating the capabilities needed for continuous evolution.</p>
+				</div>
+			  </div>
+			</section>
+		</div>
+
+
+	</main>
+	<footer>
+		<div class="content-wrapper">
+			<div class="upper-footer-container">
+				<a href="../../index.html" class="logo">
+					<img src="../../images/orange-logo.svg" alt="Logo" class="logo" /></a>
+				<div class="footer-text">
+					<p>Kei is a full-service strategic creative agency that bridges the gap between visionary thinking
+						and exceptional implementation.<br><br>
+						We are a 100% employee-owned Public Benefit Corporation.
+					</p>
+				</div>
+			</div>
+			<div class="lower-footer-container">
+				<div class="left">
+					<p>2025© Kei.inc All Rights Reserved</p>
+					<div class="social-icons">
+						<a href="https://www.linkedin.com/company/we-are-kei/" target="blank">
+							<img src="../../images/orange-linked.png" alt="LinkedIn">
+						</a>
+						<a href="https://www.instagram.com/kei_says" target="blank">
+							<img src="../../images/orange-insta.png" alt="Instagram">
+						</a>
+						<a href="https://x.com/we_are_kei" target="blank">
+							<img src="../../images/orange-x.png" alt="X">
+						</a>
+					</div>
+				</div>
+				<div class="right">
+					<a href="../../how.html" style="border-top: none;">How</a>
+					<a href="../../who.html">Who</a>
+					<a href="../../case-studies.html">Case Studies</a>
+					<a href="../../contact.html">Contact</a>
+					<br>
+					<a href="../../terms-of-service.html">Terms of Service</a>
+					<a href="../../privacy-policy.html">Privacy Policy</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script src="/js/navbar.js"></script>
+	<script>
+	  loadNavbar('practices');
+	</script>
+</body>
+</html>

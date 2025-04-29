@@ -177,7 +177,6 @@ em{
   position: absolute;
   top: 0px; /* Position for the number */
   left: 0; /* Aligned with the content */
-  /* Removed padding-bottom as it doesn't affect layout in absolute positioning */
 }
 .practiceItem h3{
 	margin-top:20px;
@@ -186,6 +185,17 @@ em{
 	color:#5D245D;
 	font-weight:400;
 	line-height:32px;
+}
+.practiceItem a{
+  text-decoration: none;
+  color:#5D245D;
+}
+.practiceItem a:hover{
+  text-decoration: underline;
+  color:#BB3216;
+}
+.practiceItem a h3:hover{
+  color:#BB3216;
 }
 #recentWork h3, #theDifference h3{
   margin:0px;

@@ -1,0 +1,11 @@
+<svg width="1440" height="720" viewBox="0 0 1440 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1440" height="720" fill="#F5C445"/>
+<path d="M0 720L720 0L720 720L0 720Z" fill="black"/>
+<path d="M0.00131226 405.333L314.668 720H0.00131226L0.00131226 405.333Z" fill="#E2725B"/>
+<path d="M240 240L480 0L480 240L240 240Z" fill="#EFEDE4"/>
+<path d="M960 720L720 480H960V720Z" fill="#5D245D"/>
+<path d="M1080 600L840 360H1080V600Z" fill="#5D245D"/>
+<path d="M0 240L240 0L240 240L0 240Z" fill="#EFEDE4"/>
+<path d="M1440 720L720 0L1440 0V720Z" fill="white"/>
+<path d="M1200 0L720 480V0H1200Z" fill="#5D245D"/>
+</svg>

@@ -7,3 +7,8 @@
 # Ignore all logfiles and tempfiles.
 .nova/
 .DS_Store
+/practices/brand.mp4
+/practices/changes.mp4
+/practices/future.mp4
+/practices/nextgen.mp4
+/practices/places.mp4
