@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const sections = document.querySelectorAll(".section");
   const footer = document.querySelector("footer"); // Assuming your footer is the last element
   const header = document.querySelector(".sticky-header");
-  const logo = header.querySelector(".logo img");
-  const navLinks = header.querySelectorAll("nav a");
-  const currentNavLink = document.querySelector("nav .current-page");
+  const logo = document.querySelector(".sticky-header .logo");
+  const navLinks = document.querySelectorAll(".sticky-header nav a");
+  const currentNavLink = document.querySelector(".sticky-header nav .current-page");
   const scrollDownSvg = document.querySelector(".scroll-down-wrapper");
 
   let initialized = false;
@@ -21,19 +21,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const navColor = section.dataset.navColor;
     const logoColor = section.dataset.logoColor;
 
-    document.body.style.backgroundColor = bgColor;
-    header.style.backgroundColor = bgColor;
-    logo.style.filter = `invert(${logoColor === "white" ? 1 : 0})`;
+    if (bgColor) document.body.style.backgroundColor = bgColor;
+    if (header) header.style.backgroundColor = bgColor;
+    
+    if (logo) {
+      if (logoColor === "white") {
+        logo.style.backgroundImage = "url('/images/full-logo-white.svg')";
+      } else {
+        logo.style.backgroundImage = "url('/images/full-logo.svg')";
+      }
+    }
 
-    section.style.color = textColor;
+    if (textColor) section.style.color = textColor;
 
-    navLinks.forEach((link) => {
-      link.style.color = navColor;
-    });
-    currentNavLink.style.color = navColor;
+    if (navLinks.length > 0) {
+      navLinks.forEach((link) => {
+        if (navColor) link.style.color = navColor;
+      });
+    }
+    
+    if (currentNavLink && navColor) {
+      currentNavLink.style.color = navColor;
+    }
+    
     const texts = section.querySelectorAll("p");
     texts.forEach((text) => {
-      text.style.color = textColor;
+      if (textColor) text.style.color = textColor;
     });
   }
 

@@ -6,7 +6,9 @@ body,main,header{
 nav a {
 	color: white;
 }
-
+.sticky-header{
+	background-color:#151515;
+}
 .container {
 	 
 	  width: 100%;

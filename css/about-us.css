@@ -3,7 +3,9 @@ main,
 header {
   background-color: #000000;
 }
-
+.sticky-header{
+  background-color:#000000;
+}
 .section {
   height: 100vh;
   /* Make each section full viewport height */

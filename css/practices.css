@@ -59,20 +59,20 @@
 	margin-top:10px;
 }
 .introBody h1{
-	font-family: 'SourceSerif4', serif;
+	font-family: source-serif-pro, serif;
 	font-size:64px;
 	font-weight:900;
 	line-height: 72px;
 	margin-top:0;
 }
 .introBody > p{
-	font-family: 'SourceSerif4', serif;
+	font-family: source-serif-pro, serif;
 	font-size:32px;
 	line-height: 44px;
 	color:#BB3216;
 }
 .introBody > div >p{
-	font-family: NeuzeitGroT, sans-serif;
+	font-family: neuzeit-grotesk, sans-serif;
 	font-size:24px;
 	line-height: 36px;
 }
@@ -87,7 +87,7 @@
 }
 
 p.slug{
-	font-family: 'SourceSerif4', serif;
+	font-family: source-serif-pro, serif;
 	color:#BB3216;
 	font-style: italic;
 }
@@ -153,12 +153,12 @@ p.slug{
 	font-size:64px;
 	line-height:76px;
 	color:#5D245D;
-	font-family: 'SourceSerif4', serif;
+	font-family: source-serif-pro, serif;
 	font-weight:500;
 	margin:0;
 }
 .offerTitle h3::before {
-	font-family: NeuzeitGroT, sans-serif;
+	font-family: neuzeit-grotesk, sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: #000;
@@ -205,14 +205,7 @@ p.slug{
 }
 
 @media (max-width: 768px) {
-  * {
-	font-synthesis: none;
-  }
 
-  body {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-  }
 .introBody{
 	  grid-column:1 / span 10;
   

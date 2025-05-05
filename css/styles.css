@@ -1,3 +1,4 @@
+@import url('https://use.typekit.net/qrd1ath.css');
 @font-face {
     font-family: 'NeuzeitGroT';
     src: url('../fonts/NeuzeitGroT.ttf') format('truetype');
@@ -24,8 +25,60 @@
     font-style: italic;
 }
 
+:root {
+  --primary-color: #435861;
+  --secondary-color: #E2725B;
+  --text-color: #ffffff;
+  --background-opacity: 0.5; 
+  --logo-image:url('/images/full-logo-white.svg');
+  --mobile-menu-image:url('/images/mobile-menu-white.png');
+}
+.blueTheme {
+  --primary-color: #435861;
+  --secondary-color: #E2725B;
+  --text-color: #ffffff;
+  --background-opacity: 0.5; 
+  --logo-image:url('/images/full-logo-white.svg');
+  --mobile-menu-image:url('/images/mobile-menu-white.png');
+  
+}
+.yellowTheme{
+  --primary-color: #F5C445;
+  --secondary-color: #E2725B;
+  --text-color: #000000;
+  --background-opacity: 0.15; 
+  --logo-image:url('/images/full-logo.svg');
+  --mobile-menu-image:url('/images/mobile-menu.png');
+}
+.greyTheme{
+  --primary-color: #BBC0B6;
+  --secondary-color: #E2725B;
+  --text-color: #000000;
+  --background-opacity: 0.2; 
+  --logo-image:url('/images/full-logo.svg');
+  --mobile-menu-image:url('/images/mobile-menu.png');
+}
+.salmonTheme{
+  --primary-color: #E2725B;
+  --secondary-color: #F5C445;
+  --text-color: #ffffff;
+  --background-opacity: 0.1; 
+  --logo-image:url('/images/full-logo-white.svg');
+  --mobile-menu-image:url('/images/mobile-menu-white.png');
+  
+}
+.beigeTheme{
+  --primary-color: #EFEDE4;
+  --secondary-color: #E2725B;
+  --text-color: #5D245D;
+  --background-opacity: 0.0; 
+  --logo-image:url('/images/full-logo-purple.svg');
+  --mobile-menu-image:url('/images/mobile-menu-purple.png');
+  
+}
+
 body {
-    font-family: 'NeuzeitGroT', sans-serif;
+    font-family: neuzeit-grotesk, sans-serif;
     margin: 0px;
     background-color: #EFEDE4;
 }
@@ -33,7 +86,7 @@ body {
 p,
 ul {
     color: black;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -53,14 +106,24 @@ ul{
     padding: 0px 50px;
 }
 
+
+
 .sticky-header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    max-height: 140px;
-    z-index: 10;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent;
+  transition: background-color 0.3s ease;
 }
 
+.sticky-header.scrolled {
+  background: rgba(0, 0, 0, 0.8);
+}
+.sticky-header.scrolled .logo {
+  background-image: url('/images/full-logo-white.svg');
+}
 
 .header-container {
     max-width: 1440px;
@@ -69,6 +132,30 @@ ul{
     display: flex;
     align-items: center;
     padding: 50px;
+}
+.logo {
+  display: block;
+  width: 125px;
+  height: 45px;
+  background-image: var(--logo-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+.mobile-menu-button {
+  width: 45px;
+  height: 45px;
+  background-image: var(--mobile-menu-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
 }
 
 nav {
@@ -84,7 +171,7 @@ nav {
 }
 
 nav a {
-    color: black;
+    color: var(--text-color);
     text-decoration: none;
     font-size: 16px;
     font-style: normal;
@@ -149,26 +236,9 @@ nav a {
 .dropdown:hover .dropbtn {
     background-color: transparent;
 }
-nav.light li>a {
-  color: white;
 
-}
-nav.dark li>a{
-  color:#000;
-}
-nav.purp li>a{
-  color:#5D245D;
-}
-nav.purp li>a:hover {
-  color: #000;
-
-}
-nav.light li>a:hover {
-  color: #E2725B;
-
-}
 nav a:hover {
-  color: #5D245D;
+  color: var(--secondary-color);
 
 }
 .menu li {
@@ -315,7 +385,7 @@ nav a:hover {
 }
 
 #focus-text p, #focus-text li {
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     color: #BB3216;
     font-size: 36px;
     font-style: normal;
@@ -326,7 +396,7 @@ nav a:hover {
 
 .body-Copy-Title {
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -400,7 +470,7 @@ footer {
 
 .footer-text p {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+   font-family: neuzeit-grotesk, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -419,7 +489,7 @@ footer {
 
 .lower-footer-container .right a {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -449,7 +519,7 @@ footer {
 
 .lower-footer-container .left p {
     color: #E2725B;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -458,7 +528,7 @@ footer {
 }
 .author-date{
     color:  #000;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -469,7 +539,7 @@ footer {
 
 #four-column h3{
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -480,7 +550,7 @@ footer {
 
 #four-column p{
     color: #BB3216;
-    font-family: NeuzeitGroT;
+    font-family: neuzeit-grotesk, sans-serif;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
@@ -519,6 +589,15 @@ footer {
   
 /* Mobile Styles */
 @media (max-width: 768px) {
+  * {
+  font-synthesis: none;
+  }
+  
+  body {
+    padding: 0px 0px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
     .menu {
         display: none;
     }
@@ -534,9 +613,7 @@ footer {
         display: block;
     }
 
-    body {
-        padding: 0px 0px;
-    }
+
 
     .content-wrapper {
         padding: 0px 30px;
@@ -548,7 +625,7 @@ footer {
 .carousel{
         max-width:108%;
     }
-    .upper-footer-container .logo {
+    .upper-footer-container .footLogoImg {
         padding-bottom: 20px;
     }
     .upper-footer-container .footer-text{

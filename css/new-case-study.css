@@ -9,19 +9,7 @@ ul {
 
 }
 
-.sticky-header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  background: transparent;
-  transition: background-color 0.3s ease;
-}
 
-.sticky-header.scrolled {
-  background: rgba(0, 0, 0, 0.8);
-}
 
 .content-wrapper {
   position: relative;
@@ -51,10 +39,10 @@ ul {
 }
 
 .caseBG {
-  margin-top: -140px; /* Negative margin to pull the background up fully */
-  padding-top: 140px; /* Maintain content spacing */
+  margin-top: -145px; /* Negative margin to pull the background up fully */
+  padding-top: 145px; /* Maintain content spacing */
   padding-bottom:100px;
-  background-color: #435861;
+  background-color: var(--primary-color);
   position: relative;
   z-index: 1;
 }
@@ -68,15 +56,16 @@ ul {
 		height: 100%;
 	  background-image: url('/images/case-study-texture.png');
 	  
-	  background-size: 40%; 
+	  background-size: 30%; 
 	  background-repeat: repeat;
-		opacity: 0.5; 
+		opacity: var(--background-opacity);
 		pointer-events: none; /* Makes the overlay non-interactive */
 	z-index: -1;
 }
 .case-hero{
 	
 	border-radius: 12px;
+  aspect-ratio: 16 / 9;
 	overflow: hidden;
 }
 .case-hero img {
@@ -92,20 +81,18 @@ ul {
 	
 }
 .titleBox h1{
-	color:#fff;
+	color:var(--text-color);
 	font-size:64px;
 	line-height:72px;
 	margin:0;
 }
 .titleBox p{
-	color:#fff;
+	color:var(--text-color);
 	font-size:36px;
 	line-height:46px;
 	margin-bottom:0;
 }
-.glance{
-	grid-column: 1 / span 11;
-}
+
 .impact {
   grid-column: 2 / span 7;
 }
@@ -113,14 +100,14 @@ ul {
 .services {
   grid-column: 10 / span 3;
 }
-.glance h2{
+.impact h2, .services h2{
 	font-size:24px;
-	color:#E2725B;
+	color:var(--secondary-color);
 }
-.glance ul{
+.impact ul, .services ul{
 	padding:0;
 	margin:0;
-	color:#fff;
+	color:var(--text-color);
 }
 .impact ul li{
   font-size:24px;
@@ -291,14 +278,7 @@ main {
   z-index: 1;
 }
 @media (max-width: 768px) {
-  * {
-    font-synthesis: none;
-  }
-  
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+
   .content-wrapper {
     padding: 0 20px;
   }
@@ -438,3 +418,6 @@ main {
   margin:0;
   padding:0;
 }
+
+
+

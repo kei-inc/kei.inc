@@ -5,7 +5,9 @@ main, header {
 .content-wrapper {
   padding-bottom: 100px;
 }
-
+.sticky-header{
+  background-color:#EFEDE4;
+}
 section {
   display: flex;
   flex-wrap: wrap;

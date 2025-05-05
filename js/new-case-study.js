@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Random theme selection
+  const themes = ['blueTheme', 'yellowTheme', 'greyTheme', 'salmonTheme'];
+  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+  document.body.className = randomTheme;
 
   // Intersection observer for sticky header
   const header = document.querySelector('.sticky-header');

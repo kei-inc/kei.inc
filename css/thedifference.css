@@ -10,6 +10,9 @@ p, ul{
 nav a {
     color: white;
 }
+.sticky-header{
+  background-color:#151515;
+}
 .intro-text{
     padding-top: 100px;
 }

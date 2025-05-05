@@ -11,7 +11,9 @@ main{
   padding-left: 2.1em;
   text-indent: -2.1em;
 }
-
+.sticky-header{
+  background-color:#EFEDE4;
+}
 .main-section ul li::before {
   content: counter(list-counter, decimal-leading-zero) ". ";
   margin-right: 0.5em;
