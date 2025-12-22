@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikaido US Launch - Gantt Chart</title>
+  <style>
+	* { box-sizing: border-box; margin: 0; padding: 0; }
+	body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; padding: 20px; }
+	h1 { font-size: 1.25rem; margin-bottom: 4px; }
+	.subtitle { font-size: 0.875rem; color: #6b7280; margin-bottom: 16px; }
+	.legend { display: flex; gap: 16px; margin-bottom: 16px; font-size: 0.75rem; }
+	.legend-item { display: flex; align-items: center; gap: 4px; }
+	.legend-dot { width: 12px; height: 12px; border-radius: 4px; }
+	.container { background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+	.header, .row { display: flex; border-bottom: 1px solid #e5e7eb; }
+	.header { background: #f3f4f6; }
+	.task-col { width: 260px; flex-shrink: 0; padding: 8px; font-size: 0.75rem; border-right: 1px solid #e5e7eb; }
+	.header .task-col { font-weight: 600; }
+	.timeline-col { flex: 1; display: flex; }
+	.month { flex: 1; padding: 8px; text-align: center; font-size: 0.75rem; font-weight: 500; border-right: 1px solid #e5e7eb; }
+	.month:last-child { border-right: none; }
+	.row:last-child { border-bottom: none; }
+	.row.group { background: #f9fafb; }
+	.row .task-col { display: flex; align-items: center; }
+	.row.child .task-col { padding-left: 24px; }
+	.toggle { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 4px; color: #6b7280; font-size: 10px; }
+	.toggle:hover { background: #e5e7eb; border-radius: 4px; }
+	.task-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	.task-name.bold { font-weight: 600; }
+	.bar-container { flex: 1; position: relative; height: 32px; display: flex; align-items: center; }
+	.grid-line { position: absolute; top: 0; bottom: 0; width: 1px; background: #f3f4f6; }
+	.bar { position: absolute; height: 20px; border-radius: 4px; }
+	.milestone { position: absolute; width: 12px; height: 12px; transform: rotate(45deg); border: 2px solid white; }
+	.bar.highlight, .milestone.highlight { box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+	.hidden { display: none; }
+	.footer { font-size: 0.75rem; color: #9ca3af; margin-top: 16px; }
+	
+	.bg-events { background: #93c5fd; }
+	.bg-events-hi { background: #3b82f6; }
+	.bg-activations { background: #fdba74; }
+	.bg-activations-hi { background: #f97316; }
+	.bg-brand { background: #d8b4fe; }
+	.bg-brand-hi { background: #a855f7; }
+	.bg-content { background: #86efac; }
+	.bg-content-hi { background: #22c55e; }
+	.bg-team { background: #d1d5db; }
+	.bg-team-hi { background: #6b7280; }
+	.bg-worldcup { background: #a5f3fc; }
+	.bg-worldcup-hi { background: #06b6d4; }
+	.bg-pr { background: #fca5a5; }
+	.bg-pr-hi { background: #ef4444; }
+	.bg-group { background: #d1d5db; }
+  </style>
+</head>
+<body>
+  <h1>Nikaido US Launch</h1>
+  <p class="subtitle">December 2025 – August 2026</p>
+  
+  <div class="legend">
+	<div class="legend-item"><div class="legend-dot bg-events-hi"></div>Events</div>
+	<div class="legend-item"><div class="legend-dot bg-activations-hi"></div>Activations</div>
+	<div class="legend-item"><div class="legend-dot bg-brand-hi"></div>Brand</div>
+	<div class="legend-item"><div class="legend-dot bg-content-hi"></div>Content</div>
+	<div class="legend-item"><div class="legend-dot bg-worldcup-hi"></div>World Cup</div>
+	<div class="legend-item"><div class="legend-dot bg-team-hi"></div>Team</div>
+	<div class="legend-item"><div class="legend-dot bg-pr-hi"></div>PR Coordination</div>
+  </div>
+  
+  <div class="container">
+	<div class="header">
+	  <div class="task-col">Task</div>
+	  <div class="timeline-col" id="months"></div>
+	</div>
+	<div id="tasks"></div>
+  </div>
+  
+  <p class="footer">Click group headers to collapse/expand sections</p>
+
+<script>
+const tasks = [
+  { id: 1, name: "Tales of the Cocktail", parent: null, start: "2025-12-08", end: "2026-07-27", cat: "events", isGroup: true },
+  { id: 2, name: "Louisiana licensing", parent: 1, start: "2025-12-08", end: "2026-01-30", cat: "events" },
+  { id: 3, name: "Tales registration", parent: 1, start: "2025-12-18", end: "2025-12-18", cat: "events", ms: true },
+  { id: 4, name: "Reference playlist", parent: 1, start: "2025-12-12", end: "2025-12-12", cat: "events", ms: true },
+  { id: 5, name: "Venue confirmed", parent: 1, start: "2026-02-15", end: "2026-02-15", cat: "events", ms: true },
+  { id: 6, name: "DJ confirmed", parent: 1, start: "2026-03-01", end: "2026-03-01", cat: "events", ms: true },
+  { id: 7, name: "Menu development", parent: 1, start: "2026-03-15", end: "2026-05-01", cat: "events" },
+  { id: 8, name: "Collateral design & production", parent: 1, start: "2026-04-15", end: "2026-07-01", cat: "events" },
+  { id: 9, name: "Event", parent: 1, start: "2026-07-22", end: "2026-07-27", cat: "events", hi: true },
+  { id: 10, name: "Bar Convent Brooklyn", parent: null, start: "2025-12-15", end: "2026-06-10", cat: "events", isGroup: true },
+  { id: 11, name: "Registration & booth spec", parent: 10, start: "2025-12-15", end: "2026-01-15", cat: "events" },
+  { id: 12, name: "Booth concept development", parent: 10, start: "2026-02-01", end: "2026-02-28", cat: "events" },
+  { id: 13, name: "Fabricator selection", parent: 10, start: "2026-03-01", end: "2026-03-15", cat: "events" },
+  { id: 14, name: "Fabrication", parent: 10, start: "2026-04-01", end: "2026-06-01", cat: "events" },
+  { id: 15, name: "Collateral production", parent: 10, start: "2026-04-01", end: "2026-05-20", cat: "events" },
+  { id: 16, name: "Event", parent: 10, start: "2026-06-09", end: "2026-06-10", cat: "events", hi: true },
+  { id: 17, name: "Tokyo Slide Activations", parent: null, start: "2025-12-12", end: "2026-07-31", cat: "activations", isGroup: true },
+  { id: 18, name: "Kickoff", parent: 17, start: "2025-12-12", end: "2025-12-12", cat: "activations", ms: true, hi: true },
+  { id: 19, name: "Location shortlist", parent: 17, start: "2025-12-12", end: "2026-01-10", cat: "activations" },
+  { id: 20, name: "Pilot partner outreach", parent: 17, start: "2026-01-06", end: "2026-01-31", cat: "activations" },
+  { id: 21, name: "Pilot partners confirmed", parent: 17, start: "2026-02-15", end: "2026-02-15", cat: "activations", ms: true },
+  { id: 22, name: "Activation collateral brief", parent: 17, start: "2026-01-15", end: "2026-01-15", cat: "activations", ms: true },
+  { id: 23, name: "Activation collateral design", parent: 17, start: "2026-01-20", end: "2026-02-15", cat: "activations" },
+  { id: 24, name: "Activation collateral production", parent: 17, start: "2026-02-15", end: "2026-03-10", cat: "activations" },
+  { id: 25, name: "Launch", parent: 17, start: "2026-03-15", end: "2026-03-15", cat: "activations", ms: true, hi: true },
+  { id: 26, name: "Phase 1 activations", parent: 17, start: "2026-03-15", end: "2026-04-30", cat: "activations" },
+  { id: 27, name: "Phase 2 planning & expansion", parent: 17, start: "2026-04-01", end: "2026-07-31", cat: "activations" },
+  { id: 28, name: "Brand Orchestration", parent: null, start: "2025-12-20", end: "2026-06-01", cat: "brand", isGroup: true },
+  { id: 29, name: "Folder structure & setup", parent: 28, start: "2025-12-20", end: "2025-12-20", cat: "brand", ms: true },
+  { id: 30, name: "Orchestration document drafts", parent: 28, start: "2026-01-20", end: "2026-03-15", cat: "brand" },
+  { id: 31, name: "Final document", parent: 28, start: "2026-04-01", end: "2026-04-01", cat: "brand", ms: true },
+  { id: 32, name: "DAM implementation", parent: 28, start: "2026-05-01", end: "2026-06-01", cat: "brand" },
+  { id: 33, name: "Content Production", parent: null, start: "2025-12-15", end: "2026-07-01", cat: "content", isGroup: true },
+  { id: 34, name: "Pre-production & planning", parent: 33, start: "2025-12-15", end: "2026-02-01", cat: "content" },
+  { id: 35, name: "Photo guidelines from Reform", parent: 33, start: "2026-02-01", end: "2026-02-01", cat: "content", ms: true },
+  { id: 36, name: "LA shoots", parent: 33, start: "2026-02-15", end: "2026-02-28", cat: "content", hi: true },
+  { id: 37, name: "LA post-production", parent: 33, start: "2026-03-01", end: "2026-03-20", cat: "content" },
+  { id: 38, name: "Japan shoot", parent: 33, start: "2026-03-23", end: "2026-03-30", cat: "content", hi: true },
+  { id: 39, name: "Japan post-production", parent: 33, start: "2026-04-01", end: "2026-04-30", cat: "content" },
+  { id: 40, name: "BCB assets delivered", parent: 33, start: "2026-05-25", end: "2026-05-25", cat: "content", ms: true },
+  { id: 41, name: "Tales assets delivered", parent: 33, start: "2026-07-01", end: "2026-07-01", cat: "content", ms: true },
+  { id: 42, name: "World Cup Activation", parent: null, start: "2025-12-15", end: "2026-06-21", cat: "worldcup", isGroup: true },
+  { id: 43, name: "Cosm inquiry", parent: 42, start: "2025-12-15", end: "2025-12-15", cat: "worldcup", ms: true },
+  { id: 44, name: "Budget approval", parent: 42, start: "2026-01-31", end: "2026-01-31", cat: "worldcup", ms: true, hi: true },
+  { id: 45, name: "Venue confirmed", parent: 42, start: "2026-02-15", end: "2026-02-15", cat: "worldcup", ms: true },
+  { id: 46, name: "Activation concept", parent: 42, start: "2026-03-15", end: "2026-03-15", cat: "worldcup", ms: true },
+  { id: 47, name: "Production planning", parent: 42, start: "2026-04-01", end: "2026-05-15", cat: "worldcup" },
+  { id: 48, name: "Collateral production", parent: 42, start: "2026-05-15", end: "2026-06-10", cat: "worldcup" },
+  { id: 49, name: "Event", parent: 42, start: "2026-06-21", end: "2026-06-21", cat: "worldcup", ms: true, hi: true },
+  { id: 50, name: "Team & Retainer", parent: null, start: "2025-12-12", end: "2026-01-27", cat: "team", isGroup: true },
+  { id: 51, name: "Traffic/PM job posted", parent: 50, start: "2025-12-12", end: "2025-12-12", cat: "team", ms: true },
+  { id: 52, name: "Traffic/PM interviews", parent: 50, start: "2025-12-28", end: "2026-01-07", cat: "team" },
+  { id: 53, name: "Traffic/PM starts", parent: 50, start: "2026-01-13", end: "2026-01-13", cat: "team", ms: true, hi: true },
+  { id: 54, name: "Events Mgr job posted", parent: 50, start: "2025-12-16", end: "2025-12-16", cat: "team", ms: true },
+  { id: 55, name: "Events Mgr interviews", parent: 50, start: "2026-01-06", end: "2026-01-15", cat: "team" },
+  { id: 56, name: "Events Mgr starts", parent: 50, start: "2026-01-27", end: "2026-01-27", cat: "team", ms: true, hi: true },
+  { id: 57, name: "PR Coordination", parent: null, start: "2026-01-13", end: "2026-07-27", cat: "pr", isGroup: true },
+  { id: 58, name: "PR firm contact established", parent: 57, start: "2026-01-20", end: "2026-01-20", cat: "pr", ms: true },
+  { id: 59, name: "TS launch PR assets due", parent: 57, start: "2026-03-05", end: "2026-03-05", cat: "pr", ms: true },
+  { id: 60, name: "TS launch PR integration", parent: 57, start: "2026-03-15", end: "2026-03-15", cat: "pr", ms: true, hi: true },
+  { id: 61, name: "BCB PR integration", parent: 57, start: "2026-06-09", end: "2026-06-10", cat: "pr", hi: true },
+  { id: 62, name: "World Cup PR integration", parent: 57, start: "2026-06-21", end: "2026-06-21", cat: "pr", ms: true, hi: true },
+  { id: 63, name: "Tales PR integration", parent: 57, start: "2026-07-22", end: "2026-07-27", cat: "pr", hi: true },
+];
+
+const startDate = new Date("2025-12-01");
+const endDate = new Date("2026-08-01");
+const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+const collapsed = {};
+
+function getPos(date) {
+  const d = new Date(date);
+  const days = Math.ceil((d - startDate) / (1000 * 60 * 60 * 24));
+  return (days / totalDays) * 100;
+}
+
+function getWidth(s, e) {
+  const days = Math.max(1, Math.ceil((new Date(e) - new Date(s)) / (1000 * 60 * 60 * 24)));
+  return (days / totalDays) * 100;
+}
+
+function renderMonths() {
+  const el = document.getElementById('months');
+  let d = new Date(startDate);
+  while (d < endDate) {
+	const div = document.createElement('div');
+	div.className = 'month';
+	div.textContent = d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+	el.appendChild(div);
+	d.setMonth(d.getMonth() + 1);
+  }
+}
+
+function toggleGroup(id) {
+  collapsed[id] = !collapsed[id];
+  renderTasks();
+}
+
+function renderTasks() {
+  const el = document.getElementById('tasks');
+  el.innerHTML = '';
+  
+  tasks.forEach(t => {
+	if (t.parent && collapsed[t.parent]) return;
+	
+	const row = document.createElement('div');
+	row.className = 'row' + (t.isGroup ? ' group' : '') + (t.parent ? ' child' : '');
+	
+	const taskCol = document.createElement('div');
+	taskCol.className = 'task-col';
+	
+	if (t.isGroup) {
+	  const toggle = document.createElement('span');
+	  toggle.className = 'toggle';
+	  toggle.textContent = collapsed[t.id] ? '▶' : '▼';
+	  toggle.onclick = () => toggleGroup(t.id);
+	  taskCol.appendChild(toggle);
+	}
+	
+	const name = document.createElement('span');
+	name.className = 'task-name' + (t.isGroup ? ' bold' : '');
+	name.textContent = t.name;
+	taskCol.appendChild(name);
+	row.appendChild(taskCol);
+	
+	const barContainer = document.createElement('div');
+	barContainer.className = 'bar-container';
+	
+	// Grid lines
+	let d = new Date(startDate);
+	while (d < endDate) {
+	  const line = document.createElement('div');
+	  line.className = 'grid-line';
+	  line.style.left = getPos(d) + '%';
+	  barContainer.appendChild(line);
+	  d.setMonth(d.getMonth() + 1);
+	}
+	
+	const left = getPos(t.start);
+	const width = getWidth(t.start, t.end);
+	const bgClass = t.isGroup ? 'bg-group' : (t.hi ? `bg-${t.cat}-hi` : `bg-${t.cat}`);
+	
+	if (t.ms) {
+	  const ms = document.createElement('div');
+	  ms.className = 'milestone ' + bgClass + (t.hi ? ' highlight' : '');
+	  ms.style.left = `calc(${left}% - 6px)`;
+	  barContainer.appendChild(ms);
+	} else {
+	  const bar = document.createElement('div');
+	  bar.className = 'bar ' + bgClass + (t.hi ? ' highlight' : '');
+	  bar.style.left = left + '%';
+	  bar.style.width = Math.max(width, 0.5) + '%';
+	  barContainer.appendChild(bar);
+	}
+	
+	row.appendChild(barContainer);
+	el.appendChild(row);
+  });
+}
+
+renderMonths();
+renderTasks();
+</script>
+</body>
+</html>

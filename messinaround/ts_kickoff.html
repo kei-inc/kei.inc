@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TokyoSlide Activation Program</title>
+  <style>
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	body {
+	  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	  background: #1a1a2e;
+	  color: #fff;
+	  overflow: hidden;
+	}
+	.slide {
+	  display: none;
+	  width: 100vw;
+	  height: 100vh;
+	  padding: 60px 80px;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  flex-direction: column;
+	}
+	.slide.active { display: flex; }
+	
+	.slide-title {
+	  font-size: 42px;
+	  font-weight: 600;
+	  margin-bottom: 40px;
+	  color: #fff;
+	}
+	.slide-subtitle {
+	  font-size: 24px;
+	  color: #a0a0a0;
+	  margin-bottom: 20px;
+	}
+	.slide-content {
+	  flex: 1;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-start;
+	}
+	.slide-content ul {
+	  list-style: none;
+	  font-size: 24px;
+	  line-height: 1.8;
+	}
+	.slide-content li {
+	  margin-bottom: 16px;
+	  padding-left: 30px;
+	  position: relative;
+	}
+	.slide-content li::before {
+	  content: "→";
+	  position: absolute;
+	  left: 0;
+	  color: #f97316;
+	}
+	.slide-content li.discussion::before {
+	  content: "?";
+	  color: #8b5cf6;
+	}
+	.highlight {
+	  color: #f97316;
+	  font-weight: 500;
+	}
+	.two-col {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 60px;
+	}
+	.col h3 {
+	  font-size: 22px;
+	  margin-bottom: 20px;
+	  color: #f97316;
+	}
+	.timeline {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 20px;
+	}
+	.timeline-item {
+	  display: flex;
+	  align-items: center;
+	  gap: 20px;
+	}
+	.timeline-date {
+	  font-size: 18px;
+	  font-weight: 600;
+	  color: #f97316;
+	  min-width: 140px;
+	}
+	.timeline-event {
+	  font-size: 20px;
+	}
+	
+	.title-slide {
+	  justify-content: center;
+	  align-items: center;
+	  text-align: center;
+	}
+	.title-slide .slide-title {
+	  font-size: 56px;
+	  margin-bottom: 20px;
+	}
+	.title-slide .slide-subtitle {
+	  font-size: 28px;
+	}
+	
+	.nav {
+	  position: fixed;
+	  bottom: 30px;
+	  right: 40px;
+	  display: flex;
+	  gap: 12px;
+	  align-items: center;
+	}
+	.nav button {
+	  background: rgba(255,255,255,0.1);
+	  border: none;
+	  color: #fff;
+	  width: 44px;
+	  height: 44px;
+	  border-radius: 8px;
+	  font-size: 20px;
+	  cursor: pointer;
+	  transition: background 0.2s;
+	}
+	.nav button:hover { background: rgba(255,255,255,0.2); }
+	.nav span {
+	  font-size: 14px;
+	  color: #a0a0a0;
+	  margin: 0 8px;
+	}
+	
+	.agenda-tag {
+	  position: absolute;
+	  top: 30px;
+	  right: 40px;
+	  font-size: 14px;
+	  color: #a0a0a0;
+	  background: rgba(255,255,255,0.05);
+	  padding: 8px 16px;
+	  border-radius: 20px;
+	}
+	
+	.gantt-slide {
+	  padding: 30px 40px;
+	}
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: Title -->
+  <div class="slide title-slide active">
+	<h1 class="slide-title">TokyoSlide</h1>
+	<p class="slide-subtitle">Activation Program Kickoff</p>
+	<p style="color: #666; margin-top: 40px;">December 2025</p>
+  </div>
+
+  <!-- Slide 2: Overall Plan -->
+  <div class="slide">
+	<div class="agenda-tag">1. Overall Plan</div>
+	<h1 class="slide-title">Activation Approach</h1>
+	<div class="slide-content">
+	  <ul>
+		<li><span class="highlight">Brunch is our entry point</span> — orienting activations around the mimosa/spritz occasion</li>
+		<li>Two distinct event types:
+		  <ul style="margin-top: 12px; margin-left: 30px;">
+			<li><strong>Launch Parties</strong> = media/influencer announcements</li>
+			<li><strong>Activations</strong> = customer-facing venue collaborations</li>
+		  </ul>
+		</li>
+		<li>Phased approach: Spring pilot → Fall expansion</li>
+		<li>Total scope: <span class="highlight">2 launch parties + 8 venue activations</span></li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Slide 3: Target Venues -->
+  <div class="slide">
+	<div class="agenda-tag">1. Overall Plan</div>
+	<h1 class="slide-title">Target Venues</h1>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>What We're Looking For</h3>
+		  <ul>
+			<li>Youthful, social energy</li>
+			<li>Groups of friends, not families</li>
+			<li>Outdoor space is a plus</li>
+			<li>Strong social media presence</li>
+			<li>Known for drinks (the mimosa crowd)</li>
+			<li>Popular and busy</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>What We're Not</h3>
+		  <ul>
+			<li>Craft cocktail bars</li>
+			<li>Formal brunch spots</li>
+			<li>Quiet neighborhood places</li>
+			<li>Family-oriented restaurants</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 4: Target Dates -->
+  <div class="slide">
+	<div class="agenda-tag">2. Target Dates</div>
+	<h1 class="slide-title">Key Milestones</h1>
+	<div class="slide-content">
+	  <div class="timeline">
+		<div class="timeline-item">
+		  <span class="timeline-date">March 2026</span>
+		  <span class="timeline-event">LA Launch Party</span>
+		</div>
+		<div class="timeline-item">
+		  <span class="timeline-date">April 2026</span>
+		  <span class="timeline-event">NYC Launch Party</span>
+		</div>
+		<div class="timeline-item">
+		  <span class="timeline-date">April – June</span>
+		  <span class="timeline-event">Spring Activations (4 venues)</span>
+		</div>
+		<div class="timeline-item">
+		  <span class="timeline-date">Sept – Nov</span>
+		  <span class="timeline-event">Fall Activations (4 venues)</span>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 5: Timeline Gantt -->
+  <div class="slide gantt-slide">
+	<div class="agenda-tag">2. Target Dates</div>
+	<svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 90%;">
+	  <style>
+		.gantt-title { font: bold 18px sans-serif; fill: #fff; }
+		.gantt-subtitle { font: 12px sans-serif; fill: #a0a0a0; }
+		.gantt-month { font: 11px sans-serif; fill: #a0a0a0; text-anchor: middle; }
+		.gantt-task { font: 12px sans-serif; fill: #fff; }
+	  </style>
+	  <text x="40" y="35" class="gantt-title">Program Timeline</text>
+	  <text x="40" y="52" class="gantt-subtitle">December 2025 – December 2026</text>
+	  <line x1="200" y1="70" x2="960" y2="70" stroke="#333" stroke-width="1"/>
+	  <line x1="200" y1="90" x2="960" y2="90" stroke="#333" stroke-width="1"/>
+	  <text x="223" y="83" class="gantt-month">Dec</text>
+	  <text x="281" y="83" class="gantt-month">Jan</text>
+	  <text x="339" y="83" class="gantt-month">Feb</text>
+	  <text x="397" y="83" class="gantt-month">Mar</text>
+	  <text x="455" y="83" class="gantt-month">Apr</text>
+	  <text x="513" y="83" class="gantt-month">May</text>
+	  <text x="571" y="83" class="gantt-month">Jun</text>
+	  <text x="629" y="83" class="gantt-month">Jul</text>
+	  <text x="687" y="83" class="gantt-month">Aug</text>
+	  <text x="745" y="83" class="gantt-month">Sep</text>
+	  <text x="803" y="83" class="gantt-month">Oct</text>
+	  <text x="861" y="83" class="gantt-month">Nov</text>
+	  <text x="919" y="83" class="gantt-month">Dec</text>
+	  <g stroke="#2a2a2a" stroke-width="1">
+		<line x1="252" y1="90" x2="252" y2="360"/>
+		<line x1="310" y1="90" x2="310" y2="360"/>
+		<line x1="368" y1="90" x2="368" y2="360"/>
+		<line x1="426" y1="90" x2="426" y2="360"/>
+		<line x1="484" y1="90" x2="484" y2="360"/>
+		<line x1="542" y1="90" x2="542" y2="360"/>
+		<line x1="600" y1="90" x2="600" y2="360"/>
+		<line x1="658" y1="90" x2="658" y2="360"/>
+		<line x1="716" y1="90" x2="716" y2="360"/>
+		<line x1="774" y1="90" x2="774" y2="360"/>
+		<line x1="832" y1="90" x2="832" y2="360"/>
+		<line x1="890" y1="90" x2="890" y2="360"/>
+		<line x1="948" y1="90" x2="948" y2="360"/>
+	  </g>
+	  <text x="40" y="118" class="gantt-task">Strategy &amp; Planning</text>
+	  <text x="40" y="158" class="gantt-task">Venue Development - LA</text>
+	  <text x="40" y="198" class="gantt-task">Venue Development - NYC</text>
+	  <text x="40" y="238" class="gantt-task">Toolkit Design &amp; Production</text>
+	  <text x="40" y="278" class="gantt-task">LA Launch Party</text>
+	  <text x="40" y="318" class="gantt-task">NYC Launch Party</text>
+	  <text x="40" y="358" class="gantt-task">Spring Activations (4)</text>
+	  <text x="40" y="398" class="gantt-task">Fall Activations (4)</text>
+	  <rect x="200" y="105" width="168" height="22" rx="4" fill="#2563eb"/>
+	  <rect x="200" y="145" width="284" height="22" rx="4" fill="#3b82f6"/>
+	  <rect x="310" y="185" width="232" height="22" rx="4" fill="#3b82f6"/>
+	  <rect x="252" y="225" width="232" height="22" rx="4" fill="#8b5cf6"/>
+	  <rect x="716" y="225" width="116" height="22" rx="4" fill="#8b5cf6" opacity="0.6"/>
+	  <rect x="310" y="265" width="116" height="22" rx="4" fill="#f97316"/>
+	  <rect x="368" y="305" width="116" height="22" rx="4" fill="#f97316"/>
+	  <rect x="426" y="345" width="174" height="22" rx="4" fill="#10b981"/>
+	  <rect x="716" y="385" width="174" height="22" rx="4" fill="#10b981"/>
+	  <polygon points="407,276 417,286 407,296 397,286" fill="#ea580c"/>
+	  <polygon points="465,316 475,326 465,336 455,326" fill="#ea580c"/>
+	</svg>
+  </div>
+
+  <!-- Slide 6: Invited Guests -->
+  <div class="slide">
+	<div class="agenda-tag">3. Invited Guests</div>
+	<h1 class="slide-title">Launch Party Guests</h1>
+	<div class="slide-content">
+	  <ul>
+		<li><span class="highlight">~150 guests</span> per launch party</li>
+		<li>Target mix: media, influencers, industry friends</li>
+		<li class="discussion">Who builds the invite list?</li>
+		<li class="discussion">PR team lead? How do brand/social contribute names?</li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Slide 7: Activation Kit Concept -->
+  <div class="slide">
+	<div class="agenda-tag">4. Starter Kit Ideas</div>
+	<h1 class="slide-title">Venue Activation Kit</h1>
+	<div class="slide-content">
+	  <ul>
+		<li>Make it <span class="highlight">easy for venues to market</span> that they have TokyoSlide</li>
+		<li>Provide assets and materials that work without us being there</li>
+		<li>Physical collateral: things guests see and touch at the venue</li>
+		<li>Social and digital assets: content venues can post and share</li>
+		<li>Goal: consistent presence across all partner venues</li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Slide 8: Starter Kit Details -->
+  <div class="slide">
+	<div class="agenda-tag">4. Starter Kit Ideas</div>
+	<h1 class="slide-title">What's In the Kit?</h1>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Physical</h3>
+		  <ul>
+			<li>Recipe cards</li>
+			<li>Coasters</li>
+			<li>Point-of-sale materials</li>
+			<li>Menu templates</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Digital</h3>
+		  <ul>
+			<li>Social media assets</li>
+			<li>Story templates</li>
+			<li>Photography for venue use</li>
+			<li class="discussion">What else?</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 9: Discussion -->
+  <div class="slide">
+	<div class="agenda-tag">5. Discussion</div>
+	<h1 class="slide-title">Open Questions</h1>
+	<div class="slide-content">
+	  <ul>
+		<li><strong>Venue targeting:</strong> Any venues that fit this profile? Existing relationships?</li>
+		<li><strong>Activation concepts:</strong> Ideas for parties and pop-ups that resonate with the brand?</li>
+		<li><strong>Content capture:</strong> Who shoots? How do we coordinate with social?</li>
+		<li><strong>Team roles:</strong> How do brand, social, PR, and Kei coordinate?</li>
+		<li><strong>Timeline pressure:</strong> Account opening lead times — venue outreach needs to start now</li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+	<button onclick="prevSlide()">←</button>
+	<span><span id="current">1</span> / <span id="total">9</span></span>
+	<button onclick="nextSlide()">→</button>
+  </div>
+
+  <script>
+	const slides = document.querySelectorAll('.slide');
+	let current = 0;
+
+	function showSlide(n) {
+	  slides[current].classList.remove('active');
+	  current = (n + slides.length) % slides.length;
+	  slides[current].classList.add('active');
+	  document.getElementById('current').textContent = current + 1;
+	}
+
+	function nextSlide() { showSlide(current + 1); }
+	function prevSlide() { showSlide(current - 1); }
+
+	document.addEventListener('keydown', (e) => {
+	  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+	  if (e.key === 'ArrowLeft') prevSlide();
+	});
+
+	document.getElementById('total').textContent = slides.length;
+  </script>
+</body>
+</html>

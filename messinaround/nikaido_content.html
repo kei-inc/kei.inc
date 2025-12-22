@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikaido Content Production</title>
+  <style>
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	body {
+	  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	  background: #1a1a2e;
+	  color: #fff;
+	  overflow: hidden;
+	}
+	.slide {
+	  display: none;
+	  width: 100vw;
+	  height: 100vh;
+	  padding: 60px 80px;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	}
+	.slide.active { display: flex; flex-direction: column; }
+	
+	.slide-title {
+	  font-size: 48px;
+	  font-weight: 600;
+	  margin-bottom: 40px;
+	  color: #fff;
+	}
+	.slide-subtitle {
+	  font-size: 28px;
+	  color: #a0a0a0;
+	  margin-bottom: 30px;
+	}
+	.slide-content {
+	  flex: 1;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-start;
+	}
+	.slide-content ul {
+	  list-style: none;
+	  font-size: 22px;
+	  line-height: 1.8;
+	}
+	.slide-content li {
+	  margin-bottom: 20px;
+	  padding-left: 30px;
+	  position: relative;
+	}
+	.slide-content li::before {
+	  content: "→";
+	  position: absolute;
+	  left: 0;
+	  color: #f97316;
+	}
+	.slide-content strong {
+	  color: #f97316;
+	}
+	.two-col {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 40px;
+	  margin-top: 20px;
+	}
+	.col h3 {
+	  color: #f97316;
+	  margin-bottom: 20px;
+	  font-size: 24px;
+	}
+	.col ul {
+	  font-size: 20px;
+	}
+	.col li {
+	  margin-bottom: 12px;
+	}
+	.three-col {
+	  display: grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  gap: 30px;
+	  margin-top: 20px;
+	}
+	.phase-box {
+	  background: rgba(249, 115, 22, 0.1);
+	  border: 2px solid #f97316;
+	  border-radius: 12px;
+	  padding: 24px;
+	}
+	.phase-box h3 {
+	  color: #f97316;
+	  margin-bottom: 16px;
+	  font-size: 22px;
+	}
+	.phase-box .date {
+	  color: #a0a0a0;
+	  font-size: 16px;
+	  margin-bottom: 16px;
+	}
+	.phase-box ul {
+	  font-size: 18px;
+	  line-height: 1.6;
+	}
+	.phase-box li {
+	  margin-bottom: 10px;
+	  padding-left: 20px;
+	}
+	.phase-box li::before {
+	  font-size: 14px;
+	}
+	.budget-table {
+	  margin-top: 20px;
+	  font-size: 15px;
+	}
+	.budget-row {
+	  display: flex;
+	  justify-content: space-between;
+	  padding: 6px 0;
+	  border-bottom: 1px solid rgba(255,255,255,0.1);
+	}
+	.budget-row.total {
+	  border-top: 2px solid #f97316;
+	  margin-top: 12px;
+	  padding-top: 12px;
+	  font-weight: 600;
+	  font-size: 22px;
+	  color: #f97316;
+	}
+	.budget-row.section {
+	  color: #f97316;
+	  font-weight: 600;
+	  margin-top: 12px;
+	}
+	.team-grid {
+	  display: grid;
+	  grid-template-columns: repeat(2, 1fr);
+	  gap: 20px;
+	  margin-top: 30px;
+	}
+	.team-member {
+	  background: rgba(249, 115, 22, 0.1);
+	  border-radius: 8px;
+	  padding: 20px;
+	}
+	.team-member h4 {
+	  color: #f97316;
+	  margin-bottom: 10px;
+	  font-size: 20px;
+	}
+	.team-member p {
+	  font-size: 18px;
+	  line-height: 1.5;
+	  color: #d1d5db;
+	}
+	.nav {
+	  position: fixed;
+	  bottom: 30px;
+	  right: 30px;
+	  display: flex;
+	  gap: 10px;
+	  align-items: center;
+	  font-size: 18px;
+	}
+	.nav button {
+	  background: #f97316;
+	  border: none;
+	  color: white;
+	  padding: 10px 20px;
+	  border-radius: 6px;
+	  cursor: pointer;
+	  font-size: 18px;
+	}
+	.nav button:hover {
+	  background: #ea580c;
+	}
+	.export-btn {
+	  position: fixed;
+	  top: 30px;
+	  right: 30px;
+	  background: #f97316;
+	  border: none;
+	  color: white;
+	  padding: 10px 20px;
+	  border-radius: 6px;
+	  cursor: pointer;
+	  font-size: 16px;
+	  z-index: 1000;
+	}
+	.export-btn:hover {
+	  background: #ea580c;
+	}
+	@media print {
+	  body { overflow: visible; }
+	  .slide {
+		display: block !important;
+		position: relative !important;
+		page-break-after: always;
+		page-break-inside: avoid;
+	  }
+	  .nav, .export-btn {
+		display: none !important;
+	  }
+	}
+  </style>
+</head>
+<body>
+
+  <button class="export-btn" onclick="window.print()">Export to PDF</button>
+
+  <!-- Slide 1: Title -->
+  <div class="slide active">
+	<div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+	  <h1 class="slide-title" style="font-size: 64px; margin-bottom: 20px;">Nikaido Content Production</h1>
+	  <p class="slide-subtitle" style="font-size: 32px;">Photography & Video Asset Library</p>
+	  <p style="font-size: 24px; color: #a0a0a0; margin-top: 40px;">Project Walkthrough for Liz Devine</p>
+	</div>
+  </div>
+
+  <!-- Slide 2: Overview -->
+  <div class="slide">
+	<h1 class="slide-title">The Big Picture</h1>
+	<div class="slide-content">
+	  <p class="slide-subtitle">Building a comprehensive content library to launch Nikaido in the US market</p>
+	  <ul>
+		<li><strong>Three Production Phases:</strong> Studio, In Situ, Japan</li>
+		<li><strong>Strategic Purpose:</strong> Capture provenance, conviviality, and craft</li>
+		<li><strong>Deliverables:</strong> Photo and video assets across all brand touchpoints</li>
+		<li><strong>Timeline:</strong> January through May 2026</li>
+		<li><strong>Team:</strong> Lean, focused crew with multi-role flexibility</li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Slide 3: Three Production Buckets -->
+  <div class="slide">
+	<h1 class="slide-title">Three Production Approaches</h1>
+	<div class="slide-content">
+	  <div class="three-col">
+		<div class="phase-box">
+		  <h3>Studio</h3>
+		  <p style="color: #a0a0a0; margin-bottom: 16px;">Controlled, composable assets</p>
+		  <ul>
+			<li>Hero bottle shots</li>
+			<li>Cocktail beauty</li>
+			<li>White background</li>
+			<li>Flexible for layouts</li>
+		  </ul>
+		</div>
+		<div class="phase-box">
+		  <h3>In Situ</h3>
+		  <p style="color: #a0a0a0; margin-bottom: 16px;">Real-world conviviality</p>
+		  <ul>
+			<li>Bars & gatherings</li>
+			<li>Bartender action</li>
+			<li>Product in context</li>
+			<li>Social moments</li>
+		  </ul>
+		</div>
+		<div class="phase-box">
+		  <h3>Japan</h3>
+		  <p style="color: #a0a0a0; margin-bottom: 16px;">Cultural provenance</p>
+		  <ul>
+			<li>Distillery process</li>
+			<li>Ceramics craft</li>
+			<li>Izakaya culture</li>
+			<li>Oita landscape</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 4: Updated Timeline -->
+  <div class="slide">
+	<h1 class="slide-title">Production Timeline</h1>
+	<div class="slide-content">
+	  <div class="three-col">
+		<div class="phase-box">
+		  <h3>Phase 1: Studio</h3>
+		  <p class="date">Mid-January 2026</p>
+		  <ul>
+			<li>2 shoot days</li>
+			<li>LA or NYC location</li>
+			<li>Controlled product photography</li>
+			<li>Cocktail beauty shots</li>
+			<li>Video: camera moves</li>
+			<li>Photo & video assistants</li>
+		  </ul>
+		</div>
+		<div class="phase-box">
+		  <h3>Phase 2: In Situ</h3>
+		  <p class="date">Late February 2026</p>
+		  <ul>
+			<li>2 shoot days in LA</li>
+			<li>Day 1: Bar/social moments</li>
+			<li>Day 2: Cocktail focus</li>
+			<li>Bartender action</li>
+			<li>Product in context</li>
+			<li>Assistants & stylist</li>
+		  </ul>
+		</div>
+		<div class="phase-box">
+		  <h3>Phase 3: Japan</h3>
+		  <p class="date">May 2026</p>
+		  <ul>
+			<li>4 shoot days</li>
+			<li>Better foliage/greenery</li>
+			<li>Distillery & LFS</li>
+			<li>Izakaya & Oita</li>
+			<li>Run-and-gun style</li>
+		  </ul>
+		</div>
+	  </div>
+	  <p style="margin-top: 40px; font-size: 20px; color: #a0a0a0;"><strong>Post-Production:</strong> 2 weeks following each phase for editing, retouching, and asset organization</p>
+	</div>
+  </div>
+
+  <!-- Slide 5: Visual Reference -->
+  <div class="slide">
+	<h1 class="slide-title">Visual Reference & Inspiration</h1>
+	<div class="slide-content" style="justify-content: center; align-items: center;">
+	  <img src="moodboard.png" alt="Content Production Moodboard" style="max-width: 90%; max-height: 75vh; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+	</div>
+  </div>
+
+  <!-- Slide 6: Team Structure -->
+  <div class="slide">
+	<h1 class="slide-title">Core Production Team</h1>
+	<p class="slide-subtitle">Lean crew with multi-role flexibility</p>
+	<div class="slide-content">
+	  <div class="team-grid">
+		<div class="team-member">
+		  <h4>Liz Devine</h4>
+		  <p><strong>Role:</strong> Lead Producer/Photographer<br>
+		  <strong>On-Site:</strong> All phases (Studio, In Situ, Japan)<br>
+		  <strong>Post:</strong> Editing, retouching, asset management</p>
+		</div>
+		<div class="team-member">
+		  <h4>Videographer (Daniel?)</h4>
+		  <p><strong>Role:</strong> Video capture & editing<br>
+		  <strong>On-Site:</strong> All phases (~10 shoot days)<br>
+		  <strong>Post:</strong> Video editing, color, delivery (~8 post days)</p>
+		</div>
+		<div class="team-member">
+		  <h4>Paul (Kei)</h4>
+		  <p><strong>Role:</strong> Creative Direction + Second<br>
+		  <strong>On-Site:</strong> Japan (critical for brand)<br>
+		  <strong>Equipment:</strong> Cinema rig available</p>
+		</div>
+		<div class="team-member">
+		  <h4>David Eveleigh-Evans (Kei)</h4>
+		  <p><strong>Role:</strong> Design Direction + Assistant<br>
+		  <strong>On-Site:</strong> Japan + LA In Situ<br>
+		  <strong>Focus:</strong> Visual brand consistency</p>
+		</div>
+	  </div>
+	  <p style="margin-top: 40px; font-size: 20px; color: #a0a0a0;"><strong>Key Change:</strong> Japan crew reduced to 4 people total (3 core shoot days + 1 buffer). Paul & David act as assistants/seconds to maximize efficiency and reduce overhead.</p>
+	</div>
+  </div>
+
+  <!-- Slide 7: Japan Deep Dive -->
+  <div class="slide">
+	<h1 class="slide-title">Japan Production Details</h1>
+	<p class="slide-subtitle">4 days in May - naturalistic documentation</p>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Locations & Subjects</h3>
+		  <ul>
+			<li><strong>Nikaido Distillery:</strong> Production process, stills, bottling, materials</li>
+			<li><strong>LFS Ceramics:</strong> Kitchom bottle craftsmanship (very visual)</li>
+			<li><strong>Izakaya:</strong> Cultural conviviality in authentic setting</li>
+			<li><strong>Oita Surroundings:</strong> Sense of place, landscape, local culture</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Production Approach</h3>
+		  <ul>
+			<li><strong>Style:</strong> Run-and-gun, naturalistic, documentary feel</li>
+			<li><strong>Schedule:</strong> 3 core days + 1 buffer</li>
+			<li><strong>Lighting:</strong> Natural light priority, minimal setup</li>
+			<li><strong>Not fetishizing Japan</strong> - authentic cultural rooting</li>
+			<li><strong>Video:</strong> "Moving stills" plus directed action moments</li>
+			<li><strong>Paul's role:</strong> Second camera, creative direction, brand guardian</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 8: In Situ Deep Dive -->
+  <div class="slide">
+	<h1 class="slide-title">In Situ Production Details</h1>
+	<p class="slide-subtitle">2 days in LA - conviviality & product in context</p>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Subjects</h3>
+		  <ul>
+			<li><strong>Day 1 - Social:</strong> Bar environments, gathering moments, atmosphere</li>
+			<li><strong>Day 2 - Cocktails:</strong> Focused bartender craft and cocktail beauty</li>
+			<li><strong>Product Placement:</strong> Back bar, in context</li>
+			<li><strong>Action:</strong> Pouring, serving, enjoying</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Approach</h3>
+		  <ul>
+			<li><strong>Talent:</strong> "Scrappy" - bartender friends, trade for drinks</li>
+			<li><strong>Venues:</strong> 2-3 different LA bars</li>
+			<li><strong>Crew:</strong> Photo assistant, video assistant, cocktail stylist</li>
+			<li><strong>Video focus:</strong> Joy, ritual, conviviality in action</li>
+			<li><strong>David's role:</strong> Brand consistency, art direction</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 9: Studio Deep Dive -->
+  <div class="slide">
+	<h1 class="slide-title">Studio Production Details</h1>
+	<p class="slide-subtitle">2 days - controlled, composable assets</p>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Subjects</h3>
+		  <ul>
+			<li><strong>Hero Bottles:</strong> All SKUs, multiple angles</li>
+			<li><strong>Cocktails:</strong> Beauty shots, clean backgrounds</li>
+			<li><strong>White Background:</strong> For layering/composition</li>
+			<li><strong>Video Moves:</strong> Pans, orbits, zooms for editorial flexibility</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Approach</h3>
+		  <ul>
+			<li><strong>Location:</strong> LA or NYC (TBD)</li>
+			<li><strong>Crew:</strong> Photo assistant, video assistant</li>
+			<li><strong>Full lighting control</strong></li>
+			<li><strong>Maximum utility</strong> - assets designed for reuse</li>
+			<li><strong>Post focus:</strong> Retouching, masking, composability</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 10: Deliverables -->
+  <div class="slide">
+	<h1 class="slide-title">What We're Creating</h1>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Photo Library</h3>
+		  <ul>
+			<li>High-res images across all contexts</li>
+			<li>Multiple angles per subject</li>
+			<li>Raw + retouched finals</li>
+			<li>Organized by use case</li>
+			<li>Tagged for easy retrieval</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Video Library</h3>
+		  <ul>
+			<li>15-30 second modular clips</li>
+			<li>Multiple aspect ratios (16:9, 9:16, 1:1)</li>
+			<li>B-roll archive for flexibility</li>
+			<li>Some finished pieces for immediate use</li>
+		  </ul>
+		</div>
+	  </div>
+	  <p style="margin-top: 40px; font-size: 22px;"><strong>Asset Management:</strong> Complete library organized by category and use case, with usage rights documentation and brand guideline integration</p>
+	</div>
+  </div>
+
+  <!-- Slide 11: Budget Overview -->
+  <div class="slide">
+	<h1 class="slide-title">Production Budget</h1>
+	<p class="slide-subtitle">$140,000 all-in</p>
+	<div class="slide-content">
+	  <div class="budget-table">
+		<div class="budget-row section">
+		  <span>Production Team</span>
+		  <span></span>
+		</div>
+		<div class="budget-row">
+		  <span>Lead Producer/Photographer (Liz) - ~29 days</span>
+		  <span>$40,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Videographer - ~18 days</span>
+		  <span>$25,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Creative Director (Paul) - 5 days Japan</span>
+		  <span>$7,500</span>
+		</div>
+		<div class="budget-row">
+		  <span>Design Director (David) - 10 days</span>
+		  <span>$15,000</span>
+		</div>
+		
+		<div class="budget-row section" style="margin-top: 30px;">
+		  <span>Production Costs</span>
+		  <span></span>
+		</div>
+		<div class="budget-row">
+		  <span>Equipment rental (Japan & LA)</span>
+		  <span>$8,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Studio rental</span>
+		  <span>$4,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Location fees</span>
+		  <span>$3,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Props/styling/consumables</span>
+		  <span>$2,000</span>
+		</div>
+		
+		<div class="budget-row section" style="margin-top: 30px;">
+		  <span>Additional Crew</span>
+		  <span></span>
+		</div>
+		<div class="budget-row">
+		  <span>Photo Assistants (4 days)</span>
+		  <span>$2,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Video Assistants (4 days)</span>
+		  <span>$2,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Cocktail Stylist (2 days)</span>
+		  <span>$1,000</span>
+		</div>
+		
+		<div class="budget-row section" style="margin-top: 30px;">
+		  <span>Management & Contingency</span>
+		  <span></span>
+		</div>
+		<div class="budget-row">
+		  <span>Production Management Fee</span>
+		  <span>$20,000</span>
+		</div>
+		<div class="budget-row">
+		  <span>Contingency Reserve</span>
+		  <span>$10,500</span>
+		</div>
+		
+		<div class="budget-row total">
+		  <span>Total Production Investment</span>
+		  <span>$140,000</span>
+		</div>
+	  </div>
+	  <p style="margin-top: 30px; font-size: 18px; color: #a0a0a0;"><strong>Note:</strong> Travel, accommodations, and per diem coordinated separately by client</p>
+	</div>
+  </div>
+
+  <!-- Slide 12: Your Role & Compensation -->
+  <div class="slide">
+	<h1 class="slide-title">Liz's Scope & Compensation</h1>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>Days Breakdown</h3>
+		  <ul>
+			<li><strong>Studio:</strong> 2 shoot days + 5 post days</li>
+			<li><strong>In Situ:</strong> 2 shoot days + 5 post days</li>
+			<li><strong>Japan:</strong> 4 shoot days + 7 post days</li>
+			<li><strong>Final organization:</strong> 3 days</li>
+			<li><strong>Total:</strong> ~28 days</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>Responsibilities</h3>
+		  <ul>
+			<li>Lead all photography</li>
+			<li>Coordinate with videographer</li>
+			<li>Post-production & retouching</li>
+			<li>Asset organization & delivery</li>
+		  </ul>
+		</div>
+	  </div>
+	  <div style="margin-top: 40px; padding: 25px; background: rgba(249, 115, 22, 0.1); border: 2px solid rgba(249, 115, 22, 0.3); border-radius: 12px;">
+		<p style="font-size: 22px; margin-bottom: 15px; color: #d1d5db;"><strong>Rate Structure:</strong> $1,400 blended day rate for both shooting and post-production days</p>
+		<p style="font-size: 20px; color: #a0a0a0;">Covers all photography, coordination, editing, retouching, and asset prep. Client handles travel/lodging separately.</p>
+	  </div>
+	  <div style="margin-top: 30px; padding: 30px; background: rgba(249, 115, 22, 0.15); border: 2px solid #f97316; border-radius: 12px;">
+		<p style="font-size: 28px; margin-bottom: 10px;"><strong>Total Compensation: $40,000</strong></p>
+		<p style="font-size: 20px; color: #d1d5db;">~28 days total across three production phases</p>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 13: Key Production Considerations -->
+  <div class="slide">
+	<h1 class="slide-title">Important Notes</h1>
+	<div class="slide-content">
+	  <ul style="font-size: 24px;">
+		<li><strong>Japan Efficiency:</strong> 4-person crew (3 core days + 1 buffer) keeps overhead low while maintaining creative control</li>
+		<li><strong>Retouching Included:</strong> Your fee covers post-production work (photo retouching built into your rate)</li>
+		<li><strong>Videographer Post:</strong> Video editing/color included in videographer's fee</li>
+		<li><strong>Talent Strategy:</strong> "Scrappy" approach for In Situ - bartender friends, minimal paid talent</li>
+		<li><strong>Seasonal Timing:</strong> May for Japan specifically chosen for better foliage/greenery in Oita</li>
+		<li><strong>Brand Guardianship:</strong> Paul & David on Japan shoot ensure cultural authenticity and brand integrity</li>
+	  </ul>
+	</div>
+  </div>
+
+  <!-- Slide 14: Next Steps -->
+  <div class="slide">
+	<h1 class="slide-title">Next Steps & Questions</h1>
+	<div class="slide-content">
+	  <div class="two-col">
+		<div class="col">
+		  <h3>To Confirm</h3>
+		  <ul>
+			<li>Studio location (LA vs NYC)</li>
+			<li>Videographer confirmation (Daniel?)</li>
+			<li>Specific LA bars for In Situ</li>
+			<li>Japan distillery/LFS access timing</li>
+			<li>Equipment rental vs. shipping strategy</li>
+		  </ul>
+		</div>
+		<div class="col">
+		  <h3>To Discuss</h3>
+		  <ul>
+			<li>Shot list priorities by phase</li>
+			<li>Video style & specs (aspect ratios, length)</li>
+			<li>Post-production workflow</li>
+			<li>Asset delivery format & organization</li>
+			<li><strong>Three separate productions:</strong> Does splitting into Jan/Feb/May trips affect your cost structure or workflow?</li>
+			<li>Your thoughts on this structure?</li>
+		  </ul>
+		</div>
+	  </div>
+	  <div style="margin-top: 50px; padding: 30px; background: rgba(249, 115, 22, 0.1); border-radius: 12px;">
+		<p style="font-size: 22px; line-height: 1.6;">
+		  <strong>Today's Goal:</strong> Make sure you're comfortable with the scope, timeline, budget, and team structure. Get your input on production approach and logistics before we finalize with the client.
+		</p>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+	<button onclick="prevSlide()">←</button>
+	<span><span id="current">1</span> / <span id="total">14</span></span>
+	<button onclick="nextSlide()">→</button>
+  </div>
+
+  <script>
+	const slides = document.querySelectorAll('.slide');
+	let current = 0;
+
+	function showSlide(n) {
+	  slides[current].classList.remove('active');
+	  current = (n + slides.length) % slides.length;
+	  slides[current].classList.add('active');
+	  document.getElementById('current').textContent = current + 1;
+	}
+
+	function nextSlide() { showSlide(current + 1); }
+	function prevSlide() { showSlide(current - 1); }
+
+	document.addEventListener('keydown', (e) => {
+	  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+	  if (e.key === 'ArrowLeft') prevSlide();
+	});
+
+	document.getElementById('total').textContent = slides.length;
+  </script>
+</body>
+</html>

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cocktail Fundamentals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+	:root {
+	  --bg-dark: #1a1714;
+	  --bg-card: #252220;
+	  --amber: #d4a056;
+	  --amber-light: #e8c48a;
+	  --cream: #f5f0e8;
+	  --cream-muted: #b8b0a4;
+	  --copper: #c67d4a;
+	}
+
+	* {
+	  margin: 0;
+	  padding: 0;
+	  box-sizing: border-box;
+	}
+
+	body {
+	  font-family: 'Source Sans 3', sans-serif;
+	  background: var(--bg-dark);
+	  color: var(--cream);
+	  min-height: 100vh;
+	  overflow: hidden;
+	  font-weight: 300;
+	}
+
+	.presentation {
+	  position: relative;
+	  width: 100vw;
+	  height: 100vh;
+	}
+
+	.slide {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  align-items: center;
+	  padding: 4rem;
+	  opacity: 0;
+	  visibility: hidden;
+	  transition: opacity 0.5s ease, visibility 0.5s ease;
+	}
+
+	.slide.active {
+	  opacity: 1;
+	  visibility: visible;
+	}
+
+	.slide-content {
+	  max-width: 900px;
+	  width: 100%;
+	}
+
+	h1 {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 4.5rem;
+	  font-weight: 700;
+	  color: var(--amber);
+	  margin-bottom: 1rem;
+	  line-height: 1.1;
+	  letter-spacing: -0.02em;
+	}
+
+	h2 {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 3rem;
+	  font-weight: 600;
+	  color: var(--amber);
+	  margin-bottom: 2rem;
+	  line-height: 1.2;
+	}
+
+	h3 {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 1.8rem;
+	  font-weight: 400;
+	  color: var(--amber-light);
+	  margin-bottom: 1.5rem;
+	}
+
+	p {
+	  font-size: 1.5rem;
+	  line-height: 1.7;
+	  color: var(--cream);
+	  margin-bottom: 1.25rem;
+	}
+
+	.subtitle {
+	  font-size: 1.6rem;
+	  color: var(--cream-muted);
+	  font-weight: 300;
+	  margin-bottom: 2rem;
+	}
+
+	.tool-grid {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 2rem;
+	  margin-top: 1rem;
+	}
+
+	.tool-item {
+	  background: var(--bg-card);
+	  padding: 1.5rem 2rem;
+	  border-left: 3px solid var(--amber);
+	}
+
+	.tool-item h4 {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 1.4rem;
+	  color: var(--amber-light);
+	  margin-bottom: 0.5rem;
+	}
+
+	.tool-item p {
+	  font-size: 1.1rem;
+	  margin-bottom: 0;
+	  color: var(--cream-muted);
+	}
+
+	.ratio-display {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 5rem;
+	  color: var(--amber);
+	  text-align: center;
+	  margin: 2rem 0;
+	  letter-spacing: 0.1em;
+	}
+
+	.ratio-examples {
+	  display: flex;
+	  gap: 2rem;
+	  justify-content: center;
+	  flex-wrap: wrap;
+	}
+
+	.ratio-example {
+	  background: var(--bg-card);
+	  padding: 1.25rem 2rem;
+	  text-align: center;
+	  min-width: 180px;
+	}
+
+	.ratio-example .name {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 1.2rem;
+	  color: var(--amber-light);
+	  margin-bottom: 0.25rem;
+	}
+
+	.ratio-example .desc {
+	  font-size: 0.95rem;
+	  color: var(--cream-muted);
+	}
+
+	.recipe-card {
+	  background: var(--bg-card);
+	  padding: 2.5rem 3rem;
+	  margin-top: 1.5rem;
+	  border-top: 3px solid var(--amber);
+	}
+
+	.recipe-card h3 {
+	  margin-bottom: 1.25rem;
+	}
+
+	.ingredient-list {
+	  list-style: none;
+	  margin-bottom: 1.5rem;
+	}
+
+	.ingredient-list li {
+	  font-size: 1.3rem;
+	  padding: 0.4rem 0;
+	  color: var(--cream);
+	  border-bottom: 1px solid rgba(212, 160, 86, 0.15);
+	}
+
+	.ingredient-list li:last-child {
+	  border-bottom: none;
+	}
+
+	.ingredient-list .amount {
+	  color: var(--amber);
+	  font-weight: 600;
+	  display: inline-block;
+	  min-width: 80px;
+	}
+
+	.method {
+	  font-size: 1.15rem;
+	  color: var(--cream-muted);
+	  font-style: italic;
+	}
+
+	.category-grid {
+	  display: grid;
+	  grid-template-columns: repeat(2, 1fr);
+	  gap: 1.5rem;
+	  margin-top: 1rem;
+	}
+
+	.category-item {
+	  background: var(--bg-card);
+	  padding: 1.5rem;
+	}
+
+	.category-item h4 {
+	  font-family: 'Playfair Display', serif;
+	  color: var(--amber);
+	  font-size: 1.2rem;
+	  margin-bottom: 0.75rem;
+	}
+
+	.category-item p {
+	  font-size: 1.05rem;
+	  color: var(--cream-muted);
+	  margin-bottom: 0;
+	  line-height: 1.5;
+	}
+
+	.technique-points {
+	  margin-top: 1rem;
+	}
+
+	.technique-point {
+	  display: flex;
+	  gap: 1.5rem;
+	  margin-bottom: 1.5rem;
+	  align-items: flex-start;
+	}
+
+	.technique-point .number {
+	  font-family: 'Playfair Display', serif;
+	  font-size: 2rem;
+	  color: var(--amber);
+	  line-height: 1;
+	  min-width: 40px;
+	}
+
+	.technique-point .text {
+	  font-size: 1.25rem;
+	  color: var(--cream);
+	  line-height: 1.5;
+	}
+
+	.technique-point .text strong {
+	  color: var(--amber-light);
+	  font-weight: 600;
+	}
+
+	.science-box {
+	  background: rgba(212, 160, 86, 0.1);
+	  border-left: 3px solid var(--copper);
+	  padding: 1.5rem 2rem;
+	  margin-top: 2rem;
+	}
+
+	.science-box h4 {
+	  font-family: 'Playfair Display', serif;
+	  color: var(--copper);
+	  font-size: 1.1rem;
+	  margin-bottom: 0.75rem;
+	  text-transform: uppercase;
+	  letter-spacing: 0.1em;
+	}
+
+	.science-box p {
+	  font-size: 1.1rem;
+	  color: var(--cream-muted);
+	  margin-bottom: 0;
+	}
+
+	.progress {
+	  position: fixed;
+	  bottom: 2rem;
+	  left: 50%;
+	  transform: translateX(-50%);
+	  display: flex;
+	  gap: 0.5rem;
+	  z-index: 100;
+	}
+
+	.progress-dot {
+	  width: 8px;
+	  height: 8px;
+	  border-radius: 50%;
+	  background: var(--cream-muted);
+	  opacity: 0.3;
+	  transition: opacity 0.3s ease, transform 0.3s ease;
+	}
+
+	.progress-dot.active {
+	  opacity: 1;
+	  background: var(--amber);
+	  transform: scale(1.3);
+	}
+
+	.nav-hint {
+	  position: fixed;
+	  bottom: 2rem;
+	  right: 2rem;
+	  font-size: 0.9rem;
+	  color: var(--cream-muted);
+	  opacity: 0.5;
+	}
+
+	.title-slide h1 {
+	  font-size: 5.5rem;
+	  text-align: center;
+	}
+
+	.title-slide .subtitle {
+	  text-align: center;
+	  font-size: 1.8rem;
+	}
+
+	.section-intro {
+	  text-align: center;
+	}
+
+	.section-intro h2 {
+	  font-size: 3.5rem;
+	  margin-bottom: 1rem;
+	}
+
+	.section-intro .subtitle {
+	  font-size: 1.4rem;
+	}
+
+	.two-column {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 3rem;
+	  align-items: start;
+	}
+
+	.highlight {
+	  color: var(--amber);
+	}
+
+	.divider {
+	  width: 60px;
+	  height: 2px;
+	  background: var(--amber);
+	  margin: 1.5rem 0;
+	}
+
+	.center-text {
+	  text-align: center;
+	}
+
+	.closing h1 {
+	  font-size: 4rem;
+	}
+  </style>
+</head>
+<body>
+  <div class="presentation">
+	
+	<!-- Slide 1: Title -->
+	<div class="slide title-slide active" data-slide="0">
+	  <div class="slide-content">
+		<h1>Cocktail Fundamentals</h1>
+		<p class="subtitle">Tools, Ratios & Technique</p>
+	  </div>
+	</div>
+
+	<!-- Slide 2: Section - Tools -->
+	<div class="slide section-intro" data-slide="1">
+	  <div class="slide-content">
+		<h2>The Tools</h2>
+		<p class="subtitle">What you need behind the bar</p>
+	  </div>
+	</div>
+
+	<!-- Slide 3: Shaker -->
+	<div class="slide" data-slide="2">
+	  <div class="slide-content">
+		<h2>The Shaker</h2>
+		<p>The Boston shaker: a metal tin and a mixing glass (or two tins). Simple, professional, effective.</p>
+		<div class="tool-grid">
+		  <div class="tool-item">
+			<h4>Why Two Pieces?</h4>
+			<p>The seal forms from temperature differential—metal contracts as it chills, gripping the glass.</p>
+		  </div>
+		  <div class="tool-item">
+			<h4>The Alternative</h4>
+			<p>Cobbler shakers (three-piece with built-in strainer) work fine for home use but can freeze shut.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 4: Strainer -->
+	<div class="slide" data-slide="3">
+	  <div class="slide-content">
+		<h2>The Strainer</h2>
+		<p>A Hawthorne strainer fits over your shaker tin. The coiled spring catches ice and large particles.</p>
+		<div class="tool-grid">
+		  <div class="tool-item">
+			<h4>Hawthorne</h4>
+			<p>The workhorse. Spring coil, flat face, fits shaker tins. Press the spring tighter for finer straining.</p>
+		  </div>
+		  <div class="tool-item">
+			<h4>Julep Strainer</h4>
+			<p>Perforated bowl shape. Traditional for stirred drinks—fits elegantly into a mixing glass.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 5: Jigger -->
+	<div class="slide" data-slide="4">
+	  <div class="slide-content">
+		<h2>The Jigger</h2>
+		<p>Precision matters. A cocktail is a small thing—a quarter ounce off throws the whole balance.</p>
+		<div class="tool-grid">
+		  <div class="tool-item">
+			<h4>Japanese Style</h4>
+			<p>Tall, slim, with interior gradations. More precise, easier to read, elegant to use.</p>
+		  </div>
+		  <div class="tool-item">
+			<h4>Standard Double</h4>
+			<p>1oz / 2oz hourglass. Simple, fast. Know your pours: fill to the brim for accuracy.</p>
+		  </div>
+		</div>
+		<div class="science-box">
+		  <h4>Pro tip</h4>
+		  <p>Pour with the jigger close to your mixing vessel. Lifting it high looks theatrical but loses liquid to drips.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 6: Mixing Glass & Bar Spoon -->
+	<div class="slide" data-slide="5">
+	  <div class="slide-content">
+		<h2>Mixing Glass & Bar Spoon</h2>
+		<p>For stirred drinks. Heavy glass holds cold; the spoon's spiral shaft lets you rotate smoothly.</p>
+		<div class="tool-grid">
+		  <div class="tool-item">
+			<h4>The Glass</h4>
+			<p>Thick-walled, heavy base. The weight keeps it stable. A pint glass works in a pinch.</p>
+		  </div>
+		  <div class="tool-item">
+			<h4>The Spoon</h4>
+			<p>Long, twisted shaft. Hold it between fingers, let the spiral guide rotation against the glass wall.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 7: Section - Ingredients -->
+	<div class="slide section-intro" data-slide="6">
+	  <div class="slide-content">
+		<h2>The Ingredients</h2>
+		<p class="subtitle">Building blocks of every cocktail</p>
+	  </div>
+	</div>
+
+	<!-- Slide 8: Base Spirits -->
+	<div class="slide" data-slide="7">
+	  <div class="slide-content">
+		<h2>Base Spirits</h2>
+		<p>The foundation. Usually 1.5–2oz, providing the drink's primary character and backbone.</p>
+		<div class="category-grid">
+		  <div class="category-item">
+			<h4>Whiskey</h4>
+			<p>Bourbon (sweet, corn), Rye (spicy, grain), Scotch (smoky, malty)</p>
+		  </div>
+		  <div class="category-item">
+			<h4>Gin</h4>
+			<p>Juniper-forward. London Dry is classic; modern styles range from floral to citrus</p>
+		  </div>
+		  <div class="category-item">
+			<h4>Rum</h4>
+			<p>White (clean, mixing), Aged (vanilla, caramel), Agricole (grassy, funky)</p>
+		  </div>
+		  <div class="category-item">
+			<h4>Others</h4>
+			<p>Vodka (neutral), Tequila/Mezcal (agave), Brandy (grape), and beyond</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 9: Modifiers & Bitters -->
+	<div class="slide" data-slide="8">
+	  <div class="slide-content">
+		<h2>Modifiers & Bitters</h2>
+		<div class="two-column">
+		  <div>
+			<h3>Modifiers</h3>
+			<p>Vermouths (sweet, dry, blanc), liqueurs, and amari. They add complexity, sweetness, herbal notes, or bitterness.</p>
+			<p style="color: var(--cream-muted); font-size: 1.15rem;">Think of them as the supporting cast—they shape the drink's direction without overpowering the lead.</p>
+		  </div>
+		  <div>
+			<h3>Bitters</h3>
+			<p>Concentrated botanical extracts. A few dashes transform a drink. Angostura is essential; Peychaud's and orange bitters round out the basics.</p>
+			<p style="color: var(--cream-muted); font-size: 1.15rem;">Like salt in cooking—you don't taste them directly, but everything's flat without them.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 10: Fresh & Sweet -->
+	<div class="slide" data-slide="9">
+	  <div class="slide-content">
+		<h2>Fresh & Sweet</h2>
+		<div class="two-column">
+		  <div>
+			<h3>Citrus</h3>
+			<p>Always fresh-squeezed. Lemon and lime are the workhorses. Juice oxidizes fast—squeeze the same day you use it.</p>
+			<p style="color: var(--cream-muted); font-size: 1.15rem;">Bottled juice is dead juice. This is the one place where shortcuts kill the drink.</p>
+		  </div>
+		  <div>
+			<h3>Sweeteners</h3>
+			<p>Simple syrup (1:1 sugar to water) is the default. Rich syrup (2:1) for more body. Honey, maple, demerara—each brings character.</p>
+			<p style="color: var(--cream-muted); font-size: 1.15rem;">Sweetness balances acid and tempers alcohol heat. Get this ratio right, everything clicks.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 11: Section - Ratios -->
+	<div class="slide section-intro" data-slide="10">
+	  <div class="slide-content">
+		<h2>The Ratios</h2>
+		<p class="subtitle">Every cocktail is a variation on a few core templates</p>
+	  </div>
+	</div>
+
+	<!-- Slide 12: The Sour -->
+	<div class="slide" data-slide="11">
+	  <div class="slide-content">
+		<h2>The Sour</h2>
+		<div class="ratio-display">2 : ¾ : ¾</div>
+		<p class="center-text">Spirit : Citrus : Sweet</p>
+		<div class="ratio-examples">
+		  <div class="ratio-example">
+			<div class="name">Whiskey Sour</div>
+			<div class="desc">Bourbon, lemon, simple</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Daiquiri</div>
+			<div class="desc">White rum, lime, simple</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Margarita</div>
+			<div class="desc">Tequila, lime, agave</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Gold Rush</div>
+			<div class="desc">Bourbon, lemon, honey</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 13: The Manhattan/Martini -->
+	<div class="slide" data-slide="12">
+	  <div class="slide-content">
+		<h2>The Manhattan / Martini</h2>
+		<div class="ratio-display">2 : 1</div>
+		<p class="center-text">Spirit : Vermouth (+ bitters)</p>
+		<div class="ratio-examples">
+		  <div class="ratio-example">
+			<div class="name">Manhattan</div>
+			<div class="desc">Rye, sweet vermouth, Ango</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Martini</div>
+			<div class="desc">Gin, dry vermouth</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Rob Roy</div>
+			<div class="desc">Scotch, sweet vermouth</div>
+		  </div>
+		  <div class="ratio-example">
+			<div class="name">Brooklyn</div>
+			<div class="desc">Rye, dry vermouth, maraschino</div>
+		  </div>
+		</div>
+		<div class="science-box">
+		  <h4>Note</h4>
+		  <p>Ratios flex with taste. Martinis have drifted drier over decades—some now just rinse the glass with vermouth. Find your balance.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 14: Equal Parts -->
+	<div class="slide" data-slide="13">
+	  <div class="slide-content">
+		<h2>Equal Parts</h2>
+		<div class="two-column">
+		  <div>
+			<div class="ratio-display" style="font-size: 3.5rem;">1:1:1</div>
+			<p class="center-text">The Negroni Template</p>
+			<div class="ratio-examples" style="justify-content: center;">
+			  <div class="ratio-example">
+				<div class="name">Negroni</div>
+				<div class="desc">Gin, sweet vermouth, Campari</div>
+			  </div>
+			</div>
+		  </div>
+		  <div>
+			<div class="ratio-display" style="font-size: 3.5rem;">1:1:1:1</div>
+			<p class="center-text">The Last Word Template</p>
+			<div class="ratio-examples" style="justify-content: center;">
+			  <div class="ratio-example">
+				<div class="name">Last Word</div>
+				<div class="desc">Gin, Green Chartreuse, Maraschino, lime</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<div class="science-box">
+		  <h4>The beauty</h4>
+		  <p>Equal parts recipes are forgiving and infinitely riffable. Swap any component and you've invented a new drink.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 15: Section - Technique -->
+	<div class="slide section-intro" data-slide="14">
+	  <div class="slide-content">
+		<h2>The Technique</h2>
+		<p class="subtitle">Shaking and stirring—when and how</p>
+	  </div>
+	</div>
+
+	<!-- Slide 16: When to Shake -->
+	<div class="slide" data-slide="15">
+	  <div class="slide-content">
+		<h2>When to Shake</h2>
+		<p>Shake anything with citrus, juice, dairy, egg, or ingredients that don't want to combine.</p>
+		<div class="divider"></div>
+		<div class="technique-points">
+		  <div class="technique-point">
+			<div class="number">1</div>
+			<div class="text"><strong>Integration</strong> — Shaking forces disparate ingredients to emulsify. Citrus and spirits don't naturally mix; violence makes them cooperate.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">2</div>
+			<div class="text"><strong>Aeration</strong> — Shaking introduces tiny air bubbles, giving the drink a lighter, frothier texture.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">3</div>
+			<div class="text"><strong>Texture</strong> — That silky mouthfeel in a good sour? That's the shake creating it.</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 17: How to Shake -->
+	<div class="slide" data-slide="16">
+	  <div class="slide-content">
+		<h2>How to Shake</h2>
+		<div class="technique-points">
+		  <div class="technique-point">
+			<div class="number">1</div>
+			<div class="text"><strong>Load and seal</strong> — Ingredients in glass, ice in tin. Tap firmly to seal. Tin on top, angled slightly.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">2</div>
+			<div class="text"><strong>Full motion</strong> — Shake from the shoulder, not the wrist. The whole arm moves. Hard, deliberate, horizontal.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">3</div>
+			<div class="text"><strong>10–12 seconds</strong> — That's it. The tin will be frost-cold. Longer just adds dilution without more chill.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">4</div>
+			<div class="text"><strong>Break and strain</strong> — Heel of hand on the tin's side where it meets the glass. Pop, strain, serve.</div>
+		  </div>
+		</div>
+		<div class="science-box">
+		  <h4>The Science</h4>
+		  <p>You're doing three things at once: chilling (to ~35°F), diluting (adding 20–25% water), and aerating. The water isn't a flaw—it's essential. It opens up flavors and softens the alcohol.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 18: Stirring -->
+	<div class="slide" data-slide="17">
+	  <div class="slide-content">
+		<h2>When & How to Stir</h2>
+		<p>Stir spirit-forward drinks with no citrus. You want cold and dilution—but <em>not</em> aeration. The texture should stay silky, not frothy.</p>
+		<div class="divider"></div>
+		<div class="technique-points">
+		  <div class="technique-point">
+			<div class="number">1</div>
+			<div class="text"><strong>Ice first</strong> — Fill the mixing glass with ice. Add your ingredients.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">2</div>
+			<div class="text"><strong>Stir gently</strong> — Spoon against the glass wall, smooth rotations. No clinking, no splashing. 30–40 rotations.</div>
+		  </div>
+		  <div class="technique-point">
+			<div class="number">3</div>
+			<div class="text"><strong>Strain clean</strong> — Julep strainer for mixing glass, Hawthorne for tin. Into a chilled coupe or over fresh ice.</div>
+		  </div>
+		</div>
+		<div class="science-box">
+		  <h4>The Goal</h4>
+		  <p>Same chill and dilution as shaking, but preserving clarity and that dense, viscous texture that makes a Manhattan or Martini feel substantial.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 19: Section - The Drinks -->
+	<div class="slide section-intro" data-slide="18">
+	  <div class="slide-content">
+		<h2>The Drinks</h2>
+		<p class="subtitle">One shaken, one stirred</p>
+	  </div>
+	</div>
+
+	<!-- Slide 20: Gold Rush -->
+	<div class="slide" data-slide="19">
+	  <div class="slide-content">
+		<h2>Gold Rush</h2>
+		<p>A modern classic. The honey adds warmth and body—perfect for winter.</p>
+		<div class="recipe-card">
+		  <h3>Shaken</h3>
+		  <ul class="ingredient-list">
+			<li><span class="amount">2 oz</span> Bourbon</li>
+			<li><span class="amount">¾ oz</span> Fresh lemon juice</li>
+			<li><span class="amount">¾ oz</span> Honey syrup (1:1 honey + hot water)</li>
+		  </ul>
+		  <p class="method">Shake hard with ice. Strain into a rocks glass over fresh ice. No garnish needed—maybe a lemon twist if you're feeling fancy.</p>
+		</div>
+		<div class="science-box">
+		  <h4>The Honey Syrup</h4>
+		  <p>Equal parts honey and hot water, stirred until dissolved. Raw honey won't incorporate properly in cold liquid—the syrup solves that.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 21: Hanmattan -->
+	<div class="slide" data-slide="20">
+	  <div class="slide-content">
+		<h2>The Hanmattan</h2>
+		<p>A reverse Manhattan—vermouth-forward, lighter, sessionable. All the elegance, easier on the pour.</p>
+		<div class="recipe-card">
+		  <h3>Stirred</h3>
+		  <ul class="ingredient-list">
+			<li><span class="amount">2 oz</span> Sweet vermouth</li>
+			<li><span class="amount">1 oz</span> Bourbon (or rye)</li>
+			<li><span class="amount">2</span> dashes Angostura bitters</li>
+			<li><span class="amount">1</span> Cherry or orange peel</li>
+		  </ul>
+		  <p class="method">Combine in a mixing glass with ice. Stir 30–40 rotations until well-chilled. Strain into a chilled coupe. Garnish with a cherry or express an orange peel.</p>
+		</div>
+		<div class="science-box">
+		  <h4>Why It Works</h4>
+		  <p>Flipping the ratio lets the vermouth's botanicals lead while the bourbon provides warmth and structure. Lower ABV, more complex aromatics, very approachable.</p>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Slide 22: Closing -->
+	<div class="slide closing center-text" data-slide="21">
+	  <div class="slide-content">
+		<h1>Cheers</h1>
+		<div class="divider" style="margin: 1.5rem auto;"></div>
+		<p class="subtitle">Now let's make something.</p>
+	  </div>
+	</div>
+
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="nav-hint">← → to navigate</div>
+
+  <script>
+	const slides = document.querySelectorAll('.slide');
+	const progress = document.getElementById('progress');
+	let currentSlide = 0;
+
+	// Create progress dots
+	slides.forEach((_, i) => {
+	  const dot = document.createElement('div');
+	  dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+	  progress.appendChild(dot);
+	});
+
+	const dots = document.querySelectorAll('.progress-dot');
+
+	function goToSlide(n) {
+	  if (n < 0 || n >= slides.length) return;
+	  
+	  slides[currentSlide].classList.remove('active');
+	  dots[currentSlide].classList.remove('active');
+	  
+	  currentSlide = n;
+	  
+	  slides[currentSlide].classList.add('active');
+	  dots[currentSlide].classList.add('active');
+	}
+
+	document.addEventListener('keydown', (e) => {
+	  if (e.key === 'ArrowRight' || e.key === ' ') {
+		e.preventDefault();
+		goToSlide(currentSlide + 1);
+	  } else if (e.key === 'ArrowLeft') {
+		e.preventDefault();
+		goToSlide(currentSlide - 1);
+	  } else if (e.key === 'Home') {
+		e.preventDefault();
+		goToSlide(0);
+	  } else if (e.key === 'End') {
+		e.preventDefault();
+		goToSlide(slides.length - 1);
+	  }
+	});
+
+	// Click to advance
+	document.addEventListener('click', (e) => {
+	  if (e.clientX > window.innerWidth / 2) {
+		goToSlide(currentSlide + 1);
+	  } else {
+		goToSlide(currentSlide - 1);
+	  }
+	});
+
+	// Touch support
+	let touchStartX = 0;
+	document.addEventListener('touchstart', (e) => {
+	  touchStartX = e.changedTouches[0].screenX;
+	});
+	document.addEventListener('touchend', (e) => {
+	  const diff = e.changedTouches[0].screenX - touchStartX;
+	  if (Math.abs(diff) > 50) {
+		if (diff > 0) {
+		  goToSlide(currentSlide - 1);
+		} else {
+		  goToSlide(currentSlide + 1);
+		}
+	  }
+	});
+  </script>
+</body>
+</html>

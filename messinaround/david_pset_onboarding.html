@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autodesk PSET Project - Onboarding</title>
+  <style>
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	body {
+	  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	  background: #0a0a0a;
+	  color: #e8e8e8;
+	  overflow: hidden;
+	  height: 100vh;
+	}
+	.slide {
+	  display: none;
+	  height: 100vh;
+	  padding: 60px 80px;
+	  flex-direction: column;
+	  justify-content: center;
+	}
+	.slide.active { display: flex; }
+	.slide-label {
+	  font-size: 11px;
+	  text-transform: uppercase;
+	  letter-spacing: 3px;
+	  color: #666;
+	  margin-bottom: 24px;
+	}
+	h1 {
+	  font-size: 48px;
+	  font-weight: 600;
+	  line-height: 1.15;
+	  margin-bottom: 28px;
+	  max-width: 900px;
+	}
+	h2 {
+	  font-size: 26px;
+	  font-weight: 500;
+	  color: #888;
+	  margin-bottom: 36px;
+	  max-width: 700px;
+	  line-height: 1.4;
+	}
+	.content {
+	  font-size: 20px;
+	  line-height: 1.7;
+	  max-width: 750px;
+	  color: #aaa;
+	}
+	.content p { margin-bottom: 16px; }
+	.highlight { color: #e8e8e8; }
+	.card {
+	  background: #151515;
+	  border-left: 3px solid #444;
+	  padding: 20px 28px;
+	  margin-bottom: 16px;
+	  max-width: 700px;
+	}
+	.card.green { border-color: #4ade80; }
+	.card.yellow { border-color: #fbbf24; }
+	.card.purple { border-color: #818cf8; }
+	.card.blue { border-color: #60a5fa; }
+	.card h3 {
+	  font-size: 17px;
+	  font-weight: 600;
+	  margin-bottom: 6px;
+	}
+	.card p {
+	  font-size: 15px;
+	  color: #888;
+	  line-height: 1.5;
+	}
+	.two-col {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 24px;
+	  max-width: 900px;
+	}
+	.timeline {
+	  display: flex;
+	  gap: 0;
+	  max-width: 850px;
+	  margin-top: 20px;
+	}
+	.timeline-item {
+	  flex: 1;
+	  padding: 20px;
+	  background: #151515;
+	  border-top: 3px solid #333;
+	  position: relative;
+	}
+	.timeline-item.active { border-color: #4ade80; }
+	.timeline-item.next { border-color: #fbbf24; }
+	.timeline-item h4 {
+	  font-size: 13px;
+	  color: #666;
+	  margin-bottom: 8px;
+	  text-transform: uppercase;
+	  letter-spacing: 1px;
+	}
+	.timeline-item p {
+	  font-size: 15px;
+	  color: #aaa;
+	  line-height: 1.4;
+	}
+	.person {
+	  display: flex;
+	  align-items: center;
+	  gap: 16px;
+	  margin-bottom: 14px;
+	}
+	.person-avatar {
+	  width: 40px;
+	  height: 40px;
+	  border-radius: 50%;
+	  background: #252525;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  font-size: 14px;
+	  font-weight: 600;
+	  color: #666;
+	}
+	.person-info h4 {
+	  font-size: 16px;
+	  font-weight: 500;
+	  margin-bottom: 2px;
+	}
+	.person-info p {
+	  font-size: 13px;
+	  color: #666;
+	}
+	.story-box {
+	  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+	  border-radius: 12px;
+	  padding: 32px;
+	  max-width: 800px;
+	  font-size: 18px;
+	  line-height: 1.7;
+	  color: #ccc;
+	}
+	.nav {
+	  position: fixed;
+	  bottom: 40px;
+	  right: 60px;
+	  display: flex;
+	  align-items: center;
+	  gap: 20px;
+	  font-size: 13px;
+	  color: #555;
+	}
+	.nav-arrows { display: flex; gap: 8px; }
+	.nav-btn {
+	  width: 40px;
+	  height: 40px;
+	  border: 1px solid #333;
+	  background: transparent;
+	  color: #666;
+	  cursor: pointer;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  transition: all 0.2s;
+	}
+	.nav-btn:hover { border-color: #555; color: #999; }
+	.progress {
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+	  height: 2px;
+	  background: #4ade80;
+	  transition: width 0.3s ease;
+	}
+	.slide-counter {
+	  position: fixed;
+	  bottom: 44px;
+	  left: 60px;
+	  font-size: 13px;
+	  color: #444;
+	}
+	.small-text {
+	  font-size: 14px;
+	  color: #666;
+	  margin-top: 24px;
+	}
+	ul.simple {
+	  list-style: none;
+	  margin-top: 12px;
+	}
+	ul.simple li {
+	  font-size: 18px;
+	  color: #aaa;
+	  padding: 8px 0;
+	  padding-left: 20px;
+	  position: relative;
+	}
+	ul.simple li::before {
+	  content: '→';
+	  position: absolute;
+	  left: 0;
+	  color: #555;
+	}
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1: Title -->
+  <div class="slide active">
+	<div class="slide-label">Project Onboarding</div>
+	<h1>Autodesk PSET Platform Narrative</h1>
+	<h2>Creating vignettes that tell the story of why platform matters</h2>
+	<p class="small-text">December 2025</p>
+  </div>
+
+  <!-- Slide 2: The Client -->
+  <div class="slide">
+	<div class="slide-label">The Client</div>
+	<h1>Platform Services & Emerging Tech (PSET)</h1>
+	<div class="content">
+	  <p>PSET is the platform organization within Autodesk — they build the shared capabilities that power products like Revit, Fusion, Maya, and AutoCAD.</p>
+	  <p>They've created 8 capability strategy memos defining their 3-year vision. Now they need <span class="highlight">a way to tell that story</span> to internal stakeholders, executives, and eventually customers.</p>
+	</div>
+  </div>
+
+  <!-- Slide 3: The Problem -->
+  <div class="slide">
+	<div class="slide-label">The Problem</div>
+	<h1>They Ran Out of Steam</h1>
+	<div class="content">
+	  <p>The team started a narrative document last summer but it stalled. Too many cooks, too much abstraction, not enough tangible output.</p>
+	  <p>The existing draft was too low-level (feature descriptions) without landing the <span class="highlight">"why should I care"</span> for busy stakeholders.</p>
+	  <p>They need something that can be used in presentations, shared with executives, and adapted for different audiences.</p>
+	</div>
+  </div>
+
+  <!-- Slide 4: Key Stakeholders -->
+  <div class="slide">
+	<div class="slide-label">Key People</div>
+	<h1>Who We're Working With</h1>
+	<div class="two-col">
+	  <div>
+		<div class="person">
+		  <div class="person-avatar">CS</div>
+		  <div class="person-info">
+			<h4>Conny Scheitz</h4>
+			<p>Exec Sponsor, PSET Leadership</p>
+		  </div>
+		</div>
+		<div class="person">
+		  <div class="person-avatar">JG</div>
+		  <div class="person-info">
+			<h4>Jennifer Glen</h4>
+			<p>PM Director, primary collaborator</p>
+		  </div>
+		</div>
+		<div class="person">
+		  <div class="person-avatar">AB</div>
+		  <div class="person-info">
+			<h4>Alex Bergin</h4>
+			<p>PM Director, Assistant strategy</p>
+		  </div>
+		</div>
+	  </div>
+	  <div>
+		<div class="person">
+		  <div class="person-avatar">BD</div>
+		  <div class="person-info">
+			<h4>Brynna Donn</h4>
+			<p>Consultant/Orchestrator, PM coaching</p>
+		  </div>
+		</div>
+		<div class="person">
+		  <div class="person-avatar">N</div>
+		  <div class="person-info">
+			<h4>Nevin + Strategy Team</h4>
+			<p>Platform narrative ownership</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<p class="small-text">Brynna is our key day-to-day contact — she has deep visibility into the PM teams and capability memos.</p>
+  </div>
+
+  <!-- Slide 5: Platform Framing -->
+  <div class="slide">
+	<div class="slide-label">Strategic Frame</div>
+	<h1>How We're Positioning Platform</h1>
+	<div class="card blue">
+	  <h3>Not Replacing Products — Amplifying Them</h3>
+	  <p>Revit, Fusion, Maya become more powerful because they connect to shared capabilities: identity, data, AI, collaboration.</p>
+	</div>
+	<div class="card blue">
+	  <h3>From Files to Flows</h3>
+	  <p>Moving from manual, file-based workflows to connected, AI-augmented experiences where context flows between tools and teams.</p>
+	</div>
+	<p class="small-text">⚠️ Politically sensitive: avoid language that makes product teams feel threatened or replaced.</p>
+  </div>
+
+  <!-- Slide 6: Capability Map -->
+  <div class="slide">
+	<div class="slide-label">The Model</div>
+	<h1>Services → Capabilities → Outcomes</h1>
+	<div style="display: flex; align-items: center; gap: 48px;">
+	  <img src="capability-map.png" alt="Capability Map" style="max-height: 420px; border-radius: 8px;">
+	  <div class="content" style="max-width: 380px;">
+		<p>Outer ring: <span class="highlight">Services</span> — the actual platform offerings</p>
+		<p>Middle ring: <span class="highlight">Capabilities</span> — what they enable</p>
+		<p>Center: <span class="highlight">Outcomes</span> — what customers/stakeholders care about</p>
+		<p style="color: #f97316; margin-top: 16px;">Orange lines show how a vignette traces through multiple capabilities to deliver an outcome.</p>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 7: The Deliverable -->
+  <div class="slide">
+	<div class="slide-label">The Deliverable</div>
+	<h1>Modular Vignettes in PowerPoint</h1>
+	<div class="content">
+	  <p>Not a video. Not an interactive microsite (for now). <span class="highlight">Modular slides</span> that can be assembled, presented, and shared.</p>
+	  <p>Each vignette tells a story through a persona facing a challenge, enabled by platform capabilities, achieving an outcome.</p>
+	</div>
+	<ul class="simple">
+	  <li>Scene-setting slides (the "philosophy" preamble)</li>
+	  <li>Individual vignettes (modular, swappable)</li>
+	  <li>Capability maps showing what platform services are involved</li>
+	</ul>
+  </div>
+
+  <!-- Slide 7: Vignette Structure -->
+  <div class="slide">
+	<div class="slide-label">Story Structure</div>
+	<h1>Four-Act Vignette Format</h1>
+	<div class="card green">
+	  <h3>Act 1: Challenge</h3>
+	  <p>Persona faces a problem. "This is how it used to be. Remember how painful this was?"</p>
+	</div>
+	<div class="card green">
+	  <h3>Act 2: Solution Being Built</h3>
+	  <p>Platform capabilities enable something new. Developer story, infrastructure story.</p>
+	</div>
+	<div class="card green">
+	  <h3>Act 3: Resolution</h3>
+	  <p>Persona uses the solution. Days instead of weeks. Frustration eliminated.</p>
+	</div>
+	<div class="card green">
+	  <h3>Act 4: Reveal</h3>
+	  <p>Narrator explains what made it possible. "Here's what platform enabled."</p>
+	</div>
+  </div>
+
+  <!-- Slide 8: Tier Framework -->
+  <div class="slide">
+	<div class="slide-label">Prioritization</div>
+	<h1>Three Tiers of Vignettes</h1>
+	<div class="card green">
+	  <h3>Tier 1 — Clear & Achievable (18 months)</h3>
+	  <p>Clear capability ownership, tangible value. Internal developer, Connected admin, External developer.</p>
+	</div>
+	<div class="card yellow">
+	  <h3>Tier 2 — Interconnected (2-3 years)</h3>
+	  <p>Multiple capabilities working together. Jordan's Air Fryer journey, budget alerts, developer response loop.</p>
+	</div>
+	<div class="card purple">
+	  <h3>Tier 3 — Future-Facing (3-5 years)</h3>
+	  <p>Inspirational vision. AI-native design, foundation models, ecosystem at scale.</p>
+	</div>
+  </div>
+
+  <!-- Slide 9: Example Vignette -->
+  <div class="slide">
+	<div class="slide-label">Example</div>
+	<h1>Jordan's Air Fryer (Tier 2)</h1>
+	<div class="story-box">
+	  Jordan is an industrial designer tasked with creating a sustainable Air Fryer design in record time. Jordan is not a sustainability expert. In the past, this meant printing plans, mailing to consultants, waiting for redlines — weeks of delay.<br><br>
+	  Now, Jordan asks the Autodesk Assistant to validate the design against sustainability standards. The Assistant connects to real-time validation APIs (built by an internal developer using platform tools), shares scoped data with an external consultant, and Jordan completes the project in days instead of weeks.
+	</div>
+  </div>
+
+  <!-- Slide 10: Capability Memos -->
+  <div class="slide">
+	<div class="slide-label">Source Material</div>
+	<h1>Eight Capability Strategy Memos</h1>
+	<div class="two-col">
+	  <div>
+		<div class="card"><h3>Developer Productivity</h3><p>CloudOS, AI-augmented development</p></div>
+		<div class="card"><h3>Access & Admin</h3><p>Identity, permissions, connected admin</p></div>
+		<div class="card"><h3>Autodesk Assistant</h3><p>AI front door, agentic workflows</p></div>
+		<div class="card"><h3>External Developer Ecosystem</h3><p>APIs, marketplace, partners</p></div>
+	  </div>
+	  <div>
+		<div class="card"><h3>Design & Make Data</h3><p>DMD, data models, interoperability</p></div>
+		<div class="card"><h3>Foundation Models & AI</h3><p>GAIA team's foundation model work</p></div>
+		<div class="card"><h3>Trusted Platform</h3><p>Security, compliance, customer trust</p></div>
+		<div class="card"><h3>+ More</h3><p>Insights, ecosystem capabilities</p></div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Slide 11: Timeline -->
+  <div class="slide">
+	<div class="slide-label">Timeline</div>
+	<h1>Key Dates</h1>
+	<div class="timeline">
+	  <div class="timeline-item active">
+		<h4>Now → Dec 20</h4>
+		<p>Kickoff, gather capabilities, draft Tier 1 vignettes</p>
+	  </div>
+	  <div class="timeline-item">
+		<h4>Jan 6 → Jan 24</h4>
+		<p>Weekly production cycle, vignette refinement</p>
+	  </div>
+	  <div class="timeline-item next">
+		<h4>Jan 27-29</h4>
+		<p>Workshop in SF (3 days)</p>
+	  </div>
+	  <div class="timeline-item">
+		<h4>Jan 31</h4>
+		<p>Deliverable complete</p>
+	  </div>
+	</div>
+	<p class="small-text">Workshop feeds into FY28 Strategic Intent planning (corporate planning cycle, May deadline)</p>
+  </div>
+
+  <!-- Slide 12: Your Role -->
+  <div class="slide">
+	<div class="slide-label">Your Role</div>
+	<h1>Your Role</h1>
+	<div class="content">
+	  <p><span class="highlight">Lead the visual production</span> — turning vignette concepts into polished, modular slides.</p>
+	  <p>Work with the four-act structure. Create templates that can scale (Mad Libs style — swap personas, capabilities, outcomes).</p>
+	  <p>Balance aspiration with groundedness. These need to feel real, not science fiction.</p>
+	</div>
+	<ul class="simple">
+	  <li>Scene-setting slides for preamble/philosophy</li>
+	  <li>Vignette templates (reusable structure)</li>
+	  <li>Capability map visualizations</li>
+	</ul>
+  </div>
+
+  <!-- Slide 13: What's Next -->
+  <div class="slide">
+	<div class="slide-label">Next Steps</div>
+	<h1>Immediate Actions</h1>
+	<div class="card green">
+	  <h3>1. Review the Vignette Library doc</h3>
+	  <p>Working draft with all vignette ideas organized by tier</p>
+	</div>
+	<div class="card green">
+	  <h3>2. Skim 2-3 capability memos</h3>
+	  <p>Developer Productivity, Assistant, and Access are good starting points</p>
+	</div>
+	<div class="card green">
+	  <h3>3. Draft visual approach for Tier 1</h3>
+	  <p>What does a vignette look like as a set of slides?</p>
+	</div>
+	<p class="small-text">Questions? Paul has full context from workshops and Brynna syncs.</p>
+  </div>
+
+  <div class="progress"></div>
+  <div class="slide-counter"></div>
+  <div class="nav">
+	<span>Arrow keys to navigate</span>
+	<div class="nav-arrows">
+	  <button class="nav-btn" onclick="prevSlide()">←</button>
+	  <button class="nav-btn" onclick="nextSlide()">→</button>
+	</div>
+  </div>
+
+  <script>
+	const slides = document.querySelectorAll('.slide');
+	const progress = document.querySelector('.progress');
+	const counter = document.querySelector('.slide-counter');
+	let current = 0;
+	function updateSlide() {
+	  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+	  progress.style.width = ((current + 1) / slides.length * 100) + '%';
+	  counter.textContent = `${current + 1} / ${slides.length}`;
+	}
+	function nextSlide() { if (current < slides.length - 1) { current++; updateSlide(); } }
+	function prevSlide() { if (current > 0) { current--; updateSlide(); } }
+	document.addEventListener('keydown', (e) => {
+	  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+	  if (e.key === 'ArrowLeft') prevSlide();
+	});
+	updateSlide();
+  </script>
+</body>
+</html>

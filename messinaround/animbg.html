@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Animated Background Demo</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			background-color: #151518;
+			color: white;
+		}
+
+		.animated-background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		
+		.animated-background__ellipse {
+			position: absolute;
+			width: 80vw;
+			height: 80vh;
+			border-radius: 50%;
+			-webkit-filter: blur(200px);
+			filter: blur(200px);
+			opacity: 0;
+			mix-blend-mode: screen;
+			transform-style: preserve-3d;
+			-webkit-transform-style: preserve-3d;
+			backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+			transition: transform 0.5s ease-out, opacity 0.5s ease-in;
+			pointer-events: none;
+			will-change: transform;
+		}
+		
+		.animated-background__content {
+			position: relative;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+		}
+
+		/* Demo content styles */
+		.demo-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			padding: 2rem;
+			text-align: center;
+		}
+
+		.demo-content h1 {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+			font-weight: 300;
+		}
+
+		.demo-content p {
+			font-size: 1.2rem;
+			max-width: 600px;
+			line-height: 1.6;
+			margin-bottom: 2rem;
+		}
+
+		.controls {
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+			margin-top: 2rem;
+		}
+
+		.controls label {
+			font-size: 1rem;
+		}
+
+		.controls input[type="range"] {
+			width: 200px;
+		}
+
+		.controls button {
+			padding: 0.5rem 1rem;
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			color: white;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		.controls button:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+	</style>
+</head>
+<body>
+	<div id="background-container">
+		<div class="demo-content">
+			<h1>Animated Background Demo</h1>
+			<p>This demonstrates the vanilla JavaScript version of the animated background with Perlin noise-driven ellipses. The background creates smooth, organic movement patterns that never repeat.</p>
+			
+			<div class="controls">
+				<label for="speedControl">Speed:</label>
+				<input type="range" id="speedControl" min="0.1" max="2" step="0.1" value="0.5">
+				<span id="speedValue">0.5</span>
+				<button id="resetBtn">Reset Positions</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// Perlin noise implementation
+		const createNoiseGenerator = () => {
+			const permutation = new Array(256).fill(0)
+				.map((_, i) => i)
+				.sort(() => Math.random() - 0.5);
+
+			// Extend the permutation to avoid overflow
+			const p = new Array(512);
+			for (let x = 0; x < 512; x++) {
+				p[x] = permutation[x % 256];
+			}
+
+			function fade(t) {
+				return t * t * t * (t * (t * 6 - 15) + 10);
+			}
+
+			function lerp(t, a, b) {
+				return a + t * (b - a);
+			}
+
+			function grad(hash, x, y, z) {
+				const h = hash & 15;
+				const u = h < 8 ? x : y;
+				const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+				return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+			}
+
+			return function noise(x, y = 0, z = 0) {
+				const X = Math.floor(x) & 255;
+				const Y = Math.floor(y) & 255;
+				const Z = Math.floor(z) & 255;
+
+				x -= Math.floor(x);
+				y -= Math.floor(y);
+				z -= Math.floor(z);
+
+				const u = fade(x);
+				const v = fade(y);
+				const w = fade(z);
+
+				const A = p[X] + Y;
+				const AA = p[A] + Z;
+				const AB = p[A + 1] + Z;
+				const B = p[X + 1] + Y;
+				const BA = p[B] + Z;
+				const BB = p[B + 1] + Z;
+
+				return lerp(
+					w,
+					lerp(
+						v,
+						lerp(
+							u,
+							grad(p[AA], x, y, z),
+							grad(p[BA], x - 1, y, z)
+						),
+						lerp(
+							u,
+							grad(p[AB], x, y - 1, z),
+							grad(p[BB], x - 1, y - 1, z)
+						)
+					),
+					lerp(
+						v,
+						lerp(
+							u,
+							grad(p[AA + 1], x, y, z - 1),
+							grad(p[BA + 1], x - 1, y, z - 1)
+						),
+						lerp(
+							u,
+							grad(p[AB + 1], x, y - 1, z - 1),
+							grad(p[BB + 1], x - 1, y - 1, z - 1)
+						)
+					)
+				);
+			};
+		};
+
+		// Animated Background Class
+		class AnimatedBackground {
+			constructor(container, options = {}) {
+				this.container = typeof container === 'string' ? document.querySelector(container) : container;
+				this.speed = options.speed || 0.5;
+				this.noise = null;
+				this.isLoaded = false;
+				this.ellipses = [
+					{ color: '#00B7FF', x: 25, y: 25, offset: 0 },
+					{ color: '#1212D5', x: 75, y: 25, offset: 2.1 },
+					{ color: '#63C1F8', x: 25, y: 75, offset: 4.2 },
+					{ color: '#98EABB', x: 75, y: 75, offset: 6.3 },
+				];
+				this.time = 0;
+				this.animationFrame = null;
+				this.ellipseElements = [];
+
+				this.initialize();
+			}
+
+			initialize() {
+				// Set up container styles
+				this.container.style.position = 'relative';
+				this.container.style.width = '100%';
+				this.container.style.height = '100vh';
+				this.container.style.backgroundColor = '#151518';
+
+				// Create background wrapper
+				this.backgroundWrapper = document.createElement('div');
+				this.backgroundWrapper.className = 'animated-background';
+				
+				// Create ellipse elements
+				this.ellipses.forEach((ellipse, index) => {
+					const ellipseElement = document.createElement('div');
+					ellipseElement.className = 'animated-background__ellipse';
+					ellipseElement.style.backgroundColor = ellipse.color;
+					this.backgroundWrapper.appendChild(ellipseElement);
+					this.ellipseElements.push(ellipseElement);
+				});
+
+				// Create content wrapper and move existing content
+				this.contentWrapper = document.createElement('div');
+				this.contentWrapper.className = 'animated-background__content';
+				
+				// Move existing content to wrapper
+				const existingContent = Array.from(this.container.children);
+				existingContent.forEach(child => {
+					this.contentWrapper.appendChild(child);
+				});
+
+				// Add wrappers to container
+				this.container.appendChild(this.backgroundWrapper);
+				this.container.appendChild(this.contentWrapper);
+
+				// Initialize noise generator
+				setTimeout(() => {
+					this.noise = createNoiseGenerator();
+					this.isLoaded = true;
+					this.fadeInEllipses();
+					this.startAnimation();
+				}, 100);
+			}
+
+			fadeInEllipses() {
+				this.ellipseElements.forEach(element => {
+					element.style.opacity = '0.5';
+				});
+			}
+
+			updatePositions() {
+				if (!this.isLoaded) return;
+
+				this.time += 0.002 * this.speed;
+
+				this.ellipses.forEach((ellipse, index) => {
+					// Scale to range of -80 to 180 (allowing movement well outside viewport)
+					const noiseX = (this.noise(this.time + ellipse.offset, 0) + 1) * 130 - 80;
+					const noiseY = (this.noise(0, this.time + ellipse.offset) + 1) * 130 - 80;
+
+					this.ellipseElements[index].style.transform = 
+						`translate(${noiseX - 50}vw, ${noiseY - 50}vh)`;
+				});
+			}
+
+			startAnimation() {
+				const animate = () => {
+					this.updatePositions();
+					this.animationFrame = requestAnimationFrame(animate);
+				};
+				animate();
+			}
+
+			setSpeed(speed) {
+				this.speed = speed;
+			}
+
+			reset() {
+				this.time = 0;
+				this.noise = createNoiseGenerator();
+			}
+
+			destroy() {
+				if (this.animationFrame) {
+					cancelAnimationFrame(this.animationFrame);
+				}
+
+				// Move content back to container
+				const contentChildren = Array.from(this.contentWrapper.children);
+				contentChildren.forEach(child => {
+					this.container.appendChild(child);
+				});
+
+				// Remove wrappers
+				if (this.backgroundWrapper) {
+					this.backgroundWrapper.remove();
+				}
+				if (this.contentWrapper) {
+					this.contentWrapper.remove();
+				}
+			}
+		}
+
+		// Initialize the animated background
+		const animatedBg = new AnimatedBackground('#background-container');
+
+		// Demo controls
+		const speedControl = document.getElementById('speedControl');
+		const speedValue = document.getElementById('speedValue');
+		const resetBtn = document.getElementById('resetBtn');
+
+		speedControl.addEventListener('input', (e) => {
+			const speed = parseFloat(e.target.value);
+			speedValue.textContent = speed;
+			animatedBg.setSpeed(speed);
+		});
+
+		resetBtn.addEventListener('click', () => {
+			animatedBg.reset();
+		});
+
+		// Cleanup on page unload
+		window.addEventListener('beforeunload', () => {
+			animatedBg.destroy();
+		});
+	</script>
+</body>
+</html>
