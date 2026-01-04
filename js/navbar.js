@@ -21,6 +21,7 @@ function loadNavbar(currentPage, isWhite) {
 					</div>
 				</li>
 				<li><a href="/case-studies/" data-text="Our Work"${currentPage === 'work' ? ' class="current-page"' : ''}>Our Work</a></li>
+				<li><a href="/join/" data-text="Join Kei"${currentPage === 'join' ? ' class="current-page"' : ''}>Join Kei</a></li>
 				<li><a href="/ai_engine/" data-text="AI Insight Engine"${currentPage === 'ai' ? ' class="current-page"' : ''}>AI Insight Engine</a></li>
 				<li><a href="/workshop/the_difference/" data-text="The Difference"${currentPage === 'difference' ? ' class="current-page"' : ''}>The Difference</a></li>
 				<li><a href="/contact.html" data-text="Contact"${currentPage === 'contact' ? ' class="current-page"' : ''}>Contact</a></li>
@@ -31,6 +32,7 @@ function loadNavbar(currentPage, isWhite) {
 					<a href="/who.html"${currentPage === 'who' ? ' class="current-page"' : ''}>About Kei</a>
 					<a href="/practices/"${currentPage === 'practices' ? ' class="current-page"' : ''}>Practice Areas</a>
 					<a href="/case-studies/"${currentPage === 'work' ? ' class="current-page"' : ''}>Our Work</a>
+					<a href="/join/"${currentPage === 'join' ? ' class="current-page"' : ''}>Join Kei</a>
 					<a href="/ai_engine/"${currentPage === 'ai' ? ' class="current-page"' : ''}>AI Insight Engine</a>
 					<a href="/workshop/the_difference/"${currentPage === 'difference' ? ' class="current-page"' : ''}>The Difference</a>
 					<a href="/contact.html"${currentPage === 'contact' ? ' class="current-page"' : ''}>Contact</a>
