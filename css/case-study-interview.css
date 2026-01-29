@@ -213,6 +213,11 @@ main{
   font-weight: 700;
   line-height: 64px; /* 100% */
 }
+/* Override browser default h1 (2em) so size is consistent in Chrome, Safari, etc. */
+.main-section #title h1{
+  font-size: 1em;
+  line-height: inherit;
+}
 .main-section #title p{
   color: black;
   font-family: NeuzeitGroT;
@@ -536,6 +541,10 @@ main{
   h1{
      font-size:36px;
      line-height:44px;
+   }
+   .main-section #title h1{
+     font-size: 36px;
+     line-height: 44px;
    }
    .main-section {
     gap: 45px;
