@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Press — Concept Presentation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+
+:root {
+  --ink: #1a1714;
+  --paper: #f5f0e8;
+  --rust: #c4541a;
+  --forest: #2d4a3e;
+  --clay: #b8906f;
+  --ochre: #d4a843;
+  --slate: #4a4843;
+  --warm-white: #faf7f2;
+  --deep-green: #1a2e25;
+  --brick: #8b3a2a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.deck {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.body-serif {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Placeholder images */
+.img-placeholder {
+  background: var(--slate);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clay);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.img-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.02) 20px,
+    rgba(255,255,255,0.02) 21px
+  );
+}
+
+/* Navigation */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(26,23,20,0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 100;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.nav-bar .slide-counter {
+  color: var(--clay);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.nav-bar .slide-title {
+  color: rgba(255,255,255,0.5);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.nav-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.nav-dots .dot.active {
+  background: var(--rust);
+  transform: scale(1.2);
+}
+
+.nav-dots .dot:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+/* Progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--rust);
+  z-index: 101;
+  transition: width 0.4s ease;
+}
+
+/* ========================================
+   SLIDE STYLES
+   ======================================== */
+
+/* SLIDE 1 — Title */
+.slide-title-cover {
+  background: var(--ink);
+  flex-direction: column;
+  padding: 0;
+}
+
+.slide-title-cover .cover-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: calc(100% - 48px);
+}
+
+.slide-title-cover .cover-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 4rem 4rem 5rem;
+}
+
+.slide-title-cover .cover-left h1 {
+  font-size: clamp(4rem, 8vw, 8rem);
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.slide-title-cover .cover-left .tagline {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  color: var(--clay);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.slide-title-cover .cover-left .address {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.slide-title-cover .cover-right {
+  position: relative;
+}
+
+.slide-title-cover .cover-right .img-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-title-cover .rust-bar {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  width: 6px;
+  height: 100%;
+  background: var(--rust);
+}
+
+/* SLIDE 2 — The Place */
+.slide-the-place {
+  background: var(--paper);
+  flex-direction: column;
+}
+
+.slide-the-place .place-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 0;
+  height: calc(100% - 48px);
+}
+
+.slide-the-place .place-text {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-the-place .place-text .label {
+  color: var(--rust);
+  margin-bottom: 1rem;
+}
+
+.slide-the-place .place-text h2 {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.slide-the-place .place-text .body-serif {
+  color: var(--slate);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  max-width: 520px;
+  margin-bottom: 1.5rem;
+}
+
+.slide-the-place .place-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.slide-the-place .stat {
+  padding: 0.75rem 0;
+  border-top: 2px solid var(--ink);
+}
+
+.slide-the-place .stat .stat-num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+
+.slide-the-place .stat .stat-label {
+  font-size: 0.7rem;
+  color: var(--slate);
+  letter-spacing: 0.05em;
+  margin-top: 0.15rem;
+}
+
+.slide-the-place .place-images {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+}
+
+.slide-the-place .place-images .img-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+/* SLIDE 3 — The People */
+.slide-the-people {
+  background: var(--deep-green);
+  flex-direction: column;
+}
+
+.slide-the-people .people-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-the-people .people-header {
+  grid-column: 1 / -1;
+  padding: 3rem 5rem 2rem;
+}
+
+.slide-the-people .people-header .label {
+  color: var(--ochre);
+  margin-bottom: 0.75rem;
+}
+
+.slide-the-people .people-header h2 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  color: var(--paper);
+}
+
+.slide-the-people .people-col {
+  padding: 0 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.slide-the-people .people-col:first-of-type {
+  padding-left: 5rem;
+}
+
+.slide-the-people .people-col .body-serif {
+  color: rgba(245,240,232,0.85);
+  font-size: 0.95rem;
+}
+
+.slide-the-people .people-col .body-serif em {
+  color: var(--ochre);
+  font-style: italic;
+}
+
+.slide-the-people .people-col .img-placeholder {
+  flex: 1;
+  min-height: 140px;
+  border-radius: 2px;
+}
+
+/* SLIDE 4 — The Name */
+.slide-the-name {
+  background: var(--rust);
+  flex-direction: column;
+}
+
+.slide-the-name .name-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-the-name .name-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 3rem 4rem 5rem;
+}
+
+.slide-the-name .name-left h2 {
+  font-size: clamp(5rem, 10vw, 10rem);
+  color: var(--paper);
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.slide-the-name .name-left .subtitle {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  color: rgba(255,255,255,0.75);
+  font-size: 1.1rem;
+  max-width: 380px;
+}
+
+.slide-the-name .name-right {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0;
+}
+
+.slide-the-name .meaning-card {
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.slide-the-name .meaning-card:last-child {
+  border-bottom: none;
+}
+
+.slide-the-name .meaning-card h3 {
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: var(--paper);
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.slide-the-name .meaning-card p {
+  font-family: 'DM Sans', sans-serif;
+  color: rgba(255,255,255,0.65);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* SLIDE 5 — Bell Labs */
+.slide-bell-labs {
+  background: var(--ink);
+  flex-direction: column;
+}
+
+.slide-bell-labs .labs-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-bell-labs .labs-text {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-bell-labs .labs-text .label {
+  color: var(--ochre);
+  margin-bottom: 1rem;
+}
+
+.slide-bell-labs .labs-text h2 {
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.slide-bell-labs .labs-text .body-serif {
+  color: rgba(245,240,232,0.75);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  max-width: 500px;
+  margin-bottom: 1.25rem;
+}
+
+.slide-bell-labs .labs-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.slide-bell-labs .labs-visual .img-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+/* SLIDE 6 — Three Poles Framework */
+.slide-framework {
+  background: var(--paper);
+  flex-direction: column;
+}
+
+.slide-framework .framework-content {
+  height: calc(100% - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-framework .framework-header {
+  padding: 3rem 5rem 1.5rem;
+}
+
+.slide-framework .framework-header .label {
+  color: var(--rust);
+  margin-bottom: 0.75rem;
+}
+
+.slide-framework .framework-header h2 {
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+.slide-framework .framework-header .body-serif {
+  color: var(--slate);
+  font-size: 0.95rem;
+  max-width: 700px;
+}
+
+.slide-framework .framework-diagram {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 5rem 2.5rem;
+}
+
+.slide-framework .framework-diagram .img-placeholder {
+  width: 100%;
+  height: 100%;
+  max-height: 360px;
+  border-radius: 2px;
+  background: var(--warm-white);
+  border: 2px solid var(--ink);
+}
+
+/* SLIDES 7, 8, 9 — Pole Detail Slides */
+.slide-pole {
+  flex-direction: column;
+}
+
+.slide-pole .pole-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-pole .pole-text {
+  padding: 3rem 3rem 3rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-pole .pole-text .pole-number {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.slide-pole .pole-text h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin-bottom: 0.4rem;
+}
+
+.slide-pole .pole-text .pole-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.slide-pole .pole-text .body-serif {
+  font-size: 0.95rem;
+  max-width: 480px;
+  margin-bottom: 1.5rem;
+}
+
+.slide-pole .pole-text .uses-label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.slide-pole .pole-text .uses-list {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.slide-pole .pole-images {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.slide-pole .pole-images .img-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-pole .pole-images .img-placeholder.span-col {
+  grid-column: 1 / -1;
+}
+
+/* Pole 1 — Curiosity Commons */
+.pole-commons { background: var(--forest); }
+.pole-commons .pole-number { color: var(--ochre); }
+.pole-commons h2 { color: var(--paper); }
+.pole-commons .pole-subtitle { color: var(--ochre); }
+.pole-commons .body-serif { color: rgba(245,240,232,0.8); }
+.pole-commons .uses-label { color: var(--ochre); }
+.pole-commons .uses-list { color: rgba(245,240,232,0.7); }
+
+/* Pole 2 — Creative Marketplace */
+.pole-marketplace { background: var(--warm-white); }
+.pole-marketplace .pole-number { color: var(--rust); }
+.pole-marketplace h2 { color: var(--ink); }
+.pole-marketplace .pole-subtitle { color: var(--rust); }
+.pole-marketplace .body-serif { color: var(--slate); }
+.pole-marketplace .uses-label { color: var(--rust); }
+.pole-marketplace .uses-list { color: var(--slate); }
+
+/* Pole 3 — Entrepreneurial Campus */
+.pole-campus { background: var(--ink); }
+.pole-campus .pole-number { color: var(--ochre); }
+.pole-campus h2 { color: var(--paper); }
+.pole-campus .pole-subtitle { color: var(--ochre); }
+.pole-campus .body-serif { color: rgba(245,240,232,0.75); }
+.pole-campus .uses-label { color: var(--ochre); }
+.pole-campus .uses-list { color: rgba(245,240,232,0.65); }
+
+/* SLIDE 10 — Engagement Ladder */
+.slide-ladder {
+  background: var(--paper);
+  flex-direction: column;
+}
+
+.slide-ladder .ladder-content {
+  height: calc(100% - 48px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.slide-ladder .ladder-text {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-ladder .ladder-text .label {
+  color: var(--rust);
+  margin-bottom: 1rem;
+}
+
+.slide-ladder .ladder-text h2 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.slide-ladder .ladder-text .body-serif {
+  color: var(--slate);
+  font-size: 0.95rem;
+  max-width: 460px;
+}
+
+.slide-ladder .ladder-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.ladder-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.ladder-step {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  padding: 0.9rem 1.25rem;
+  border-left: 3px solid transparent;
+  transition: all 0.3s;
+}
+
+.ladder-step:hover {
+  border-left-color: var(--rust);
+  background: rgba(196,84,26,0.04);
+}
+
+.ladder-step .step-role {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.ladder-step .step-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
+.ladder-step .step-arrow {
+  grid-column: 1;
+  text-align: center;
+  color: var(--clay);
+  font-size: 0.7rem;
+  padding: 0.25rem 0;
+}
+
+/* SLIDE 11 — More Than a Landlord */
+.slide-partner {
+  background: var(--deep-green);
+  flex-direction: column;
+}
+
+.slide-partner .partner-content {
+  height: calc(100% - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-partner .partner-header {
+  padding: 2.5rem 5rem 1.5rem;
+}
+
+.slide-partner .partner-header .label {
+  color: var(--ochre);
+  margin-bottom: 0.75rem;
+}
+
+.slide-partner .partner-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  color: var(--paper);
+  margin-bottom: 0.5rem;
+}
+
+.slide-partner .partner-header .body-serif {
+  color: rgba(245,240,232,0.7);
+  font-size: 0.9rem;
+  max-width: 600px;
+}
+
+.slide-partner .partner-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  padding: 1rem 5rem 2.5rem;
+}
+
+.partner-card {
+  background: rgba(255,255,255,0.04);
+  padding: 1.5rem;
+  border-top: 2px solid var(--ochre);
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--paper);
+  margin-bottom: 0.75rem;
+}
+
+.partner-card p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.65);
+  line-height: 1.6;
+}
+
+/* SLIDE 12 — Precedents */
+.slide-precedents {
+  background: var(--warm-white);
+  flex-direction: column;
+}
+
+.slide-precedents .prec-content {
+  height: calc(100% - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-precedents .prec-header {
+  padding: 2.5rem 5rem 1.5rem;
+}
+
+.slide-precedents .prec-header .label {
+  color: var(--rust);
+  margin-bottom: 0.75rem;
+}
+
+.slide-precedents .prec-header h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--ink);
+}
+
+.slide-precedents .prec-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  padding: 0 5rem 2.5rem;
+  overflow: hidden;
+}
+
+.prec-card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.prec-card .img-placeholder {
+  height: 110px;
+  flex-shrink: 0;
+}
+
+.prec-card .prec-info {
+  padding: 1rem 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.prec-card .prec-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+
+.prec-card .prec-loc {
+  font-size: 0.7rem;
+  color: var(--rust);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.prec-card .prec-lesson {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+.prec-card .prec-lesson strong {
+  color: var(--ink);
+}
+
+/* SLIDE 13 — Housing */
+.slide-housing {
+  background: var(--ink);
+  flex-direction: column;
+}
+
+.slide-housing .housing-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-housing .housing-text {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-housing .housing-text .label {
+  color: var(--clay);
+  margin-bottom: 1rem;
+}
+
+.slide-housing .housing-text h2 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  color: var(--paper);
+  margin-bottom: 0.75rem;
+}
+
+.slide-housing .housing-text .held-lightly {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  color: var(--clay);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.slide-housing .housing-text .body-serif {
+  color: rgba(245,240,232,0.75);
+  font-size: 0.95rem;
+  max-width: 480px;
+  margin-bottom: 1rem;
+}
+
+.slide-housing .housing-visual {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-housing .housing-visual .img-placeholder {
+  flex: 1;
+}
+
+/* SLIDE 14 — East Lawrence */
+.slide-neighborhood {
+  background: var(--paper);
+  flex-direction: column;
+}
+
+.slide-neighborhood .hood-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: calc(100% - 48px);
+}
+
+.slide-neighborhood .hood-text {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-neighborhood .hood-text .label {
+  color: var(--forest);
+  margin-bottom: 1rem;
+}
+
+.slide-neighborhood .hood-text h2 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.slide-neighborhood .hood-text .body-serif {
+  color: var(--slate);
+  font-size: 0.95rem;
+  max-width: 480px;
+  margin-bottom: 1.25rem;
+}
+
+.slide-neighborhood .hood-text .commitment {
+  font-family: 'Source Serif 4', serif;
+  font-style: italic;
+  color: var(--forest);
+  font-size: 0.95rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--forest);
+  max-width: 440px;
+}
+
+.slide-neighborhood .hood-map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.slide-neighborhood .hood-map .img-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+/* SLIDE 15 — What Comes Next */
+.slide-next {
+  background: var(--rust);
+  flex-direction: column;
+}
+
+.slide-next .next-content {
+  height: calc(100% - 48px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.slide-next .next-left {
+  padding: 3.5rem 3rem 3.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-next .next-left .label {
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1rem;
+}
+
+.slide-next .next-left h2 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.slide-next .next-left .body-serif {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+}
+
+.slide-next .next-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem 4rem 3.5rem 2rem;
+  gap: 1.75rem;
+}
+
+.slide-next .question {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  color: var(--paper);
+  line-height: 1.55;
+  padding-left: 1.25rem;
+  border-left: 2px solid rgba(255,255,255,0.3);
+}
+
+/* Credit bar */
+.credit {
+  position: absolute;
+  bottom: 56px;
+  left: 5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.08em;
+}
+
+.slide-the-place .credit,
+.slide-framework .credit,
+.slide-ladder .credit,
+.slide-precedents .credit,
+.slide-neighborhood .credit {
+  color: rgba(0,0,0,0.2);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1 — Title -->
+  <div class="slide slide-title-cover active" data-title="Title">
+    <div class="cover-grid">
+      <div class="cover-left">
+        <div class="label" style="color: var(--rust); margin-bottom: 2rem;">Concept Presentation · East Lawrence, Kansas</div>
+        <h1>THE<br>PRESS</h1>
+        <p class="tagline">Everyone has something to make and share, and the act of making together is what builds community.</p>
+        <p class="address">800 E 10th Street · East Lawrence, Kansas</p>
+      </div>
+      <div class="cover-right">
+        <div class="img-placeholder">
+          <img src="" alt="Allen Press complex exterior — eye-level view showing industrial character and East Lawrence context" style="display:none;">
+          Allen Press Complex<br>Exterior / Street View
+        </div>
+      </div>
+      <div class="rust-bar"></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — The Place -->
+  <div class="slide slide-the-place" data-title="The Place">
+    <div class="place-content">
+      <div class="place-text">
+        <div class="label">The Place</div>
+        <h2>A Building That Remembers</h2>
+        <p class="body-serif">The former Allen Press site in East Lawrence carried an idea in its bones for decades. This was a place where people came to work with their hands and their minds together, where raw material went in and something real came out, where the act of production was collective and purposeful. The buildings remember that even if the machines are gone.</p>
+        <p class="body-serif">A complex with the variety and scale to hold many kinds of making under one roof.</p>
+        <div class="place-stats">
+          <div class="stat">
+            <div class="stat-num">150,988 SF</div>
+            <div class="stat-label">Building Area</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">8.67 Acres</div>
+            <div class="stat-label">Site Area</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1951</div>
+            <div class="stat-label">Year Built</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">19–21 FT</div>
+            <div class="stat-label">Clear Heights</div>
+          </div>
+        </div>
+      </div>
+      <div class="place-images">
+        <div class="img-placeholder">
+          <img src="" alt="Interior — skylights, clear spans, industrial character" style="display:none;">
+          Interior — Skylights &<br>Clear-Span Warehouse
+        </div>
+        <div class="img-placeholder" style="background: var(--ink);">
+          <img src="" alt="Site plan or overhead diagram showing building volumes on 8.67 acres" style="display:none;">
+          Site Plan / Building<br>Footprint Diagram
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — The People -->
+  <div class="slide slide-the-people" data-title="The People">
+    <div class="people-grid">
+      <div class="people-header">
+        <div class="label">The People</div>
+        <h2>Who This Place Is For</h2>
+      </div>
+      <div class="people-col">
+        <p class="body-serif"><em>The ceramicist and the welder.</em> The software developer and the food entrepreneur. The architecture student and the person who just wants to learn how to fix their own car.</p>
+        <div class="img-placeholder">
+          <img src="" alt="Vignette — ceramicist at wheel, welder, hands-on making" style="display:none;">
+          Makers at Work —<br>Ceramics, Welding, Fabrication
+        </div>
+      </div>
+      <div class="people-col">
+        <p class="body-serif">The person who comes for <em>coffee on a Tuesday morning</em> and ends up watching someone throw a pot through the studio window. The person who brings a client for a meeting because the building says something about who they are.</p>
+        <div class="img-placeholder">
+          <img src="" alt="Vignette — casual visitor watching through studio window, coffee in hand" style="display:none;">
+          The Casual Visitor —<br>Coffee, Observation, Discovery
+        </div>
+      </div>
+      <div class="people-col">
+        <p class="body-serif">Making is the engine of this place, but the energy it produces is for everyone. The line between visitor and maker is one <em>this place should make easy to cross.</em></p>
+        <div class="img-placeholder">
+          <img src="" alt="Vignette — kids in workshop, community programming, open studio" style="display:none;">
+          Community —<br>Youth, Open Studios, Events
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — The Name -->
+  <div class="slide slide-the-name" data-title="The Name">
+    <div class="name-content">
+      <div class="name-left">
+        <h2>THE<br>PRESS</h2>
+        <p class="subtitle">A verb wearing a noun's clothing. It speaks directly to the history of the site without turning that history into decoration.</p>
+      </div>
+      <div class="name-right">
+        <div class="meaning-card">
+          <h3>To Press Is to Make</h3>
+          <p>Direct homage to the Allen Press heritage. Inky, hands-on, purposeful production.</p>
+        </div>
+        <div class="meaning-card">
+          <h3>Things Go to Press</h3>
+          <p>When ideas are ready to be shared with the world. A verb with an address.</p>
+        </div>
+        <div class="meaning-card">
+          <h3>Press Forward</h3>
+          <p>Action and intention. Rooted in doing rather than being.</p>
+        </div>
+        <div class="meaning-card">
+          <h3>"Meet Me at The Press"</h3>
+          <p>A gathering place. Community gravity. The social anchor East Lawrence has needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 — Bell Labs -->
+  <div class="slide slide-bell-labs" data-title="The Idea">
+    <div class="labs-content">
+      <div class="labs-text">
+        <div class="label">The Idea</div>
+        <h2>Bell Labs for Makers</h2>
+        <p class="body-serif">Bell Labs worked because it put physicists next to engineers next to mathematicians and trusted that proximity and collision would produce things none of them could have made alone. The breakthroughs came from the in-between spaces.</p>
+        <p class="body-serif">That logic, applied to the full messy spectrum of creative and making life in a mid-sized American city, is what The Press is built on.</p>
+        <p class="body-serif">This is a dirty hands place. Inky, greasy, clay dusty, saw dusty. Welding and blacksmithing live here alongside 3D printing, arduino, video production, and letterpress. There is no hierarchy between those things.</p>
+      </div>
+      <div class="labs-visual">
+        <div class="img-placeholder">
+          <img src="" alt="Diagram — collision principle, disciplines overlapping, unexpected adjacencies" style="display:none;">
+          Collision Diagram —<br>Disciplines Overlapping,<br>In-Between Spaces
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 — Three Poles Framework -->
+  <div class="slide slide-framework" data-title="The Framework">
+    <div class="framework-content">
+      <div class="framework-header">
+        <div class="label">The Framework</div>
+        <h2>Three Poles, One Ecosystem</h2>
+        <p class="body-serif">The physical complexity of the Allen Press site already suggests how the space wants to be used. The variety reads as an asset. Different buildings suit different kinds of activity, and that natural differentiation maps onto three distinct but complementary poles. The poles are layers of a single ecosystem, each reinforcing the others.</p>
+      </div>
+      <div class="framework-diagram">
+        <div class="img-placeholder">
+          <img src="" alt="Ecosystem diagram — three poles with cross-subsidy flows: foot traffic, revenue, ideas/credibility" style="display:none;">
+          Ecosystem Flow Diagram<br><br>
+          Curiosity Commons → foot traffic → Creative Marketplace<br>
+          Creative Marketplace → revenue → Entrepreneurial Campus<br>
+          Entrepreneurial Campus → ideas & credibility → Curiosity Commons
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 — Pole 1: Curiosity Commons -->
+  <div class="slide slide-pole pole-commons" data-title="Curiosity Commons">
+    <div class="pole-content">
+      <div class="pole-text">
+        <div class="pole-number">01</div>
+        <h2>The Curiosity Commons</h2>
+        <div class="pole-subtitle">Public-Facing · Drop-In · Community Access</div>
+        <p class="body-serif">The open, come-as-you-are layer. This is the soul of The Press. The animating question: what if anyone in Lawrence could come here and try something new?</p>
+        <p class="body-serif">Access is the organizing principle. Sliding scale membership, open studio time, drop-in programming, youth partnerships. The spaces are forgiving, flexible, and built for beginners as much as for serious practitioners.</p>
+        <div class="uses-label">Potential Uses</div>
+        <div class="uses-list">
+          Community Ceramics & Glass · Textile & Fiber Arts · Community Darkroom · Wood & Hand Tools Shop · Electronics & Tinkering Lab · Open Music Rehearsal · Community Automotive Space
+        </div>
+      </div>
+      <div class="pole-images">
+        <div class="img-placeholder">
+          <img src="" alt="Reference — community ceramics studio, beginners working with clay" style="display:none;">
+          Community Ceramics /<br>Open Studio
+        </div>
+        <div class="img-placeholder">
+          <img src="" alt="Reference — textile arts, screen printing, fiber workshop" style="display:none;">
+          Textile & Fiber Arts /<br>Screen Printing
+        </div>
+        <div class="img-placeholder span-col">
+          <img src="" alt="Reference — open workshop with diverse makers, welcoming atmosphere" style="display:none;">
+          Open Workshop — Drop-In Making,<br>Beginners Welcome
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 — Pole 2: Creative Marketplace -->
+  <div class="slide slide-pole pole-marketplace" data-title="Creative Marketplace">
+    <div class="pole-content">
+      <div class="pole-text">
+        <div class="pole-number">02</div>
+        <h2>The Creative Marketplace</h2>
+        <div class="pole-subtitle">Revenue Layer · Food · Retail · Production</div>
+        <p class="body-serif">The revenue-generating middle layer that sustains the ecosystem without defining its identity. Food, coffee, creative retail, and production-adjacent commerce. The distinction from a conventional food hall: everything here should feel like it comes from the same making ethos as the rest of The Press. Producers, not just vendors.</p>
+        <div class="uses-label">Potential Tenants</div>
+        <div class="uses-list">
+          Coffee Roaster & Café (social heart) · Small-Batch Food Production · Letterpress & Risograph Print Shop · Bottle Shop / Taproom · Tool & Materials Supply · Permanent Maker Market
+        </div>
+      </div>
+      <div class="pole-images">
+        <div class="img-placeholder" style="background: #e8e2d8;">
+          <img src="" alt="Reference — visible coffee roasting operation, café as social anchor" style="display:none;">
+          Coffee Roaster & Café —<br>The Social Heart
+        </div>
+        <div class="img-placeholder" style="background: #ddd7cd;">
+          <img src="" alt="Reference — letterpress / risograph shop, production visible behind counter" style="display:none;">
+          Letterpress Shop —<br>Production as Spectacle
+        </div>
+        <div class="img-placeholder span-col" style="background: #d5cfc5;">
+          <img src="" alt="Reference — maker market, artisans selling with production visible behind" style="display:none;">
+          Maker Market —<br>Transparency, Production Visible
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 — Pole 3: Entrepreneurial Campus -->
+  <div class="slide slide-pole pole-campus" data-title="Entrepreneurial Campus">
+    <div class="pole-content">
+      <div class="pole-text">
+        <div class="pole-number">03</div>
+        <h2>The Entrepreneurial Campus</h2>
+        <div class="pole-subtitle">Serious Infrastructure · Creative Manufacturing</div>
+        <p class="body-serif">The infrastructure layer for makers and creative businesses who need real space and real equipment to do real work. The Kansas City region lacks a genuine creative manufacturing incubator at this scale, and that gap represents real tenant demand and meaningful economic development opportunity.</p>
+        <p class="body-serif">The large clear-span warehouse spaces with loading dock access are particularly well suited to this use.</p>
+        <div class="uses-label">Potential Tenants</div>
+        <div class="uses-list">
+          KU Architecture Design-Build (anchor) · Metals Fabrication & Welding · Commercial Kitchen Incubator · Digital Fabrication / CNC · Video & Photo Production · Blacksmithing & Forging · Creative Offices
+        </div>
+      </div>
+      <div class="pole-images">
+        <div class="img-placeholder">
+          <img src="" alt="Reference — large fabrication space, CNC machines, industrial scale" style="display:none;">
+          Digital Fabrication /<br>CNC Studio
+        </div>
+        <div class="img-placeholder">
+          <img src="" alt="Reference — welding studio, metals fabrication, sparks" style="display:none;">
+          Metals Fabrication /<br>Welding Studio
+        </div>
+        <div class="img-placeholder span-col">
+          <img src="" alt="Reference — clear-span warehouse bay with 20ft ceilings, loading dock, serious infrastructure" style="display:none;">
+          Warehouse Bay — 19–21 FT Ceilings,<br>Loading Dock Access, Serious Scale
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 — Engagement Ladder -->
+  <div class="slide slide-ladder" data-title="The Engagement Ladder">
+    <div class="ladder-content">
+      <div class="ladder-text">
+        <div class="label">The Operating Model</div>
+        <h2>From Coffee to Community</h2>
+        <p class="body-serif">The three poles create a natural pathway from casual exposure to deep participation. Someone walks in for coffee, watches a ceramicist through the studio window, signs up for a Saturday workshop, buys a monthly membership for bench time, rents a studio, and eventually launches a business from the campus.</p>
+        <p class="body-serif" style="margin-top: 1rem;">That continuum from curiosity to commitment is the operating model. Every level of engagement has a home, and moving from one to the next feels natural rather than requiring a leap.</p>
+      </div>
+      <div class="ladder-visual">
+        <div class="ladder-steps">
+          <div class="ladder-step">
+            <div class="step-role">Visitor</div>
+            <div class="step-desc">Comes for coffee, food, a market day, an event</div>
+          </div>
+          <div class="ladder-step">
+            <div class="step-role">Observer</div>
+            <div class="step-desc">Watches making happen through open studio windows</div>
+          </div>
+          <div class="ladder-step">
+            <div class="step-role">Participant</div>
+            <div class="step-desc">Takes a drop-in class, attends a workshop</div>
+          </div>
+          <div class="ladder-step">
+            <div class="step-role">Member</div>
+            <div class="step-desc">Buys a Curiosity Commons membership for regular access</div>
+          </div>
+          <div class="ladder-step">
+            <div class="step-role">Tenant</div>
+            <div class="step-desc">Rents a studio, workshop bay, or office</div>
+          </div>
+          <div class="ladder-step">
+            <div class="step-role">Entrepreneur</div>
+            <div class="step-desc">Grows a business from the Entrepreneurial Campus</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 — More Than a Landlord -->
+  <div class="slide slide-partner" data-title="The Press as Partner">
+    <div class="partner-content">
+      <div class="partner-header">
+        <div class="label">The Operating Philosophy</div>
+        <h2>More Than a Landlord</h2>
+        <p class="body-serif">The Press operates as an active partner to its tenants and the broader community. The model is closer to a community development organization than a venture capital firm. The goal is to stimulate the maker and creative economy, to put resources and infrastructure in the hands of people who will use them to build something real.</p>
+      </div>
+      <div class="partner-grid">
+        <div class="partner-card">
+          <h3>Capital & Business Support</h3>
+          <p>Revolving loan fund for critical growth moments. CDFI and SBA connections. Shared bookkeeping, HR templates, legal resources, and insurance pooling to reduce overhead for small operators.</p>
+        </div>
+        <div class="partner-card">
+          <h3>Knowledge & Community</h3>
+          <p>Programming calendar of workshops, talks, critiques, and open houses. Mentorship networks. Cross-tenant project brokering. A residency program bringing outside makers in for defined periods.</p>
+        </div>
+        <div class="partner-card">
+          <h3>Shared Infrastructure</h3>
+          <p>Equipment libraries beyond individual studios. Freight and logistics support using the loading docks. High-quality shared internet. A Press membership for non-tenants who want lighter access.</p>
+        </div>
+        <div class="partner-card">
+          <h3>Neighborhood Commitment</h3>
+          <p>Active participation in East Lawrence community organizations. Below-market studio rates. Youth programming partnerships with Lawrence public schools. Public events woven into the neighborhood.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 — Precedents (split into 2 slides for readability) -->
+  <div class="slide slide-precedents" data-title="Precedents">
+    <div class="prec-content">
+      <div class="prec-header">
+        <div class="label">Precedents</div>
+        <h2>Who Has Done This</h2>
+      </div>
+      <div class="prec-grid">
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="The Barlow, Sebastopol CA — maker merchant district, production transparency" style="display:none;">
+            The Barlow — Sebastopol, CA
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">The Barlow</div>
+            <div class="prec-loc">Sebastopol, CA · 215,000 SF</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> transparency as activation. Seeing making happen is what draws people in and keeps them coming back.</div>
+          </div>
+        </div>
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="8th Street Market, Bentonville AR — Vine connector, food culture hub" style="display:none;">
+            8th Street Market — Bentonville, AR
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">8th Street Market</div>
+            <div class="prec-loc">Bentonville, AR · Multi-Building</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> architectural connective tissue across multiple structures, and how a food anchor catalyzes a broader district.</div>
+          </div>
+        </div>
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="Open Works Baltimore — large makerspace, fabrication shops, community" style="display:none;">
+            Open Works — Baltimore, MD
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">Open Works</div>
+            <div class="prec-loc">Baltimore, MD · 34,000 SF</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> the Curiosity Commons pole at serious scale, driven by a community-wealth-building mission.</div>
+          </div>
+        </div>
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="The Steel Yard Providence — industrial arts, anti-displacement, community" style="display:none;">
+            The Steel Yard — Providence, RI
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">The Steel Yard</div>
+            <div class="prec-loc">Providence, RI</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> anti-displacement politics and industrial making can coexist when the community is a genuine partner.</div>
+          </div>
+        </div>
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="Russell Industrial Center Detroit — raw, affordable, multi-building arts hub" style="display:none;">
+            Russell Industrial Center — Detroit, MI
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">Russell Industrial Center</div>
+            <div class="prec-loc">Detroit, MI · Multi-Building</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> the most direct physical analog. A varied industrial building sustains an ecosystem of creative producers.</div>
+          </div>
+        </div>
+        <div class="prec-card">
+          <div class="img-placeholder">
+            <img src="" alt="Ponyride Detroit — nonprofit incubator, subsidized maker space, economic justice" style="display:none;">
+            Ponyride — Detroit, MI
+          </div>
+          <div class="prec-info">
+            <div class="prec-name">Ponyride</div>
+            <div class="prec-loc">Detroit, MI</div>
+            <div class="prec-lesson"><strong>The lesson:</strong> patient capital and community development thinking can produce a viable creative ecosystem.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13 — Housing -->
+  <div class="slide slide-housing" data-title="Live-Work Housing">
+    <div class="housing-content">
+      <div class="housing-text">
+        <div class="label">Held Lightly</div>
+        <h2>Live-Work as Mission</h2>
+        <p class="held-lightly">A direction worth exploring rather than a resolved part of the program.</p>
+        <p class="body-serif">The Allen Press site could support roughly 100 units, built new on a portion of the site. A 20,000 SF footprint with maker/commercial ground floor and five residential floors above.</p>
+        <p class="body-serif">The more specific version connects housing directly to the mission. The early Y Combinator model put founders in close physical proximity during the most formative period of building something. A live-work component oriented toward makers, artists, and early-stage creative entrepreneurs would be a genuine differentiator.</p>
+        <p class="body-serif">Residents become the most committed regulars, the ones who keep the coffee bar busy on a Wednesday morning and the ones most likely to cross the line from participant to maker to tenant.</p>
+      </div>
+      <div class="housing-visual">
+        <div class="img-placeholder" style="flex: 1;">
+          <img src="" alt="Massing diagram — 6-story new building on south portion of site, ground-floor commercial, residential above" style="display:none;">
+          Massing Diagram —<br>New Building on South Site<br><br>
+          Ground Floor: Maker / Commercial<br>
+          Floors 2–6: ~100 Live-Work Units<br>
+          ~75–85 FT Height
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14 — East Lawrence -->
+  <div class="slide slide-neighborhood" data-title="East Lawrence">
+    <div class="hood-content">
+      <div class="hood-text">
+        <div class="label">The Neighborhood</div>
+        <h2>The Neighborhood This Comes From</h2>
+        <p class="body-serif">East Lawrence is a resilient, creative, working neighborhood. It sits directly adjacent to the Lawrence Cultural District, the densest creative neighborhood in Kansas. The university is a constant source of talent, energy, and institutional partnership opportunities.</p>
+        <p class="body-serif">What East Lawrence has lacked is a destination that reflects the community's own identity, builds wealth locally, and draws people in without displacing those already here.</p>
+        <p class="body-serif">No creative manufacturing incubator at this scale exists between Kansas City and Topeka. The Press fills a genuine regional gap.</p>
+        <p class="commitment">Below-market studio rates, youth programming partnerships, active participation in neighborhood organizations, and public events that keep the place woven into the community are commitments, not aspirations.</p>
+      </div>
+      <div class="hood-map">
+        <div class="img-placeholder" style="background: var(--warm-white); border: 2px solid var(--ink);">
+          <img src="" alt="Neighborhood context map — site relative to Cultural District, Downtown Lawrence, BNSF rail corridor, KU campus" style="display:none;">
+          Neighborhood Context Map<br><br>
+          Cultural District · Downtown · BNSF Rail<br>
+          KU Campus · Walking Distances
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15 — What Comes Next -->
+  <div class="slide slide-next" data-title="What Comes Next">
+    <div class="next-content">
+      <div class="next-left">
+        <div class="label">What Comes Next</div>
+        <h2>Questions, Not Conclusions</h2>
+        <p class="body-serif">This concept is a framework for conversation, not a finished plan. The questions that shape the next phase:</p>
+      </div>
+      <div class="next-right">
+        <p class="question">What spaces in the building are best suited to each pole? How does the physical layout suggest the gradient from public-facing to production-heavy?</p>
+        <p class="question">Who are the anchor tenants that make each pole real? What commitments can be secured early to build momentum?</p>
+        <p class="question">What does the phasing look like? What opens first, and what generates the early revenue and energy that funds subsequent buildout?</p>
+        <p class="question">How does the residential component connect to the mission, and what does the financial modeling say about feasibility?</p>
+        <p class="question">How does The Press stay accountable to East Lawrence as it grows?</p>
+      </div>
+    </div>
+    <div class="credit">Prepared by Paul Cloutier / Kei · Working Document for Iteration</div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav-bar">
+  <span class="slide-counter" id="slideCounter">01 / 15</span>
+  <div class="nav-dots" id="navDots"></div>
+  <span class="slide-title" id="slideTitle">Title</span>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('slideCounter');
+const titleEl = document.getElementById('slideTitle');
+const dotsContainer = document.getElementById('navDots');
+const progressBar = document.getElementById('progressBar');
+let current = 0;
+
+// Build dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(index) {
+  if (index < 0 || index >= slides.length) return;
+  slides[current].classList.remove('active');
+  dotsContainer.children[current].classList.remove('active');
+  current = index;
+  slides[current].classList.add('active');
+  dotsContainer.children[current].classList.add('active');
+  counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  titleEl.textContent = slides[current].dataset.title || '';
+  progressBar.style.width = ((current + 1) / slides.length * 100) + '%';
+}
+
+function next() { goTo(current + 1); }
+function prev() { goTo(current - 1); }
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+});
+
+// Click navigation (left/right halves)
+document.getElementById('deck').addEventListener('click', (e) => {
+  if (e.target.closest('.nav-bar') || e.target.closest('.nav-dots')) return;
+  if (e.clientX > window.innerWidth / 2) next();
+  else prev();
+});
+
+// Touch swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) next();
+    else prev();
+  }
+});
+
+// Initialize
+goTo(0);
+</script>
+
+</body>
+</html>
