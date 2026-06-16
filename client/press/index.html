@@ -93,6 +93,31 @@ h1, h2, h3 {
   overflow: hidden;
 }
 
+.img-placeholder img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  display: none;
+}
+
+/* When an image has a src, it becomes visible and covers the placeholder */
+.img-placeholder.has-image img {
+  display: block !important;
+}
+
+.img-placeholder.has-image {
+  color: transparent;
+  border-color: transparent;
+}
+
+.img-placeholder.has-image::before {
+  display: none;
+}
+
 .img-placeholder::before {
   content: '';
   position: absolute;
@@ -1071,7 +1096,7 @@ h1, h2, h3 {
       </div>
       <div class="cover-right">
         <div class="img-placeholder">
-          <img src="" alt="Allen Press complex exterior — eye-level view showing industrial character and East Lawrence context" style="display:none;">
+          <img src="./allenarial.jpg" alt="Allen Press complex exterior — eye-level view showing industrial character and East Lawrence context">
           Allen Press Complex<br>Exterior / Street View
         </div>
       </div>
@@ -1108,11 +1133,11 @@ h1, h2, h3 {
       </div>
       <div class="place-images">
         <div class="img-placeholder">
-          <img src="" alt="Interior — skylights, clear spans, industrial character" style="display:none;">
+          <img src="" alt="Interior — skylights, clear spans, industrial character">
           Interior — Skylights &<br>Clear-Span Warehouse
         </div>
         <div class="img-placeholder" style="background: var(--ink);">
-          <img src="" alt="Site plan or overhead diagram showing building volumes on 8.67 acres" style="display:none;">
+          <img src="" alt="Site plan or overhead diagram showing building volumes on 8.67 acres">
           Site Plan / Building<br>Footprint Diagram
         </div>
       </div>
@@ -1129,21 +1154,21 @@ h1, h2, h3 {
       <div class="people-col">
         <p class="body-serif"><em>The ceramicist and the welder.</em> The software developer and the food entrepreneur. The architecture student and the person who just wants to learn how to fix their own car.</p>
         <div class="img-placeholder">
-          <img src="" alt="Vignette — ceramicist at wheel, welder, hands-on making" style="display:none;">
+          <img src="./makers.png" alt="Vignette — ceramicist at wheel, welder, hands-on making">
           Makers at Work —<br>Ceramics, Welding, Fabrication
         </div>
       </div>
       <div class="people-col">
         <p class="body-serif">The person who comes for <em>coffee on a Tuesday morning</em> and ends up watching someone throw a pot through the studio window. The person who brings a client for a meeting because the building says something about who they are.</p>
         <div class="img-placeholder">
-          <img src="" alt="Vignette — casual visitor watching through studio window, coffee in hand" style="display:none;">
+          <img src="" alt="Vignette — casual visitor watching through studio window, coffee in hand">
           The Casual Visitor —<br>Coffee, Observation, Discovery
         </div>
       </div>
       <div class="people-col">
         <p class="body-serif">Making is the engine of this place, but the energy it produces is for everyone. The line between visitor and maker is one <em>this place should make easy to cross.</em></p>
         <div class="img-placeholder">
-          <img src="" alt="Vignette — kids in workshop, community programming, open studio" style="display:none;">
+          <img src="" alt="Vignette — kids in workshop, community programming, open studio">
           Community —<br>Youth, Open Studios, Events
         </div>
       </div>
@@ -1190,7 +1215,7 @@ h1, h2, h3 {
       </div>
       <div class="labs-visual">
         <div class="img-placeholder">
-          <img src="" alt="Diagram — collision principle, disciplines overlapping, unexpected adjacencies" style="display:none;">
+          <img src="" alt="Diagram — collision principle, disciplines overlapping, unexpected adjacencies">
           Collision Diagram —<br>Disciplines Overlapping,<br>In-Between Spaces
         </div>
       </div>
@@ -1207,7 +1232,7 @@ h1, h2, h3 {
       </div>
       <div class="framework-diagram">
         <div class="img-placeholder">
-          <img src="" alt="Ecosystem diagram — three poles with cross-subsidy flows: foot traffic, revenue, ideas/credibility" style="display:none;">
+          <img src="" alt="Ecosystem diagram — three poles with cross-subsidy flows: foot traffic, revenue, ideas/credibility">
           Ecosystem Flow Diagram<br><br>
           Curiosity Commons → foot traffic → Creative Marketplace<br>
           Creative Marketplace → revenue → Entrepreneurial Campus<br>
@@ -1233,15 +1258,15 @@ h1, h2, h3 {
       </div>
       <div class="pole-images">
         <div class="img-placeholder">
-          <img src="" alt="Reference — community ceramics studio, beginners working with clay" style="display:none;">
+          <img src="" alt="Reference — community ceramics studio, beginners working with clay">
           Community Ceramics /<br>Open Studio
         </div>
         <div class="img-placeholder">
-          <img src="" alt="Reference — textile arts, screen printing, fiber workshop" style="display:none;">
+          <img src="" alt="Reference — textile arts, screen printing, fiber workshop">
           Textile & Fiber Arts /<br>Screen Printing
         </div>
         <div class="img-placeholder span-col">
-          <img src="" alt="Reference — open workshop with diverse makers, welcoming atmosphere" style="display:none;">
+          <img src="" alt="Reference — open workshop with diverse makers, welcoming atmosphere">
           Open Workshop — Drop-In Making,<br>Beginners Welcome
         </div>
       </div>
@@ -1263,15 +1288,15 @@ h1, h2, h3 {
       </div>
       <div class="pole-images">
         <div class="img-placeholder" style="background: #e8e2d8;">
-          <img src="" alt="Reference — visible coffee roasting operation, café as social anchor" style="display:none;">
+          <img src="" alt="Reference — visible coffee roasting operation, café as social anchor">
           Coffee Roaster & Café —<br>The Social Heart
         </div>
         <div class="img-placeholder" style="background: #ddd7cd;">
-          <img src="" alt="Reference — letterpress / risograph shop, production visible behind counter" style="display:none;">
+          <img src="" alt="Reference — letterpress / risograph shop, production visible behind counter">
           Letterpress Shop —<br>Production as Spectacle
         </div>
         <div class="img-placeholder span-col" style="background: #d5cfc5;">
-          <img src="" alt="Reference — maker market, artisans selling with production visible behind" style="display:none;">
+          <img src="" alt="Reference — maker market, artisans selling with production visible behind">
           Maker Market —<br>Transparency, Production Visible
         </div>
       </div>
@@ -1294,15 +1319,15 @@ h1, h2, h3 {
       </div>
       <div class="pole-images">
         <div class="img-placeholder">
-          <img src="" alt="Reference — large fabrication space, CNC machines, industrial scale" style="display:none;">
+          <img src="" alt="Reference — large fabrication space, CNC machines, industrial scale">
           Digital Fabrication /<br>CNC Studio
         </div>
         <div class="img-placeholder">
-          <img src="" alt="Reference — welding studio, metals fabrication, sparks" style="display:none;">
+          <img src="" alt="Reference — welding studio, metals fabrication, sparks">
           Metals Fabrication /<br>Welding Studio
         </div>
         <div class="img-placeholder span-col">
-          <img src="" alt="Reference — clear-span warehouse bay with 20ft ceilings, loading dock, serious infrastructure" style="display:none;">
+          <img src="" alt="Reference — clear-span warehouse bay with 20ft ceilings, loading dock, serious infrastructure">
           Warehouse Bay — 19–21 FT Ceilings,<br>Loading Dock Access, Serious Scale
         </div>
       </div>
@@ -1388,7 +1413,7 @@ h1, h2, h3 {
       <div class="prec-grid">
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="The Barlow, Sebastopol CA — maker merchant district, production transparency" style="display:none;">
+            <img src="" alt="The Barlow, Sebastopol CA — maker merchant district, production transparency">
             The Barlow — Sebastopol, CA
           </div>
           <div class="prec-info">
@@ -1399,7 +1424,7 @@ h1, h2, h3 {
         </div>
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="8th Street Market, Bentonville AR — Vine connector, food culture hub" style="display:none;">
+            <img src="" alt="8th Street Market, Bentonville AR — Vine connector, food culture hub">
             8th Street Market — Bentonville, AR
           </div>
           <div class="prec-info">
@@ -1410,7 +1435,7 @@ h1, h2, h3 {
         </div>
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="Open Works Baltimore — large makerspace, fabrication shops, community" style="display:none;">
+            <img src="" alt="Open Works Baltimore — large makerspace, fabrication shops, community">
             Open Works — Baltimore, MD
           </div>
           <div class="prec-info">
@@ -1421,7 +1446,7 @@ h1, h2, h3 {
         </div>
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="The Steel Yard Providence — industrial arts, anti-displacement, community" style="display:none;">
+            <img src="" alt="The Steel Yard Providence — industrial arts, anti-displacement, community">
             The Steel Yard — Providence, RI
           </div>
           <div class="prec-info">
@@ -1432,7 +1457,7 @@ h1, h2, h3 {
         </div>
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="Russell Industrial Center Detroit — raw, affordable, multi-building arts hub" style="display:none;">
+            <img src="" alt="Russell Industrial Center Detroit — raw, affordable, multi-building arts hub">
             Russell Industrial Center — Detroit, MI
           </div>
           <div class="prec-info">
@@ -1443,7 +1468,7 @@ h1, h2, h3 {
         </div>
         <div class="prec-card">
           <div class="img-placeholder">
-            <img src="" alt="Ponyride Detroit — nonprofit incubator, subsidized maker space, economic justice" style="display:none;">
+            <img src="" alt="Ponyride Detroit — nonprofit incubator, subsidized maker space, economic justice">
             Ponyride — Detroit, MI
           </div>
           <div class="prec-info">
@@ -1469,7 +1494,7 @@ h1, h2, h3 {
       </div>
       <div class="housing-visual">
         <div class="img-placeholder" style="flex: 1;">
-          <img src="" alt="Massing diagram — 6-story new building on south portion of site, ground-floor commercial, residential above" style="display:none;">
+          <img src="" alt="Massing diagram — 6-story new building on south portion of site, ground-floor commercial, residential above">
           Massing Diagram —<br>New Building on South Site<br><br>
           Ground Floor: Maker / Commercial<br>
           Floors 2–6: ~100 Live-Work Units<br>
@@ -1492,7 +1517,7 @@ h1, h2, h3 {
       </div>
       <div class="hood-map">
         <div class="img-placeholder" style="background: var(--warm-white); border: 2px solid var(--ink);">
-          <img src="" alt="Neighborhood context map — site relative to Cultural District, Downtown Lawrence, BNSF rail corridor, KU campus" style="display:none;">
+          <img src="" alt="Neighborhood context map — site relative to Cultural District, Downtown Lawrence, BNSF rail corridor, KU campus">
           Neighborhood Context Map<br><br>
           Cultural District · Downtown · BNSF Rail<br>
           KU Campus · Walking Distances
@@ -1588,7 +1613,36 @@ document.addEventListener('touchend', (e) => {
 
 // Initialize
 goTo(0);
+
+// Detect images with src and activate them
+document.querySelectorAll('.img-placeholder img').forEach(img => {
+  if (img.getAttribute('src')) {
+    img.style.display = 'block';
+    img.parentElement.classList.add('has-image');
+  }
+  // Also handle images loaded later or with delayed src
+  img.addEventListener('load', () => {
+    img.style.display = 'block';
+    img.parentElement.classList.add('has-image');
+  });
+});
+
+// MutationObserver to catch src changes at any time
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach(m => {
+    if (m.type === 'attributes' && m.attributeName === 'src') {
+      const img = m.target;
+      if (img.getAttribute('src')) {
+        img.style.display = 'block';
+        img.closest('.img-placeholder')?.classList.add('has-image');
+      }
+    }
+  });
+});
+document.querySelectorAll('.img-placeholder img').forEach(img => {
+  observer.observe(img, { attributes: true });
+});
 </script>
- 
+
 </body>
 </html>
