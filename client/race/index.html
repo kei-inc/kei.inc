@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Race Platform</title>
+  <style>
+    :root {
+      --canvas: #2c2c2c;
+      --ink: #151515;
+      --paper: #fff;
+      --muted: #666;
+      --line: #ddd;
+      --accent: #111;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      font-family: Helvetica, Arial, sans-serif;
+      background: var(--canvas);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--paper);
+      margin-bottom: 10px;
+    }
+
+    .lede {
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.62);
+      max-width: 42ch;
+    }
+
+    section {
+      margin-bottom: 36px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.38);
+      margin-bottom: 12px;
+    }
+
+    .links {
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+
+    .link-card {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .link-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .link-card .num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .link-card .title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .link-card .desc {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .link-card .arrow {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1;
+    }
+
+    .link-card.external .arrow::after {
+      content: "↗";
+    }
+
+    .link-card:not(.external) .arrow::after {
+      content: "→";
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Kei · Client Materials</p>
+      <h1>Race Platform</h1>
+      <p class="lede">Overview, prototypes, and live environments for the RaceComm platform.</p>
+    </header>
+
+    <section>
+      <p class="section-label">Documents &amp; Prototypes</p>
+      <ul class="links">
+        <li>
+          <a class="link-card" href="./Race_Platform_Overview.pdf">
+            <span class="num">01</span>
+            <span>
+              <div class="title">Platform Overview</div>
+              <div class="desc">Race platform strategy and architecture summary</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a class="link-card" href="./RC_FLD_Prototype_Alpha_v1.3.html">
+            <span class="num">02</span>
+            <span>
+              <div class="title">Field Surface Prototype</div>
+              <div class="desc">Mobile golden-path clickable prototype — Alpha v1.3</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a class="link-card" href="./spectator_app.html">
+            <span class="num">03</span>
+            <span>
+              <div class="title">Spectator App</div>
+              <div class="desc">Spectator-facing mobile experience prototype</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a class="link-card external" href="https://spectator-desktoptv-554d7d.netlify.app" target="_blank" rel="noopener noreferrer">
+            <span class="num">04</span>
+            <span>
+              <div class="title">Spectator App (Web)</div>
+              <div class="desc">Web version of the spectator experience</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <p class="section-label">Live Environments</p>
+      <ul class="links">
+        <li>
+          <a class="link-card external" href="https://fancast.kei.inc" target="_blank" rel="noopener noreferrer">
+            <span class="num">↗</span>
+            <span>
+              <div class="title">Fancast</div>
+              <div class="desc">fancast.kei.inc</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a class="link-card external" href="https://sim.kei.inc" target="_blank" rel="noopener noreferrer">
+            <span class="num">↗</span>
+            <span>
+              <div class="title">Simulator</div>
+              <div class="desc">sim.kei.inc</div>
+            </span>
+            <span class="arrow" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>Kei · Race Platform</footer>
+  </main>
+</body>
+</html>

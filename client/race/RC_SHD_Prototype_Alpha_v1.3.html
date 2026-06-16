@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<!-- RC switcher v1.7: normal-browser direct-file navigation; tray limited to stage zone; fullscreen behavior removed; active role shared. -->
+
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>RC_SHD_Prototype_Alpha_v1.4.21</title>
+<!--
+Title: Shared Display surface — Alpha
+Version: v1.4.20
+Date: 2026-05-27
+Status: Shared Display passive desktop prototype / standard desktop shell
+Document type: Desktop clickable prototype
+Product area: RaceComm Shared Display / Passive HQ orientation
+Source basis: RC_SHD_Prototype_Alpha_v1.3.html shell + RC_SHD_CoreScreens_TV_Wireframes_Alpha_v1.4.20 baseline core screen set
+Current truth basis: Approved Alpha v1.3 model + Shared Display passive-display boundary + approved categories Safety / Security / Route / Race Ops / Logistics + sector readiness primary map object
+
+Change Log:
+| v1.4.21 | 2026-05-27 | SHD-PROTO-013 | Fixed product screen rendering by applying core-screen CSS variables inside the embedded Shadow DOM and preserving 1920×1080 → 1440×810 aspect-ratio scaling. | Applied |
+| v1.4.20 | 2026-05-27 | SHD-PROTO-013 | Updated embedded product templates to the current SHD baseline core screen set v1.4.20 while preserving the fixed 1440px desktop prototype shell. | Applied |
+| v1.4.16 | 2026-05-27 | SHD-PROTO-012 | Scaled embedded TV baseline screens into a fixed 1440px-wide desktop stage and removed the visible sidebar version/date label. | Applied |
+
+Project Linter Summary:
+- File checked: RC_SHD_Prototype_Alpha_v1.4.21.html
+- Result: PASS WITH WARNINGS — Prototype shell retained and product templates updated to SHD core screen baseline v1.4.20. Browser visual click-through recommended before freeze.
+-->
+<style>
+:root{--canvas:#2c2c2c;--ink:#151515;--paper:#fff;--muted:#666;--panelLine:#c7c7c7;--lightLine:#ddd;--stroke:1.25px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--canvas);color:var(--ink)}body{overflow:hidden}button{font-family:inherit;color:inherit;cursor:pointer}.proto-root{height:100vh;width:100vw;display:grid;grid-template-columns:minmax(0,1fr) 430px;background:var(--canvas)}.proto-stage{height:100vh;display:grid;place-items:center;overflow:hidden;padding:24px;background:var(--canvas)}.proto-stage-viewport{position:relative;width:1440px;height:810px;aspect-ratio:16/9;transform-origin:center center;background:#fff;border:1px solid #222;overflow:hidden}.proto-stage-content{position:absolute;left:0;top:0;width:1920px;height:1080px;background:#fff;display:block;transform:scale(.75);transform-origin:top left}.proto-panel{height:100vh;background:#fff;border-left:1px solid #222;overflow:hidden;padding:28px 20px 24px;display:flex;flex-direction:column}.proto-panel h1{font-size:20px;line-height:1;margin:0 0 9px;font-weight:500;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.version{display:none!important}.story{height:72px;min-height:72px;max-height:72px;font-size:13px;line-height:1.25;margin:0 0 14px;overflow:hidden;color:#222;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical}.state-class{font-size:9px;text-transform:uppercase;font-weight:900;letter-spacing:.05em;color:#555;margin:0 0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rule{height:1px;background:#aaa;margin:0 0 14px}.tabs{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--panelLine);margin:0 0 12px;min-height:38px;flex:0 0 auto}.tab-group{display:flex;align-items:flex-end;min-width:0}.tab{height:38px;border:0;border-bottom:3px solid transparent;background:#fff;text-transform:uppercase;font-size:10px;font-weight:900;padding:0 11px;white-space:nowrap}.tab.active{border-bottom-color:#111}.mode-tabs{display:flex;gap:6px;align-items:center;padding-bottom:6px;flex:0 0 auto}.mode-tabs button{border:2px solid #111;background:#fff;color:#111;text-transform:uppercase;font-size:9px;font-weight:900;letter-spacing:.04em;height:27px;min-width:52px;border-radius:999px;padding:0 10px}.mode-tabs button.active{background:#111;color:#fff}.hidden{display:none!important}.section-label{font-size:8px;text-transform:uppercase;font-weight:900;letter-spacing:.05em;margin:0 0 8px}#flowsPane,#screensPane{min-height:0;flex:1;overflow:hidden}#flowsPane{display:flex;flex-direction:column}.flow-selector{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;flex:0 0 auto}.flow-card{min-height:32px;border:1px solid var(--panelLine);background:#fff;padding:6px 8px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:3px;overflow:hidden}.flow-card b{font-size:8.5px;text-transform:uppercase;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.flow-card span{font-size:7px;text-transform:uppercase;color:#666;font-weight:800;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.flow-card.active{background:#111;color:#fff;border-color:#111}.flow-card.active span{color:#ddd}.walkthrough-panel{height:440px;min-height:440px;max-height:440px;border:1px solid var(--panelLine);background:#fff;margin:0;padding:14px;display:grid;grid-template-rows:auto 8px minmax(0,1fr) 42px;overflow:hidden;gap:12px;flex:0 0 auto}.flow-current{min-height:58px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--lightLine);padding-bottom:10px;gap:10px;overflow:hidden}.flow-current h2{max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:20px;line-height:1;margin:2px 0 0;letter-spacing:-.045em}.flow-current strong{font-size:9px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}.micro-label{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;color:#666}.progress-track{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;height:8px;overflow:hidden}.progress-segment{background:#ececec;border:1px solid #ddd}.progress-segment.complete{background:#111;border-color:#111}.progress-segment.active{background:#777;border-color:#777}.step-timeline{min-height:0;overflow:hidden;display:grid;gap:0;align-content:start;grid-auto-rows:24px}.step-row-control{height:24px;min-height:24px;border:0;border-bottom:1px solid #e5e5e5;background:#fff;text-align:left;padding:2px;display:grid;grid-template-columns:18px 1fr auto 32px;gap:6px;align-items:center}.step-row-control .dot{width:12px;height:12px;border:1px solid #aaa;background:#fff;margin-left:1px}.step-row-control.complete .dot,.step-row-control.active .dot{background:#111;border-color:#111}.step-row-control b{font-size:10px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.step-row-control em{font-style:normal;font-size:7px;line-height:1;text-transform:uppercase;color:#777;font-weight:900;white-space:nowrap;text-align:right}.step-row-control small{font-size:7px;line-height:1;text-transform:uppercase;color:#777;font-weight:900;margin-left:4px;white-space:nowrap}.step-row-control.active{background:#f2f2f2}.flow-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.flow-nav button{height:42px;border:1px solid var(--panelLine);background:#fff;text-transform:uppercase;font-size:10px;font-weight:900}.flow-nav button:disabled{opacity:.35;cursor:not-allowed}.screen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start;overflow:hidden}.screen-grid button{min-height:31px;height:31px;border:1px solid var(--panelLine);background:#fff;text-transform:uppercase;font-size:6.7px;font-weight:900;padding:3px 6px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.02em}.screen-grid button.active{background:#111;color:#fff}.free-note{border:1px solid var(--panelLine);padding:10px 12px;margin:12px 0 0;background:#fff;display:none}.free-note.active{display:block}.free-note b{display:block;text-transform:uppercase;font-size:9px;margin-bottom:5px}.free-note p{font-size:11px;line-height:1.3;color:#333;margin:0}.fullscreen-toggle{position:fixed;top:16px;right:16px;z-index:1000;width:32px;height:32px;border:0;background:transparent;color:#111;border-radius:0;padding:0;display:flex;align-items:center;justify-content:center;box-shadow:none;-webkit-appearance:none;appearance:none}.fullscreen-toggle svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:square;stroke-linejoin:miter;pointer-events:none}.fullscreen-toggle:hover{opacity:.65}.fullscreen-toggle:focus-visible{outline:1px solid #111;outline-offset:3px}.fullscreen-toggle.is-active{background:transparent;color:#111}.proto-root:fullscreen{width:100vw;height:100vh}.proto-root:-webkit-full-screen{width:100vw;height:100vh}@media(max-width:980px){body{overflow:auto}.proto-root{height:auto;min-height:100vh;grid-template-columns:1fr}.proto-stage{height:auto;min-height:70vh}.proto-panel{border-left:0;border-top:1px solid #111}}
+
+/* v1.3 sidebar stability */
+.step-row-control b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.flow-current h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+
+/* v1.3 fixed-layout and command-state consistency QA */
+.product-screen{
+  width:1440px!important;
+  height:1024px!important;
+  display:grid!important;
+  grid-template-rows:112px 500px 266px 76px 70px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+}
+.product-screen .state-strip{
+  height:112px!important;
+  min-height:112px!important;
+  max-height:112px!important;
+  grid-row:1!important;
+}
+.product-screen .route-band{
+  height:500px!important;
+  min-height:500px!important;
+  max-height:500px!important;
+  flex:0 0 500px!important;
+  grid-row:2!important;
+  overflow:hidden!important;
+}
+.product-screen .attention{
+  height:266px!important;
+  min-height:266px!important;
+  max-height:266px!important;
+  flex:0 0 266px!important;
+  grid-row:3!important;
+  padding:22px 40px!important;
+  gap:10px!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+.product-screen .desk-row{
+  height:76px!important;
+  min-height:76px!important;
+  max-height:76px!important;
+  flex:0 0 76px!important;
+  grid-row:4!important;
+  overflow:hidden!important;
+}
+.product-screen .ticker{
+  height:70px!important;
+  min-height:70px!important;
+  max-height:70px!important;
+  flex:0 0 70px!important;
+  grid-row:5!important;
+  padding:12px 18px!important;
+  overflow:hidden!important;
+}
+.product-screen .desk{padding:10px 16px!important;}
+.product-screen .desk-label{margin-bottom:6px!important;}
+.product-screen .desk-val{font-size:17px!important;}
+.product-screen .state-cell.dominant{
+  background:#222!important;
+  color:#fff!important;
+  border-right:2px solid #222!important;
+}
+.product-screen .state-cell.dominant .lbl,
+.product-screen .state-cell.dominant .val,
+.product-screen .state-cell.dominant .subtxt{
+  color:#fff!important;
+  opacity:1!important;
+}
+.product-screen .message.command,
+.product-screen .message.black,
+.product-screen .message.attention{
+  background:#222!important;
+  color:#fff!important;
+  border-color:#222!important;
+}
+.product-screen .message.command .icon,
+.product-screen .message.black .icon,
+.product-screen .message.attention .icon,
+.product-screen .message.command .clock,
+.product-screen .message.black .clock,
+.product-screen .message.attention .clock{
+  color:#fff!important;
+  border-color:#fff!important;
+  background:#222!important;
+}
+.product-screen .message.command .msglabel,
+.product-screen .message.command .msgtitle,
+.product-screen .message.command .msgsub,
+.product-screen .message.black .msglabel,
+.product-screen .message.black .msgtitle,
+.product-screen .message.black .msgsub,
+.product-screen .message.attention .msglabel,
+.product-screen .message.attention .msgtitle,
+.product-screen .message.attention .msgsub{
+  color:#fff!important;
+  opacity:1!important;
+}
+.product-screen .message{
+  min-height:154px!important;
+  max-height:172px!important;
+  width:100%!important;
+  margin:0!important;
+}
+.product-screen .trace{
+  min-height:42px!important;
+  max-height:52px!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+}
+.product-screen .map-context-layer,
+.product-screen .route-svg-copy{
+  position:absolute!important;
+  inset:0!important;
+}
+
+
+/* RC switcher v1.7 — normal-browser stage-only hover tray */
+:root{--rc-switcher-panel-width:430px;}
+.fullscreen-toggle{display:none!important;}
+.prototype{grid-template-columns:minmax(560px,1fr) var(--rc-switcher-panel-width)!important;}
+.proto-root{grid-template-columns:minmax(0,1fr) var(--rc-switcher-panel-width)!important;}
+.panel,.proto-panel{width:var(--rc-switcher-panel-width)!important;max-width:var(--rc-switcher-panel-width)!important;}
+.rc-role-switcher-zone{position:fixed;left:0;right:var(--rc-switcher-panel-width);bottom:0;height:96px;z-index:2147483000;display:flex;align-items:flex-end;justify-content:center;pointer-events:auto;background:transparent;}
+.rc-role-switcher{width:100%;height:72px;background:#000;display:flex;align-items:center;justify-content:center;gap:18px;padding:0 28px;transform:translateY(48px);opacity:0;transition:transform .16s ease,opacity .16s ease;border:0;box-shadow:none;}
+.rc-role-switcher-zone:hover .rc-role-switcher,.rc-role-switcher-zone:focus-within .rc-role-switcher{transform:translateY(0);opacity:1;}
+.rc-role-switcher a{height:34px;min-width:146px;border:1px solid #fff;background:#000;color:#fff;display:inline-flex;align-items:center;justify-content:center;padding:0 18px;text-decoration:none;text-transform:uppercase;font:700 12px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.08em;white-space:nowrap;box-shadow:none;}
+.rc-role-switcher a.is-active{background:#fff;color:#111;border-color:#fff;}
+.rc-role-switcher a:hover,.rc-role-switcher a:focus{background:#fff;color:#111;outline:none;}
+@media(max-width:980px){.rc-role-switcher-zone{right:0}.rc-role-switcher{gap:8px;padding:0 12px}.rc-role-switcher a{min-width:auto;flex:1;font-size:9px;padding:0 8px}}
+
+
+/* RC switcher pack v1.12 — flow step indicators use circles, not squares */
+.step-row .dot,
+.step-row-control .dot,
+.walkthrough-panel .dot,
+#stepStrip .dot{
+  border-radius:50% !important;
+}
+
+</style>
+</head>
+<body>
+<div class="proto-root" id="prototypeRoot">
+<button aria-label="Enter full screen" aria-pressed="false" class="fullscreen-toggle" id="fullscreenToggle" title="Enter full screen" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+<main aria-label="Desktop prototype stage" class="proto-stage"><div class="proto-stage-viewport" id="stageViewport"><div class="proto-stage-content" id="stageContent"></div></div></main>
+<aside aria-label="Prototype controls" class="proto-panel">
+<h1 id="protoTitle">Shared Display surface — Alpha</h1>
+<p class="version" id="protoVersion"></p>
+<p class="story" id="story">Shared Display passive state prototype walkthrough.</p>
+<p class="state-class" id="stateClass">STATE CLASS: SHARED DISPLAY PASSIVE STATE</p>
+<div class="rule"></div>
+<div class="tabs"><div class="tab-group"><button class="tab active" data-tab="flows" type="button">Core user flows</button><button class="tab" data-tab="screens" type="button">Screens</button></div><div class="mode-tabs"><button class="active" data-mode="walk" type="button">Walk</button><button data-mode="free" type="button">Free</button></div></div>
+<section id="flowsPane"><p class="section-label">Core user flows</p><div class="flow-selector" id="flowButtons"></div><section class="walkthrough-panel"><div class="flow-current"><div><span class="micro-label">Current user flow</span><h2 id="flowTitle">Flow</h2></div><strong id="flowStepCount">Step 1 of 1</strong></div><div class="progress-track" id="flowProgress"></div><div class="step-timeline" id="stepStrip"></div><div class="flow-nav"><button id="backBtn" type="button">Back</button><button id="nextBtn" type="button">Next</button></div></section><div class="free-note" id="freeNote"><b>Free mode</b><p>Use screen hotspots or sidebar screen buttons to move through passive Shared Display states. Product UI remains read-only.</p></div></section>
+<section class="hidden" id="screensPane"><p class="section-label">App screen states</p><div class="screen-grid" id="screenButtons"></div></section>
+</aside>
+</div>
+<template id="productStyle"><style>
+:host{--ink:#222;--muted:#666;--line:#c4c4c4;--soft:#eeeeee;--paper:#fff;--page:#cfcfcf;--black:#111;--met:#fff;--watch:#f1f1f1;--notready:#d8d8d8;--pending:#fbfbfb;--header-cols:1.32fr .78fr .88fr .9fr 1.05fr;--divider-gap:2px}*{box-sizing:border-box;margin:0;padding:0}html,body{background:var(--page);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:var(--ink)}body{padding:32px}.doc{width:1920px;margin:0 auto 28px;background:#fff;border:1px solid var(--line);padding:18px 20px}.doc .eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#555}.doc h1{font-size:22px;margin-top:6px}.doc .sub{margin-top:6px;font-size:12px;max-width:112ch;line-height:1.45}.wireframe{width:1920px;margin:0 auto 36px;background:var(--paper);border:1px solid var(--line);overflow:hidden}.caption{height:40px;background:#202020;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:700}.caption .meta{font-size:9px;color:#d0d0d0;font-family:"Courier New",Courier,monospace;text-transform:none;letter-spacing:.04em;font-weight:400}.screen{width:1920px;height:1080px;background:#fff;overflow:hidden}.top-strip{height:96px;display:grid;grid-template-columns:var(--header-cols);border-bottom:2px solid var(--ink)}.top-cell{position:relative;padding:16px 20px;border-right:0}.top-cell:not(:last-child):after{content:"";position:absolute;top:0;right:0;bottom:var(--divider-gap);width:1px;background:var(--line)}.top-cell.dark{background:var(--black);color:#fff}.lbl{font-size:10px;line-height:1.1;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted)}.dark .lbl{color:#dadada}.val{font-size:28px;line-height:1.02;font-weight:700;margin-top:8px}.mono{font-family:"Courier New",Courier,monospace}.sub{font-size:11px;color:#444;margin-top:6px}.dark .sub{color:#ddd}.context-strip{height:88px;display:grid;grid-template-columns:var(--header-cols);border-bottom:2px solid var(--ink)}.context-cell{position:relative;padding:13px 18px;border-right:0}.context-cell:not(:last-child):after{content:"";position:absolute;top:0;right:0;bottom:var(--divider-gap);width:1px;background:var(--line)}.context-cell.signal{background:#f3f3f3}.context-cell .big{font-size:21px;line-height:1.02;font-weight:700;margin-top:7px}.context-cell .small{font-size:12px;line-height:1.25;color:#333;margin-top:5px}.map-stage{height:642px;position:relative;background:#f7f7f7;border-bottom:1.5px solid var(--ink);overflow:hidden}.map-label{position:absolute;left:28px;top:18px;background:#fff;border:1px solid var(--line);padding:8px 12px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;z-index:30}.sector-grid{position:absolute;left:0;right:0;top:0;bottom:0;display:grid;grid-template-columns:repeat(6,1fr);border-left:1px solid var(--line);z-index:1}.sector{position:relative;border-right:1px solid var(--line)}.sector:last-child{border-right:0}.sector.met{background:var(--met)}.sector.watch{background:var(--watch)}.sector.notready{background:var(--notready)}.sector.pending{background:var(--pending)}.sector-rag{position:absolute;left:0;right:0;top:0;height:14px;border-bottom:1px solid #d0d0d0}.sector.met .sector-rag{background:#fff}.sector.watch .sector-rag{background:#d9d9d9}.sector.notready .sector-rag{background:#9a9a9a}.sector.pending .sector-rag{background:repeating-linear-gradient(90deg,#dddddd 0,#dddddd 8px,#fafafa 8px,#fafafa 16px)}.sector-head{position:absolute;left:18px;right:18px;top:24px;text-align:center;z-index:5}.sector-id{display:inline-block;padding:4px 10px;background:#fff;border:1px solid #e4e4e4;font:700 11px "Courier New",Courier,monospace}.sector-state{margin-top:10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}.sector-score{margin-top:30px;font-size:24px;font-weight:700;line-height:1}.sector-score-label{margin-top:4px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#555}.sector-note{margin:10px auto 0;font-size:11px;line-height:1.28;color:#333;max-width:220px}.route-band{position:absolute;left:0;right:0;top:314px;height:42px;background:#d2d2d2;z-index:8}.route-line{position:absolute;left:58px;right:58px;top:334px;height:2px;background:#969696;z-index:9}.callout{position:absolute;left:49%;top:84px;transform:translateX(-50%);z-index:20;background:#222;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:2px solid #222}.callout:after{content:"";position:absolute;left:50%;top:100%;width:2px;height:96px;background:#222}.rm{position:absolute;left:48%;top:210px;transform:translateX(-50%);z-index:20;padding:14px 34px;background:#fff;border:3px solid #222;font:700 16px "Courier New",Courier,monospace}.rm:after{content:"";position:absolute;left:50%;top:100%;width:80px;height:2px;background:#222;transform:rotate(90deg);transform-origin:left center}.cloud{position:absolute;left:47.7%;top:292px;transform:translateX(-50%);width:454px;height:64px;border:1px dashed #222;border-radius:36px;background:rgba(255,255,255,.32);z-index:14}.cloud .rear{position:absolute;left:54px;top:0;width:132px;height:64px;border:2px solid #222;border-radius:36px;background:#e8e8e8}.cloud .pack{position:absolute;left:122px;top:0;width:264px;height:64px;border-radius:36px;background:#111;display:flex;align-items:center;justify-content:space-evenly;padding:0 22px}.cloud .pack i{display:block;width:12px;height:12px;border-radius:50%;background:#fff}.cloud .lead{position:absolute;left:60px;top:26px;width:12px;height:12px;border-radius:50%;background:#111}.mp{position:absolute;bottom:16px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:16}.mp i{display:block;width:10px;height:10px;background:#222;margin-bottom:8px}.mp span{display:block;padding:3px 7px;background:#fff;border:1px solid var(--line);font:400 10px "Courier New",Courier,monospace;color:#444}.legend{position:absolute;left:28px;bottom:20px;padding:8px 12px;background:#fff;border:1px solid var(--line);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#666;z-index:16}.direction{display:none}.inset{position:absolute;right:32px;bottom:20px;width:282px;height:122px;border:1.5px solid #222;background:#fff;z-index:16;padding:14px}.inset .title{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#666;margin-bottom:16px}.inset .line{height:2px;background:#222;margin:26px 14px 18px}.inset .cities{display:flex;justify-content:space-between;font-size:10px;font-weight:700}.command-summary{height:112px;display:grid;grid-template-columns:360px 1.35fr 1fr .95fr .95fr;background:#101010;color:#fff;border-bottom:2px solid #222}.command-lead{display:flex;gap:18px;align-items:center;padding:18px 24px;border-right:1px solid #333}.command-icon{width:52px;height:52px;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font:700 28px "Courier New",Courier,monospace}.command-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#d8d8d8;font-weight:700}.command-title{font-size:30px;font-weight:700;line-height:1;margin-top:7px}.command-cell{padding:18px 20px;border-right:1px solid #333}.command-cell:last-child{border-right:0}.command-cell .h{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#d8d8d8;font-weight:700}.command-cell .m{font-size:21px;font-weight:700;line-height:1.1;margin-top:8px}.command-cell .s{font-size:12px;color:#d8d8d8;line-height:1.28;margin-top:6px}.category-row{height:142px;display:grid;grid-template-columns:repeat(5,1fr);background:#efefef}.cat{position:relative;padding:18px 18px 14px;border-right:1px solid var(--line);background:#fff}.cat:last-child{border-right:0}.cat:before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:#ddd}.cat.watch{background:#f2f2f2}.cat.watch:before{background:#aaa}.cat.notready{background:#d3d3d3}.cat.notready:before{background:#777}.cat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.cat-name{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#555}.cat-state{font-size:18px;font-weight:700;text-transform:uppercase;margin-top:12px;display:flex;align-items:center;gap:10px}.dot{width:16px;height:16px;border:2px solid #222;border-radius:50%;background:#fff}.dot.ready{background:#222}.dot.watch{background:#ddd}.dot.blocked{border-style:dashed}.cat-note{font-size:12px;line-height:1.3;color:#333;margin-top:11px;max-width:310px}.cat-meta{font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:#555;margin-top:8px}.qa{width:1920px;margin:0 auto 40px;background:#fff;border:1px solid var(--line);padding:14px 18px;font-size:12px;line-height:1.45}.qa b{display:block;margin-bottom:6px}
+
+/* v1.4.10 contextual map state indicators */
+.map-state-layer{position:absolute;inset:0;z-index:26;pointer-events:none;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;}
+.state-badge{position:absolute;left:28px;top:58px;background:#fff;border:1.5px solid #222;padding:9px 14px;min-width:260px;}
+.state-badge.dark{background:#222;color:#fff;border-color:#222;}
+.state-badge .state-k{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#666;}
+.state-badge.dark .state-k{color:#ddd;}
+.state-badge .state-v{font-size:17px;font-weight:700;line-height:1.05;margin-top:5px;}
+.state-badge .state-s{font-size:11px;line-height:1.25;margin-top:5px;color:#444;}
+.state-badge.dark .state-s{color:#ddd;}
+.scope-band{position:absolute;top:270px;height:112px;border:1.5px solid #222;background:rgba(255,255,255,.58);display:flex;align-items:flex-end;justify-content:center;padding:0 10px 10px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:center;}
+.scope-band.dark{background:rgba(34,34,34,.82);color:#fff;}
+.scope-band.watch{background:rgba(214,214,214,.65);}
+.scope-band.pending{background:repeating-linear-gradient(90deg,rgba(255,255,255,.75) 0,rgba(255,255,255,.75) 11px,rgba(220,220,220,.72) 11px,rgba(220,220,220,.72) 22px);}
+.scope-band.dashed{border-style:dashed;}
+.scope-line{position:absolute;top:246px;width:2px;height:226px;background:#222;}
+.scope-line.dashed{background:transparent;border-left:2px dashed #222;}
+.scope-label{position:absolute;background:#fff;border:1.5px solid #222;padding:7px 10px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.scope-label.dark{background:#222;color:#fff;}
+.issue-dot{position:absolute;width:34px;height:34px;border-radius:50%;border:1.5px solid #222;background:#fff;display:flex;align-items:center;justify-content:center;font:700 14px "Courier New",Courier,monospace;}
+.issue-dot.dark{background:#222;color:#fff;}
+.issue-dot.watch{background:#d8d8d8;}
+.issue-dot.dashed{border-style:dashed;}
+.map-message{position:absolute;left:50%;transform:translateX(-50%);top:392px;background:#fff;border:1.5px solid #222;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.map-message.dark{background:#222;color:#fff;}
+.audit-ribbon{position:absolute;right:336px;bottom:164px;background:#fff;border:1.5px solid #222;padding:8px 12px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;}
+.stale-wash{position:absolute;inset:0;background:rgba(255,255,255,.48);border:4px dashed #222;}
+.stale-stamp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#222;color:#fff;border:3px solid #222;padding:16px 28px;font-size:18px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+
+.sector-alert{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:8px;border:1.5px solid #222;border-radius:50%;background:#fff;font:700 12px/1 "Courier New",Courier,monospace;vertical-align:middle;}
+
+/* v1.4.20 map cleanup */
+.callout{display:none!important}.callout:after{display:none!important}.sector-score{margin-top:26px}.sector-score-label{margin-top:5px}
+
+/* v1.4.20 targeted SHD corrections */
+.scope-band,.scope-line,.scope-label,.map-message{z-index:32;}
+.issue-dot{z-index:34;}
+.stale-wash{z-index:26;}
+.stale-label-back{position:absolute;left:50%;top:50%;width:520px;height:96px;transform:translate(-50%,-50%);background:rgba(255,255,255,.72);z-index:30;}
+.stale-stamp{z-index:34;}
+
+
+:host{display:block;width:1920px;height:1080px;overflow:hidden;background:#fff;}
+.screen{display:block!important;margin:0!important;width:1920px!important;height:1080px!important;}
+</style></template><template id="tpl_RC_SHD_17"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">RECENT EVENT</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Audit trace expanded</div><div class="small">Recent event visible</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">20 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Recent event trace</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band watch" style="left:16.667%;width:50%;">recent event affected scope</div><div class="audit-ribbon">audit trace · recent command event</div><div class="issue-dot watch" style="left:25%;top:250px;">A</div></div><div class="map-label">Stage corridor · recent event trace</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Passive event audit</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">IL Sector 18</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Recent command event</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Recent</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety recent event</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Security clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_16"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">STALE</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Verify source freshness</div><div class="small">Data stale warning</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">Unknown / stale</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Stale · 90s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Feed confidence warning</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="stale-wash"></div><div class="stale-label-back"></div><div class="stale-stamp">FEED STALE · VERIFY SOURCE</div></div><div class="map-label">Stage corridor · stale source warning</div>
+<div class="sector-grid"><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Data stale verify source</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Stage corridor</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Source confidence degraded</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Stale</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Verify on role surfaces</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety stale</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security stale</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Route stale</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops stale</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Logistics stale</div><div class="cat-meta">Monitor</div></div></section>
+</main></template><template id="tpl_RC_SHD_15"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">CRITICAL</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Escalation summary</div><div class="small">Multiple critical escalations</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">15 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Multiple escalations</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:16.667%;width:66.667%;">multiple escalation pressure</div><div class="issue-dot dark" style="left:25%;top:250px;">1</div><div class="issue-dot dark" style="left:58.333%;top:250px;">2</div><div class="issue-dot dark" style="left:75%;top:250px;">3</div></div><div class="map-label">Stage corridor · multiple escalations</div>
+<div class="sector-grid"><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Multiple escalations</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">S18–S21</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Multiple escalation pressure</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈9m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander acts on command surface</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety critical</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route critical</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Logistics watch</div><div class="cat-meta">Monitor</div></div></section>
+</main></template><template id="tpl_RC_SHD_14"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">WATCH</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Watch multiple desks</div><div class="small">Multiple desks under pressure</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">17 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Multiple desk pressure</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band watch" style="left:16.667%;width:66.667%;">multi-desk watch pressure</div><div class="issue-dot watch" style="left:25%;top:250px;">S</div><div class="issue-dot dark" style="left:58.333%;top:250px;">R</div><div class="issue-dot watch" style="left:75%;top:250px;">O</div></div><div class="map-label">Stage corridor · multiple desk pressure</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Multiple sector pressure</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">S18–S21</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Safety + Route pressure</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈12m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander awareness</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route blocker</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_13"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE START PENDING</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">PENDING</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Stage start pending</div><div class="small">Start authorization pending</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">19 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 staged</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Stage start pending</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band pending dashed" style="left:0%;width:50%;">stage start authorization pending</div><div class="scope-line dashed" style="left:0%;"></div><div class="scope-line dashed" style="left:50%;"></div><div class="map-message">Pending authorization</div></div><div class="map-label">Stage start authorization pending</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Authorization waiting</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Stage start scope</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Readiness pending</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Pending</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander authorization required</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Safety clear</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Pending</div><div class="cat-note">Route pending</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops pending</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_12"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE TRANSITION</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">TRANSITION</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Handoff in progress</div><div class="small">Stage handoff</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">18 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S21–S28 handoff</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 03s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Stage transition</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band pending" style="left:0%;width:33.333%;z-index:32;">next stage handoff</div><div class="scope-line" style="left:33.333%;z-index:33;"></div><div class="scope-label" style="left:25.8%;top:202px;z-index:34;">handoff boundary</div></div><div class="map-label">Stage transition / handoff</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Handoff context active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Next stage boundary</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Handoff pressure</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈22m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive orientation only</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Safety stable</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops handoff</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_11"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">RESUMES</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Race resumes</div><div class="small">Command State lifted</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">22 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Race resumes</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band" style="left:0%;width:100%;">race resumes · command state lifted</div><div class="map-message">Resume signal</div></div><div class="map-label">Stage corridor · race resumes</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race Live</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Stage corridor</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Command State lifted</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Resuming</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive orientation only</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Safety clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Security clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Race Ops clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Logistics clear</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_10"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">ALL CLEAR</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">RELEASE</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Release condition</div><div class="small">All Clear issued</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">22 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 clearing</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">All Clear issued</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band" style="left:0%;width:100%;">ALL CLEAR · release route scope</div><div class="map-message">Release active</div></div><div class="map-label">Stage corridor · all clear release</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race release active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Stage corridor</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Release after command state</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Safety clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Security clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Race Ops clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Logistics clear</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_9"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">EMERGENCY BROADCAST</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">COMMAND</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Race-wide broadcast</div><div class="small">Emergency Broadcast active</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">10 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Emergency Broadcast active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:0%;width:100%;">EMERGENCY BROADCAST · RACE-WIDE</div><div class="issue-dot dark" style="left:25%;top:250px;">!</div><div class="issue-dot dark" style="left:58.333%;top:250px;">!</div><div class="issue-dot dark" style="left:75%;top:250px;">!</div></div><div class="map-label">Race-wide emergency broadcast</div>
+<div class="sector-grid"><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><span class="sector-alert">!</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Emergency active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Race-wide</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Emergency-level severity</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety critical</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route blocked</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Logistics watch</div><div class="cat-meta">Monitor</div></div></section>
+</main></template><template id="tpl_RC_SHD_8"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">DO NOT REOPEN</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">COMMAND</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Closure remains locked</div><div class="small">Do Not Reopen active</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">15 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Do Not Reopen active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark dashed" style="left:50%;width:33.334%;">DO NOT REOPEN · S20–S21</div><div class="scope-label dark" style="left:55%;top:202px;">closure remains locked</div></div><div class="map-label">Stage corridor · do not reopen scope</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Sector do not open</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Affected sector scope</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Reopen blocked</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route not ready</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_7"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">NEUTRALISED</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">COMMAND</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Controlled movement</div><div class="small">Neutralised state active</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">14 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Neutralised active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band watch dashed" style="left:16.667%;width:66.667%;">neutralised · controlled movement</div><div class="scope-line dashed" style="left:16.667%;"></div><div class="scope-line dashed" style="left:83.334%;"></div><div class="map-message">Controlled movement only</div></div><div class="map-label">Stage corridor · neutralised movement</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race neutralised active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Active corridor</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Controlled movement</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Security stable</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Route watch</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Controlled movement</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_6"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">RACE STOP</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">COMMAND</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Stop in effect</div><div class="small">Race stopped</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">12 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Race Stop active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:0%;width:100%;">RACE STOP · RACE-WIDE AFFECTED SCOPE</div><div class="map-message dark">Full route stop signal</div></div><div class="map-label">Race-wide stop scope</div>
+<div class="sector-grid"><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race stop<br/>active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">Race-wide affected scope</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Race Stop active</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety stop pressure</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route blocked</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Race Ops hold</div><div class="cat-meta">Monitor</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Logistics watch</div><div class="cat-meta">Monitor</div></div></section>
+</main></template><template id="tpl_RC_SHD_5"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">RACE HOLD</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">COMMAND</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Hold in effect</div><div class="small">Command State active</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">16 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Race Hold active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:16.667%;width:50%;">RACE HOLD ACTIVE</div><div class="scope-line" style="left:16.667%;"></div><div class="scope-line" style="left:66.667%;"></div><div class="map-message dark">Hold scope locked</div></div><div class="map-label">Stage corridor · Race Hold active</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race hold<br/>active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">IL Sector 18</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Hold condition active</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">Active</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive display only</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety pass-up</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Security watch</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route blocker</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Hold timing</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_4"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">DECISION NEEDED</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Race Hold recommended</div><div class="small">Hold recommendation active</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">16 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Race Hold recommended</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:16.667%;width:50%;">Race Hold recommended · S18–S20</div><div class="issue-dot dark" style="left:58.333%;top:250px;">R</div><div class="scope-label dark" style="left:51%;top:202px;">route blocker</div></div><div class="map-label">Stage corridor · decision pending</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race hold pending</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">IL Sector 18</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Route blocker</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈10m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander decides on command surface</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety pass-up</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Crowd-control gap</div><div class="cat-meta">Monitor</div></div><div class="cat notready"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Route blocker</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Timing shift</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_3"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">CRITICAL</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Race Commander attention</div><div class="small">Critical escalation passed up</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">18 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 01s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Critical pass-up active</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band dark" style="left:16.667%;width:50%;">critical pass-up scope</div><div class="issue-dot dark" style="left:25%;top:250px;">!</div><div class="scope-label dark" style="left:21%;top:202px;">passed up to Race Commander</div></div><div class="map-label">Stage corridor · critical pass-up</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector notready"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Not Ready</div><div class="sector-score">3 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector pending"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Pending</div><div class="sector-score">2 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Spectator struck by debris</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">IL Sector 18</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Safety pass-up</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈10m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander acts on command surface</div></div>
+</section>
+<section class="category-row"><div class="cat notready"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot blocked"></span>Not Ready</div><div class="cat-note">Safety pass-up</div><div class="cat-meta">Priority exception</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Crowd-control watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Timing shift</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_2"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">WATCH</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Monitor Safety desk</div><div class="small">Safety desk watch</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">20 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Safety desk watch</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band watch" style="left:16.667%;width:33.333%;">Safety watch · S18–S19</div><div class="issue-dot watch" style="left:25%;top:250px;">S</div><div class="issue-dot watch" style="left:41.667%;top:250px;">S</div></div><div class="map-label">Stage corridor · Safety desk watch</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Safety watch active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">S18–S19</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Safety concern</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈14m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive room signal only</div></div>
+</section>
+<section class="category-row"><div class="cat watch"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Safety watch</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Security stable</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Timing stable</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_1"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">WATCH</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">Monitor sector watch</div><div class="small">One sector on watch</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">21 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 03s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Watch pressure in S19</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band watch" style="left:33.333%;width:16.667%;">S19 watch</div><div class="issue-dot watch" style="left:41.667%;top:250px;">!</div><div class="scope-label" style="left:35.4%;top:202px;">watch · not blocking</div></div><div class="map-label">Stage corridor · sector watch</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector watch"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Watch</div><div class="sector-score">4 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Sector watch active</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">S19</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">Crowd-control watch</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">≈18m</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Race Commander attention not required</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">All clear</div><div class="cat-meta">No escalation</div></div><div class="cat watch"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot watch"></span>Watch</div><div class="cat-note">Crowd-control gap</div><div class="cat-meta">Monitor</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Route clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Timing stable</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template><template id="tpl_RC_SHD_0"><main class="screen">
+<section class="top-strip">
+<div class="top-cell dark"><div class="lbl">Race State</div><div class="val mono">STAGE 3</div><div class="sub">Shared race state</div></div>
+<div class="top-cell"><div class="lbl">Race Time</div><div class="val">04:12:38</div><div class="sub">Shared clock</div></div>
+<div class="top-cell"><div class="lbl">Race Cloud</div><div class="val mono">RM 745</div><div class="sub">Absolute MP · derived labels</div></div>
+<div class="top-cell"><div class="lbl">Next Checkpoint</div><div class="val mono">CP D</div><div class="sub">Current route context</div></div>
+<div class="top-cell"><div class="lbl">Command Stance</div><div class="val mono">NORMAL</div><div class="sub">Passive Shared Display</div></div>
+</section>
+<section class="context-strip">
+<div class="context-cell"><div class="lbl">Decision Window</div><div class="big">No command action</div><div class="small">All sectors met</div></div>
+<div class="context-cell"><div class="lbl">Sector Readiness</div><div class="big">22 / 22 sectors met</div><div class="small">Sector readiness is the primary object</div></div>
+<div class="context-cell"><div class="lbl">Stage Corridor</div><div class="big">S17–S24 active</div><div class="small">Route, Race Cloud and sector scope</div></div>
+<div class="context-cell"><div class="lbl">Source Confidence</div><div class="big">Fresh · 02s</div><div class="small">Source / trust context visible where relevant</div></div>
+<div class="context-cell signal"><div class="lbl">Room Signal</div><div class="big">Race running clean</div><div class="small">Shared Display is passive</div></div>
+</section>
+<section class="map-stage">
+<div class="map-state-layer"><div class="scope-band" style="left:0%;width:100%;">stage corridor met</div><div class="map-message">Race running clean</div></div><div class="map-label">Stage corridor · all sectors met</div>
+<div class="sector-grid"><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S17</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S18</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S19</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S20</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S21</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div><div class="sector met"><div class="sector-rag"></div><div class="sector-head"><span class="sector-id">S22</span><div class="sector-state">Met</div><div class="sector-score">5 / 5</div><div class="sector-score-label">categories met</div></div></div></div>
+<div class="rm">RM 745</div><div class="route-band"></div><div class="route-line"></div>
+<div class="cloud"><div class="rear"></div><div class="lead"></div><div class="pack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div class="mp" style="left:28%"><i></i><span>MP 720</span></div><div class="mp" style="left:48%"><i></i><span>MP 745</span></div><div class="mp" style="left:70%"><i></i><span>MP 780</span></div>
+<div class="legend">Legend</div><div class="inset"><div class="title">Total Route Inset</div><div class="line"></div><div class="cities"><span>NY</span><span>LA</span></div></div>
+</section>
+<section class="command-summary">
+<div class="command-lead"><div class="command-icon">!</div><div><div class="command-k">Command Summary</div><div class="command-title">Race<br/>live</div></div></div>
+<div class="command-cell"><div class="h">Scope</div><div class="m">All monitored sectors clear</div><div class="s">Sector / stage scope for room awareness.</div></div>
+<div class="command-cell"><div class="h">Pressure Source</div><div class="m">No pressure</div><div class="s">Shown as passive context only.</div></div>
+<div class="command-cell"><div class="h">Time Pressure</div><div class="m">None</div><div class="s">Race Cloud timing context.</div></div>
+<div class="command-cell"><div class="h">Surface Boundary</div><div class="m">Passive</div><div class="s">Passive orientation only</div></div>
+</section>
+<section class="category-row"><div class="cat"><div class="cat-head"><div class="cat-name">Safety</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">All clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Security</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">All clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Route</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">All clear</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Race Ops</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Timing stable</div><div class="cat-meta">No escalation</div></div><div class="cat"><div class="cat-head"><div class="cat-name">Logistics</div><div class="lbl">Fresh</div></div><div class="cat-state"><span class="dot ready"></span>Ready</div><div class="cat-note">Support stable</div><div class="cat-meta">No escalation</div></div></section>
+</main></template>
+<script>
+const screens = [{"id": "RC_SHD_0", "title": "Ambient Race Picture / All Ready", "desc": "Ambient race picture. Race is live and all monitored sectors are clear."}, {"id": "RC_SHD_1", "title": "Sector Watch / Non-blocking Pressure", "desc": "Sector watch active. Non-blocking watch pressure is visible on the Shared Display."}, {"id": "RC_SHD_2", "title": "Desk Watch / Safety Concern", "desc": "Safety watch active. Safety desk watch is visible as passive room context."}, {"id": "RC_SHD_3", "title": "Critical Escalation Passed Up", "desc": "Spectator struck by debris. Critical escalation is visible for Race Commander attention."}, {"id": "RC_SHD_4", "title": "Decision Pending / Suggested Command State", "desc": "Race hold pending. Race Hold recommendation is visible while Shared Display remains passive."}, {"id": "RC_SHD_5", "title": "Race Hold Active", "desc": "Race hold active. Issued Command State is reflected as passive room state."}, {"id": "RC_SHD_6", "title": "Race Stop Active", "desc": "Race stop active. Race-wide stop scope is reflected as passive room state."}, {"id": "RC_SHD_7", "title": "Neutralised Active", "desc": "Race neutralised active. Controlled movement state is visible as passive room state."}, {"id": "RC_SHD_8", "title": "Do Not Reopen Active", "desc": "Sector do not open. Affected sector reopening boundary is visible as passive room state."}, {"id": "RC_SHD_9", "title": "Emergency Broadcast Active", "desc": "Emergency active. Emergency Broadcast state is reflected as passive room state."}, {"id": "RC_SHD_10", "title": "All Clear / Release", "desc": "Race release active. All Clear / Release state is visible for room awareness."}, {"id": "RC_SHD_11", "title": "Command State Lifted / Race Resumes", "desc": "Race Live. Command State lifted and race state is live."}, {"id": "RC_SHD_12", "title": "Stage Transition / Handoff", "desc": "Handoff context active. Stage transition and handoff boundary are visible."}, {"id": "RC_SHD_13", "title": "Stage Start Pending / Authorization Waiting", "desc": "Stage start pending. Authorization waiting is visible as passive room context."}, {"id": "RC_SHD_14", "title": "Multiple Desk Pressure", "desc": "Multiple sector pressure. Multiple desk pressure is visible as passive room context."}, {"id": "RC_SHD_15", "title": "Multiple Escalation Summary", "desc": "Multiple escalations. Multiple escalation summary is visible for Race Commander attention."}, {"id": "RC_SHD_16", "title": "Data Stale / Feed Confidence Warning", "desc": "Data stale verify source. Stale feed condition is visible and must not be treated as confirmed."}, {"id": "RC_SHD_17", "title": "Passive Recent Event / Audit Trace Expanded", "desc": "Passive event audit. Recent event/audit trace is visible as passive room context."}];
+const flows = [{"id": "shared_golden_path", "title": "Shared display golden path", "steps": ["RC_SHD_0", "RC_SHD_1", "RC_SHD_3", "RC_SHD_4", "RC_SHD_5", "RC_SHD_10", "RC_SHD_11", "RC_SHD_12"]}, {"id": "watch_pressure", "title": "Watch pressure", "steps": ["RC_SHD_0", "RC_SHD_1", "RC_SHD_2", "RC_SHD_0"]}, {"id": "critical_pass_up", "title": "Critical pass-up", "steps": ["RC_SHD_0", "RC_SHD_3", "RC_SHD_4"]}, {"id": "command_state", "title": "Command State active", "steps": ["RC_SHD_4", "RC_SHD_5", "RC_SHD_6", "RC_SHD_7", "RC_SHD_8", "RC_SHD_9", "RC_SHD_10", "RC_SHD_11", "RC_SHD_0"]}, {"id": "stage_authorization", "title": "Stage authorization", "steps": ["RC_SHD_13", "RC_SHD_12", "RC_SHD_0"]}, {"id": "multi_pressure", "title": "Multi-pressure", "steps": ["RC_SHD_0", "RC_SHD_14", "RC_SHD_15", "RC_SHD_4"]}, {"id": "feed_confidence", "title": "Feed confidence", "steps": ["RC_SHD_0", "RC_SHD_16", "RC_SHD_0"]}, {"id": "passive_trace", "title": "Passive trace", "steps": ["RC_SHD_0", "RC_SHD_17", "RC_SHD_0"]}];
+const screenById = Object.fromEntries(screens.map(s => [s.id, s]));
+let currentScreenId = 'RC_SHD_0';
+let currentFlowId = 'shared_golden_path';
+let currentStepIndex = 0;
+let mode = 'walk';
+let activeTab = 'flows';
+const root = document.getElementById('prototypeRoot');
+const stageViewport = document.getElementById('stageViewport');
+const stageContent = document.getElementById('stageContent');
+const shadow = stageContent.attachShadow({mode:'open'});
+
+function $(id){return document.getElementById(id)}
+function flow(){return flows.find(f => f.id === currentFlowId) || flows[0];}
+function screenIndexInFlow(id){return flow().steps.indexOf(id);}
+function setScreen(id, opts={}){
+  if(!screenById[id]) id = 'RC_SHD_0';
+  currentScreenId = id;
+  const ix = screenIndexInFlow(id);
+  if(ix >= 0) currentStepIndex = ix;
+  renderScreen();
+  renderSidebar();
+}
+function renderScreen(){
+  const tpl = document.getElementById('tpl_' + currentScreenId);
+  const style = document.getElementById('productStyle').innerHTML;
+  shadow.innerHTML = style + (tpl ? tpl.innerHTML : '');
+  // Shared Display product frame is passive: no product-frame click handlers.
+}
+function renderSidebar(){
+  const s = screenById[currentScreenId];
+  $('story').textContent = s?.desc || 'Shared Display passive state.';
+  $('stateClass').textContent = 'STATE CLASS: SHARED DISPLAY PASSIVE STATE';
+  renderFlowButtons(); renderScreenButtons(); renderWalkthrough();
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
+  $('flowsPane').classList.toggle('hidden', activeTab !== 'flows');
+  $('screensPane').classList.toggle('hidden', activeTab !== 'screens');
+  document.querySelectorAll('.mode-tabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('freeNote').classList.toggle('active', mode === 'free');
+}
+function renderFlowButtons(){
+  const box = $('flowButtons'); box.innerHTML = '';
+  flows.forEach(f => {
+    const b = document.createElement('button'); b.type='button'; b.className='flow-card' + (f.id===currentFlowId?' active':'');
+    b.innerHTML = `<b>${f.title}</b><span>${f.steps.length} steps</span>`;
+    b.addEventListener('click', () => { currentFlowId=f.id; currentStepIndex=0; setScreen(f.steps[0]); });
+    box.appendChild(b);
+  });
+}
+function renderScreenButtons(){
+  const box = $('screenButtons'); box.innerHTML = '';
+  screens.forEach(s => {
+    const b = document.createElement('button'); b.type='button'; b.className = s.id===currentScreenId ? 'active' : '';
+    b.textContent = s.id.replace('RC_SHD_','') + ' · ' + s.title;
+    b.addEventListener('click', () => setScreen(s.id));
+    box.appendChild(b);
+  });
+}
+function renderWalkthrough(){
+  const f = flow();
+  const idx = Math.max(0, f.steps.indexOf(currentScreenId));
+  currentStepIndex = idx >= 0 ? idx : currentStepIndex;
+  $('flowTitle').textContent = f.title;
+  $('flowStepCount').textContent = `Step ${currentStepIndex+1} of ${f.steps.length}`;
+  const prog = $('flowProgress'); prog.innerHTML = '';
+  f.steps.forEach((id,i) => { const seg=document.createElement('div'); seg.className='progress-segment'+(i<currentStepIndex?' complete':i===currentStepIndex?' active':''); prog.appendChild(seg); });
+  const steps = $('stepStrip'); steps.innerHTML = '';
+  f.steps.forEach((id,i) => {
+    const s = screenById[id];
+    const row = document.createElement('button'); row.type='button'; row.className='step-row-control'+(i<currentStepIndex?' complete':i===currentStepIndex?' active':'');
+    row.innerHTML = `<span class="dot"></span><b>${s?.title || id}</b><em>Required</em><small>${i+1}/${f.steps.length}</small>`;
+    row.addEventListener('click', () => {currentStepIndex=i; setScreen(id);});
+    steps.appendChild(row);
+  });
+  $('backBtn').disabled = currentStepIndex === 0;
+  $('nextBtn').disabled = currentStepIndex >= f.steps.length-1;
+}
+function showContext(title, body, rows=[]){
+  const wrap = document.createElement('div'); wrap.className='proto-context-overlay';
+  const grid = rows.length ? `<div class="proto-context-grid">${rows.map(r => `<div>${r[0]}</div><div>${r[1]}</div>`).join('')}</div>` : '';
+  wrap.innerHTML = `<div class="proto-context-modal" role="dialog" aria-modal="true"><div class="proto-context-head"><span>${title}</span><button class="proto-context-close" type="button" aria-label="Close">×</button></div><div class="proto-context-body"><h3>${title}</h3><p>${body}</p>${grid}</div></div>`;
+  wrap.querySelector('.proto-context-close').addEventListener('click', () => wrap.remove());
+  wrap.addEventListener('click', e => { if(e.target === wrap) wrap.remove(); });
+  shadow.appendChild(wrap);
+}
+function attachProductHotspots(){ /* intentionally empty: Shared Display is passive */ }
+function nextStep(){ const f=flow(); if(currentStepIndex < f.steps.length-1) {currentStepIndex++; setScreen(f.steps[currentStepIndex]);} }
+function prevStep(){ const f=flow(); if(currentStepIndex > 0) {currentStepIndex--; setScreen(f.steps[currentStepIndex]);} }
+function resizeStage(){
+  const container = document.querySelector('.proto-stage');
+  const rect = container.getBoundingClientRect();
+  const pad = 48;
+  const scale = Math.min((rect.width - pad) / 1440, (rect.height - pad) / 810, 1);
+  stageViewport.style.transform = `scale(${Math.max(scale,0.1)})`;
+}
+window.addEventListener('resize', resizeStage);
+document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => { activeTab=b.dataset.tab; renderSidebar(); }));
+document.querySelectorAll('.mode-tabs button').forEach(b => b.addEventListener('click', () => { mode=b.dataset.mode; renderSidebar(); }));
+$('backBtn').addEventListener('click', prevStep); $('nextBtn').addEventListener('click', nextStep);
+const fs = $('fullscreenToggle');
+fs.addEventListener('click', async () => {
+  const target = $('prototypeRoot');
+  if(!document.fullscreenElement) { await target.requestFullscreen?.(); fs.classList.add('is-active'); fs.setAttribute('aria-pressed','true'); fs.setAttribute('aria-label','Exit full screen'); fs.title='Exit full screen'; }
+  else { await document.exitFullscreen?.(); fs.classList.remove('is-active'); fs.setAttribute('aria-pressed','false'); fs.setAttribute('aria-label','Enter full screen'); fs.title='Enter full screen'; }
+});
+document.addEventListener('fullscreenchange', () => { if(!document.fullscreenElement) { fs.classList.remove('is-active'); fs.setAttribute('aria-pressed','false'); } resizeStage(); });
+renderScreen(); renderSidebar(); resizeStage();
+</script>
+
+<div class="rc-role-switcher-zone" aria-label="RaceComm prototype role switcher"><nav class="rc-role-switcher" aria-label="RaceComm prototype roles"><a href="RC_FLD_Prototype_Alpha_v1.3.html" data-rc-role="field">FIELD</a><a href="RC_COO_Prototype_Alpha_v1.3.html" data-rc-role="coordinator">COORDINATOR</a><a href="RC_SUB_Prototype_Alpha_v1.3.html" data-rc-role="sub">SUB COMMAND</a><a href="RC_RCM_Prototype_Alpha_v1.3.html" data-rc-role="race">RACE COMMAND</a><a class="is-active" href="RC_SHD_Prototype_Alpha_v1.3.html" data-rc-role="shared">SHARED DISPLAY</a></nav></div>
+</body>
+</html>

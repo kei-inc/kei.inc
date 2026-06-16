@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectator App</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #e8e8e8;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* iPhone frame sized off viewport height so it always fits */
+  .iphone {
+    position: relative;
+    height: 92vh;
+    aspect-ratio: 1180 / 2556;
+    background: #1a1a1a;
+    border-radius: 11.5%/5.3%;
+    padding: 1.2% 1.2%;
+    box-sizing: border-box;
+    box-shadow:
+      0 0 0 2px #2a2a2a,
+      0 30px 60px rgba(0,0,0,0.25),
+      0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  /* Inner bezel ring */
+  .iphone::before {
+    content: "";
+    position: absolute;
+    inset: 0.6%;
+    border-radius: 11.2%/5.1%;
+    background: #0a0a0a;
+    z-index: 0;
+  }
+
+  /* Screen */
+  .screen {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 10.5%/4.8%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Dynamic Island */
+  .island {
+    position: absolute;
+    top: 1.6%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 3.6%;
+    background: #000;
+    border-radius: 999px;
+    z-index: 2;
+  }
+
+  /* Side buttons */
+  .btn {
+    position: absolute;
+    background: #2a2a2a;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+  }
+
+  /* Left side: silent switch + volume up + volume down */
+  .btn-silent {
+    left: -0.4%;
+    top: 13%;
+    width: 0.6%;
+    height: 4%;
+    border-radius: 2px 0 0 2px;
+  }
+  .btn-vol-up {
+    left: -0.5%;
+    top: 20%;
+    width: 0.7%;
+    height: 8%;
+    border-radius: 2px 0 0 2px;
+  }
+  .btn-vol-down {
+    left: -0.5%;
+    top: 30%;
+    width: 0.7%;
+    height: 8%;
+    border-radius: 2px 0 0 2px;
+  }
+
+  /* Right side: power button */
+  .btn-power {
+    right: -0.5%;
+    top: 22%;
+    width: 0.7%;
+    height: 11%;
+    border-radius: 0 2px 2px 0;
+  }
+</style>
+</head>
+<body>
+  <div class="iphone">
+    <span class="btn btn-silent"></span>
+    <span class="btn btn-vol-up"></span>
+    <span class="btn btn-vol-down"></span>
+    <span class="btn btn-power"></span>
+
+    <div class="screen">
+      <video
+        src="https://kei-site.s3.us-east-2.amazonaws.com/260525_MVP_SpectatorApp.mov"
+        controls
+        autoplay
+        muted
+        loop
+        playsinline>
+      </video>
+      <div class="island"></div>
+    </div>
+  </div>
+</body>
+</html>

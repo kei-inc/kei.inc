@@ -13,3 +13,10 @@
 /practices/nextgen.mp4
 /practices/places.mp4
 /climactic/climactic_sample.mp4
+
+# Generated at deploy time from RACE_BASIC_AUTH (see scripts/generate-headers.js)
+/_headers
+
+# Apache-only auth files (not used on Netlify)
+/client/race/.htaccess
+/client/race/.htpasswd

@@ -1,0 +1,8 @@
+# Copy format for local testing, or set RACE_BASIC_AUTH in Netlify instead.
+# Do not commit a real _headers file with credentials.
+
+/client/race
+  Basic-Auth: username:password
+
+/client/race/*
+  Basic-Auth: username:password
