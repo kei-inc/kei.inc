@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SF Open Innovation Challenge — Research Synthesis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800;900&family=Overpass+Mono:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fog:#EFF2F5; --paper:#FAFBFC; --ink:#1E252C; --ink2:#4C565F; --line:#D6DCE2;
+  --c-intro:#1E252C; --c-s1:#D2491E; --c-s2:#2E7B52; --c-s3:#2E6484; --c-name:#B07414;
+  --disp:'Overpass',system-ui,sans-serif; --body:'Source Serif 4',Georgia,serif; --mono:'Overpass Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--fog);color:var(--ink);font-family:var(--body);overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--c-s1);outline-offset:2px;border-radius:4px}
+
+/* ---------- chrome ---------- */
+#progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--sec-color,var(--ink));z-index:50;transition:width .3s ease,background .3s ease}
+header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:10px;padding:16px 22px 10px;z-index:40}
+#deckmark{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);white-space:nowrap;margin-right:6px}
+nav#chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px 4px;border:1.5px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink2);transition:all .18s ease}
+.chip:hover{border-color:var(--ink2)}
+.chip.active{background:var(--chip,var(--ink));border-color:var(--chip,var(--ink));color:#fff}
+#counter{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--ink2);white-space:nowrap}
+
+/* ---------- route strip (signature) ---------- */
+footer{position:fixed;bottom:0;left:0;right:0;padding:14px 26px 16px;z-index:40}
+#route{position:relative;height:34px}
+#routeline{position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+#routedone{position:absolute;left:0;top:9px;height:2px;width:0;background:var(--sec-color,var(--ink));transition:width .3s ease,background .3s}
+#stops{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:flex-start}
+.stop{position:relative;width:14px;height:34px;display:flex;flex-direction:column;align-items:center;padding:0}
+.stop i{display:block;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--dot,var(--ink2));margin-top:4px;transition:transform .18s ease,background .18s ease}
+.stop.passed i{background:var(--dot,var(--ink2))}
+.stop.here i{transform:scale(1.9);background:#fff;border-color:var(--dot,var(--ink));box-shadow:0 0 0 3px color-mix(in srgb,var(--dot) 25%,transparent)}
+.stop:hover i{transform:scale(1.6)}
+.stop.here:hover i{transform:scale(1.9)}
+.stop b{position:absolute;top:20px;font-family:var(--mono);font-weight:600;font-size:9px;letter-spacing:.08em;color:var(--ink2);white-space:nowrap;text-transform:uppercase}
+#hints{display:flex;justify-content:space-between;margin-top:2px;font-family:var(--mono);font-size:10.5px;color:var(--ink2);letter-spacing:.06em}
+
+/* on-screen arrows */
+.arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:45;width:44px;height:64px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--ink2);opacity:.45;transition:opacity .15s,background .15s}
+.arrow:hover{opacity:1;background:color-mix(in srgb,var(--paper) 80%,transparent)}
+.arrow svg{width:22px;height:22px}
+#prev{left:8px}#next{right:8px}
+
+/* ---------- slides ---------- */
+#stage{position:absolute;inset:0}
+.slide{position:absolute;inset:calc(var(--headh,64px) + 8px) 76px 84px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(24px);transition:opacity .3s ease,transform .3s ease,visibility .3s}
+.slide.on{opacity:1;visibility:visible;transform:none}
+.slide.back{transform:translateX(-24px)}
+.slide.on.back{transform:none}
+@media (prefers-reduced-motion:reduce){.slide,#progress,#routedone,.stop i{transition:none!important}}
+
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sec,var(--ink2));display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.eyebrow .tick{display:inline-block;width:26px;height:3px;background:var(--sec,var(--ink2))}
+h1.slidetitle{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3.1vw,40px);line-height:1.08;letter-spacing:-.01em;max-width:22ch}
+.slidebody{flex:1;min-height:0;overflow-y:auto;margin-top:22px;padding-right:8px;scrollbar-width:thin}
+
+/* insight layout */
+.lbl{font-family:var(--disp);font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sec,var(--ink2));margin-bottom:8px}
+.big{font-size:clamp(17px,1.55vw,22px);line-height:1.5;max-width:66ch;font-weight:600}
+.cols{display:grid;grid-template-columns:1.6fr 1fr;gap:34px;margin-top:26px;align-items:start}
+.heard p{font-size:clamp(13.5px,1.1vw,16px);line-height:1.62;color:var(--ink2);max-width:72ch}
+.means{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:22px 24px}
+.means .lbl{color:var(--ink2)}
+.means p{font-style:italic;font-size:clamp(16.5px,1.45vw,20.5px);line-height:1.5;letter-spacing:.002em}
+.lean{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--sec,var(--ink));padding:3px 8px 2px;border-radius:3px;margin-left:8px;vertical-align:middle}
+
+/* dividers */
+.divider{justify-content:center}
+.divider .huge{font-family:var(--disp);font-weight:900;font-size:clamp(70px,11vw,150px);line-height:.95;color:var(--sec);letter-spacing:-.02em}
+.divider h1{font-family:var(--disp);font-weight:800;font-size:clamp(26px,3.4vw,44px);margin-top:8px;max-width:24ch}
+.divider .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);margin-top:14px}
+.toc{margin-top:22px;columns:2;column-gap:44px;max-width:960px}
+.toc div{break-inside:avoid;display:flex;gap:10px;font-size:clamp(13px,1.05vw,15.5px);line-height:1.45;padding:5px 0;border-bottom:1px solid var(--line)}
+.toc b{font-family:var(--mono);font-weight:600;color:var(--sec);min-width:34px}
+
+/* title slide */
+.titleslide{justify-content:center}
+.titleslide .over{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2)}
+.titleslide h1{font-family:var(--disp);font-weight:900;font-size:clamp(40px,6vw,84px);line-height:1.0;letter-spacing:-.015em;margin:16px 0 18px;max-width:16ch}
+.titleslide .sub{font-size:clamp(16px,1.5vw,21px);color:var(--ink2);max-width:52ch;line-height:1.5}
+.titleroute{display:flex;align-items:center;gap:0;margin-top:44px}
+.titleroute span{width:56px;height:2px;background:var(--line)}
+.titleroute i{width:12px;height:12px;border-radius:50%;border:2.5px solid var(--dotc);background:var(--paper)}
+.titleroute em{font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin:0 8px 0 6px}
+.meta{margin-top:40px;font-family:var(--mono);font-size:12px;color:var(--ink2);letter-spacing:.08em}
+
+/* generic content slides */
+.prose p{font-size:clamp(14.5px,1.2vw,17.5px);line-height:1.66;max-width:74ch;margin-bottom:14px}
+.prose .final{font-family:var(--disp);font-weight:700;font-size:clamp(15px,1.3vw,19px);color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px}
+.card h3{font-family:var(--disp);font-weight:800;font-size:15.5px;margin-bottom:2px}
+.card .org{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--sechint,var(--ink2));margin-bottom:8px}
+.card p{font-size:13px;line-height:1.5;color:var(--ink2)}
+.threeup{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.threeup .card{padding-top:14px}
+.threeup .card .num{font-family:var(--disp);font-weight:900;font-size:58px;line-height:.85;letter-spacing:-.03em;color:var(--acc);margin-bottom:10px}
+.threeup .card h3{font-size:17px;margin-bottom:6px}
+.anatomy{display:flex;flex-direction:column;gap:14px;max-width:860px}
+.anatomy .row{display:grid;grid-template-columns:190px 1fr;gap:20px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 18px;align-items:start}
+.anatomy .row h3{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.02em}
+.anatomy .row p{font-size:14.5px;line-height:1.6;color:var(--ink2)}
+.nogo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.nogo .card h3{font-size:15px;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.nogo .card h3::before{content:'';flex:none;width:14px;height:14px;border:2px solid var(--c-s1);border-radius:50%;background:linear-gradient(135deg,transparent 43%,var(--c-s1) 43%,var(--c-s1) 57%,transparent 57%)}
+.wordbank{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:6px;max-width:1000px}
+.wordbank h3{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.wb{display:flex;flex-wrap:wrap;gap:8px}
+.wb span{font-family:var(--disp);font-weight:700;font-size:14px;padding:6px 12px 4px;border-radius:100px;background:var(--paper);border:1.5px solid var(--line)}
+.wordbank .pos h3{color:var(--c-s2)} .wordbank .pos .wb span{border-color:color-mix(in srgb,var(--c-s2) 45%,var(--line))}
+.wordbank .neg h3{color:var(--c-s1)} .wordbank .neg .wb span{border-color:color-mix(in srgb,var(--c-s1) 40%,var(--line));text-decoration:line-through;text-decoration-thickness:1.5px;color:var(--ink2)}
+.namingnote{margin-top:22px;max-width:86ch;font-size:clamp(14px,1.15vw,16.5px);line-height:1.62;color:var(--ink2)}
+
+@media (max-width:900px){
+  .slide{position:absolute;inset:0;padding:calc(var(--headh,64px) + 8px) 20px 96px}
+  .cols{grid-template-columns:1fr;gap:18px}
+  .cards,.threeup,.nogo,.wordbank{grid-template-columns:1fr}
+  .toc{columns:1}
+  .anatomy .row{grid-template-columns:1fr;gap:6px}
+  .stop b{display:none}
+  .arrow{display:none}
+  header{flex-wrap:wrap;padding:10px 14px}
+  #counter{margin-left:0}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header>
+  <span id="deckmark">Kei · SF Research</span>
+  <nav id="chips" aria-label="Sections"></nav>
+  <span id="counter" aria-live="polite"></span>
+</header>
+
+<button class="arrow" id="prev" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button class="arrow" id="next" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 5l7 7-7 7"/></svg></button>
+
+<main id="stage" aria-live="polite"></main>
+
+<footer>
+  <div id="route"><div id="routeline"></div><div id="routedone"></div><div id="stops"></div></div>
+  <div id="hints"><span>&larr; &rarr; arrow keys · click a stop to jump</span><span id="secname"></span></div>
+</footer>
+
+<script>
+const SEC = {
+  intro:{name:'Intro', color:'var(--c-intro)', hex:'#1E252C'},
+  s1:{name:'1 · Brand & Naming', color:'var(--c-s1)', hex:'#D2491E'},
+  s2:{name:'2 · Gather & Innovate', color:'var(--c-s2)', hex:'#2E7B52'},
+  s3:{name:'3 · SF Specifics', color:'var(--c-s3)', hex:'#2E6484'},
+  naming:{name:'Naming Notes', color:'var(--c-name)', hex:'#B07414'}
+};
+
+function insight(sec,num,title,big,heard,means,lean){return {sec,type:'insight',num,title,big,heard,means,lean};}
+
+const slides = [
+{sec:'intro',type:'title'},
+{sec:'intro',type:'sources'},
+{sec:'intro',type:'structure'},
+{sec:'intro',type:'anatomy'},
+{sec:'s1',type:'divider',num:'1',title:'Brand, Naming & Positioning',kicker:'What should this thing say',toc:[
+ ['1.1','Anchor to values nobody can oppose'],['1.1b','No-go zones'],['1.2','"Innovation" is a loaded word here'],['1.3','The credibility deficit is real'],['1.4','Ideas festivals have a broken-promise history'],['1.5','Neighborhood scale is where energy lives'],['1.6','Lead with love and pride, not problems'],['1.7','Position as amplifier, not arrival'],['1.8','Build a brand people can appropriate']]},
+
+insight('s1','1.1','Anchor to values nobody can oppose; stay out of the culture-war blast radius',
+'San Francisco\u2019s civic space is littered with tripwires: words and topics that instantly sort people into factions. The organizers who actually build broad coalitions do it by staying relentlessly on universal ground (safety, affordability, walkability, joy) and refusing to engage adjacent fights.',
+'Mahdi Rahimi runs an explicit \u201cno culture wars\u201d rule in Safe Streets Bernal\u2019s channels, steering the group away from surveillance cameras, robotaxi labor politics, and parking fights because they fracture the coalition. His observation: \u201cyou don\u2019t have anyone opposing street safety.\u201d Matthew Lewis of California YIMBY lands the same way at state scale: message on affordability, safety, freedom, inclusivity, walkability, and (in California) climate.',
+'The brand\u2019s core vocabulary should be values everyone already holds. Test every line against the question: could a reasonable person organize against this word?'),
+
+{sec:'s1',type:'nogo',num:'1.1',title:'No-go zones surfaced across interviews',items:[
+ ['\u201cProgressive\u201d','Thomas Rogers (D9 Neighbors): the word has \u201clost meaning\u201d in SF and now signals a political faction rather than a value.'],
+ ['NIMBY / YIMBY as labels','Useful inside the movement, tribal markers outside it.'],
+ ['\u201cCommunity input\u201d','Carries baggage; for many it now means veto power and process paralysis (Rogers), and for engagement professionals it means a biased, unrepresentative process (Merker, Lewis).'],
+ ['\u201cThe homeless problem\u201d as shorthand','Simon Bertrang was emphatic that this framing flattens distinct issues (drug trade, street conditions, housing supply, mental health) and alienates people on all sides.'],
+ ['Culture-war adjacent topics','Surveillance/cameras, robotaxis, parking removal framed as loss.'],
+ ['Consultant-speak','\u201cActivation,\u201d \u201cengagement,\u201d \u201cstakeholders.\u201d Rogers gently mocked \u201cactivation\u201d in his own interview.']]},
+
+insight('s1','1.2','\u201cInnovation\u201d is a loaded word in San Francisco specifically',
+'In most cities \u201cinnovation\u201d is a neutral positive. In San Francisco it carries the residue of a decade of tech-solutionism: the reflex to answer civic problems with an app, a platform, or a moonshot. Residents and civic professionals alike have developed antibodies to it.',
+'Lewis was blunt: \u201cthere are a lot of people who think you can solve these problems with technology... geometry doesn\u2019t change because your car flies now.\u201d The Kei team\u2019s own framing in the Merker interview (\u201cman with a hammer, everything looks like a nail around technology\u201d) resonated immediately with the interviewee. At the same time, Rogers volunteered that urbanist hackathons genuinely draw people out and showcase SF\u2019s unusual human capital, so the appetite to build is real.',
+'Technology can appear as a tool in the brand story, never as the hero. If \u201cinnovation\u201d survives into the name, it needs grounding in civic, human, neighborhood language, or it will read as another platform play. Consider whether the name needs the word at all.'),
+
+insight('s1','1.3','The credibility deficit is real: philanthropy and nonprofits carry baggage here',
+'San Franciscans have paid repeatedly, through bonds, taxes, and donations, for civic problems that visibly persist. That history has produced a specific cynicism toward institutionally flavored initiatives, and any philanthropy-backed program inherits it on day one.',
+'Lewis described a \u201cnonprofit industrial complex\u201d with indictments, tax fatigue, and public cynicism: residents \u201copened their checkbook\u201d via billions in bonds and then read about grift in the Chronicle. That is one interviewee\u2019s strong framing, but the underlying dynamic (donor fatigue plus visible non-delivery) came up independently: Merker noted the city \u201cdoesn\u2019t really have any money ever\u201d and projects get value-engineered down; Roach described \u201csuccess fatigue\u201d around Mid-Market and stalled master-plan developments. Notably, several participants probed \u201cwho\u2019s the client?\u201d during the interviews themselves, and the partial answers created friction in the room.',
+'The initiative should not look, sound, or behave like an institutional NGO. The brand earns trust by being transparent about who is behind it, by showing tangible results early, and by avoiding grant-cycle aesthetics and language.'),
+
+insight('s1','1.4','Ideas festivals have a broken-promise history; the brand must carry implementation in its DNA',
+'San Francisco has run the \u201cinvite the public to imagine the future\u201d play before, sometimes brilliantly. The pattern residents remember is that the ideas were celebrated and the follow-through died, which means a new challenge brand starts with an implementation credibility gap it has to close explicitly.',
+'Merker lived the full arc. His Park(ing) Day art intervention led to the city\u2019s parklet program, a genuine pathway from creative experiment to institutional adoption. The Market Street Prototyping Festival (50 curated teams building interventions to inform the street\u2019s redesign) was \u201cpositive, positive, positive\u201d... then the pandemic hit, the city\u2019s money evaporated, nothing got built, and \u201cthe momentum around that kind of stuff really crashed.\u201d Roach defended ideas as valuable in themselves but framed the healthy model as \u201chigh energy democracy\u201d: rapid, cheap experiments with sunset clauses, tried and retired honestly.',
+'Position the challenge as a pipeline to visible, real-world outcomes, not a call for ideas. The brand promise should be closer to \u201cwe will build the winning things\u201d than \u201cshare your vision.\u201d Anything that smells like a design competition whose renderings die in a PDF will trigger the fatigue interviewees described.'),
+
+insight('s1','1.5','Neighborhood scale is where identity, trust, and energy live',
+'San Franciscans\u2019 civic identity attaches to their neighborhood and commercial corridor, not to the city as a whole. \u201cSan Francisco\u201d is an abstraction people argue about; their block is something they love, and participation rises the closer the action gets to home.',
+'Every interviewee defaulted to neighborhood scale when describing what works: Rahimi\u2019s town halls succeed because they\u2019re \u201ca short five-minute walk away\u201d; Rogers described Bernal potlucks and a branch-library-and-playground sense of place; Bertrang\u2019s model at SF New Deal is corridor-level vibrancy funds and night markets; Merker\u2019s example of deep belonging was 24th Street in the Mission, where Latino families customize and occupy the space as their own.',
+'The brand architecture should flex to neighborhood-level expression: a system that lets Bernal, the Excelsior, or the Inner Sunset put their own name on it. Consider naming and identity that feels like it comes from inside a neighborhood rather than down from City Hall or Salesforce Tower. Rahimi\u2019s group stamps its name on pedestrian flags that neighbors bought with their own money; that is the emotional register to hit.'),
+
+insight('s1','1.6','Lead with love and pride, not problems: the register that matches the moment',
+'What sustains civic participation is affection for a place, and what exhausts it is cataloguing the place\u2019s failures. San Francisco is in a moment of deliberate, city-led positivity, and residents are responding to it, which makes a pride-forward brand both strategically right and culturally timely.',
+'Bertrang described the current administration as having \u201ccaptured the vibes\u201d with a \u201cLet\u2019s Go San Francisco\u201d energy: night markets, Downtown First Thursdays, Civic Joy Fund cleanups. Merker independently: \u201cwe\u2019re so hungry for joyful things to celebrate together out in the city.\u201d Roach\u2019s baseline read on motivation was simply that \u201cpeople care about their neighborhoods,\u201d and Rogers moved to Bernal because he and his wife \u201chad always loved\u201d it. The exhausting counter-register also showed up: Roach\u2019s \u201csuccess fatigue,\u201d Lewis\u2019s tax-fatigue cynicism. And Bertrang added the caution: \u201cpeople are going to start to expect real results... we feel better about it than it actually is.\u201d',
+'Position the initiative as an expression of love and pride in San Francisco, an invitation to make the place you care about better with your neighbors, rather than a reporting mechanism for its failures. An optimistic, celebratory, even playful register is on-trend and welcome. The caution stands: a reckoning between vibes and results is coming, so the brand should ride the joy while visibly banking small, real wins, positioning it as substance when the vibe cycle turns. Insight 2.10 carries the supporting evidence and the tension to manage.', true),
+
+insight('s1','1.7','Position as amplifier, not arrival',
+'San Francisco\u2019s civic ecosystem is crowded with sophisticated, long-tenured actors who have seen outside initiatives come and go. An initiative funded from outside the city, arriving with resources and a mandate, will be read by default as either naive or competitive unless it visibly positions itself as fuel for what already exists.',
+'Roach warned about \u201creinventing the wheel\u201d and \u201cre-exploring a path someone\u2019s already explored\u201d in an ecosystem dense with CBDs, SPUR, CBOs, advocacy groups, and artist networks. In multiple interviews the Kei team spent meaningful time reassuring participants the project was not competitive with existing efforts, and that reassurance was needed before people opened up.',
+'Messaging should lead with spotlighting and resourcing the people already doing the work. \u201cWe noticed what you built and want to pour fuel on it\u201d beats \u201cwe\u2019re here to fix San Francisco.\u201d The outsider funding origin is a known liability; local partnership and local voice in the brand are the mitigation.'),
+
+insight('s1','1.8','Belonging comes from permission to change things; build a brand people can appropriate',
+'People feel a place is theirs when they\u2019re allowed to alter it. The same is true of brands: identities that communities can customize, stamp, and remix generate ownership in a way that polished, locked-down systems never will.',
+'Merker\u2019s closest thing to a theory of belonging, drawn from Gehl\u2019s research and his art practice: \u201cthe ability to change the environment, to alter a place to make it your own.\u201d His contrast case was San Francisco\u2019s privately owned public spaces, which are legally open but feel exclusive because unspoken design cues (reception desks, security guards, corporate architecture) tell most people they don\u2019t belong.',
+'Favor an open, remixable identity system over a locked, polished one. Toolkits, templates, and assets neighborhoods can customize signal \u201cthis is yours\u201d in a way no tagline can. Guard the system lightly.'),
+
+{sec:'s2',type:'divider',num:'2',title:'How People Gather, Brainstorm & Innovate',kicker:'What should this thing do',toc:[
+ ['2.1','Outrage mobilizes; infrastructure captures it'],['2.2','Informality is a feature, not a gap'],['2.3','Proximity predicts showing up'],['2.4','Parties are organizing tools'],['2.5','Data grants permission; owning it grants power'],['2.6','Walking together changes the conversation'],['2.7','One caring human beats any platform'],['2.8','The engagement palette is stale and biased'],['2.9','Flip the extractive model: community as experts'],['2.10','Grievance opens the door; love keeps people in the room']]},
+
+insight('s2','2.1','Outrage mobilizes, but only infrastructure captures it',
+'Galvanizing events (a tragedy, an outrage, a visible failure) produce surges of civic energy, but the energy dissipates within weeks unless an organized vessel already exists to receive it. The groups that grow are the ones that were already there.',
+'Rahimi\u2019s street-safety group grew most after a pedestrian was killed by a speeding driver on Bernal\u2019s commercial corridor: \u201cthey got enraged... and we already had this group and this infrastructure in place.\u201d The group then converted that surge into advocacy, DIY crash-data analysis, and physical safety improvements that actually got built.',
+'Build the standing infrastructure (channels, rituals, on-ramps) before asking for participation, so the program can absorb episodic energy rather than trying to manufacture it. Note the sequence in Rahimi\u2019s story: the outrage arrived, and what the group offered it was constructive work. Infrastructure is what converts a spike of anger into durable contribution (see 2.10).'),
+
+insight('s2','2.2','Informality is a feature, not a gap',
+'The healthiest grassroots groups in San Francisco run on chat threads, self-assignment, and social trust, with no charters, budgets, or votes. Formality is a tax on volunteers, and the groups that avoid it last longer.',
+'Safe Streets Bernal is a WhatsApp channel, a shared Google Map of flagged issues, and a handful of active leads; no bank account, no bylaws. D9 Neighbors runs on Slack with consensus instead of voting, and per Rogers, \u201conly if somebody wants to do it will they get that assignment.\u201d Both groups handle burnout through baton handoffs: when one volunteer\u2019s energy dips, another picks up the thread.',
+'Any participation mechanic should plug into existing informal channels rather than asking groups to adopt new process, platforms, or governance.'),
+
+insight('s2','2.3','Proximity is the biggest predictor of showing up',
+'The distance between a person and a civic moment is the single most reliable predictor of whether they participate. A five-minute walk gets neighbors; a trip downtown gets professionals and the retired.',
+'Rahimi: when the town hall is \u201ca short five-minute walk away, people just show up,\u201d versus the heavy ask of trekking to City Hall for public comment. Merker and the Kei team converged on the same principle from the design side: find \u201cthe parking meter you can leverage,\u201d meaning meet people inside the places and routines they already have.',
+'Distribute the program into neighborhoods physically: storefronts, parks, corridors, existing events. Never make the neighborhood come downtown.'),
+
+insight('s2','2.4','Parties are organizing tools',
+'Social gatherings recruit and retain civic participants better than civic meetings do. People show up for the potluck, the night market, or the match on the big screen, and some of them stay for the neighborhood.',
+'Rogers called social gatherings \u201can underrated strategy\u201d: potlucks in the park, post-election debriefs at a bar, family-friendly events that widen the age range. New people arrive for the social occasion and some become contributors. Bertrang\u2019s version: night markets and trash cleanups, where \u201cpicking up trash turns out to be a really satisfying way to connect with your neighbors.\u201d The interstitial moment is the mechanism: people come to see a thing and end up talking about their neighborhood.',
+'Lead with gatherings that are worth attending on their own terms, and let the civic content ride along. The brainstorm hidden inside the block party outperforms the advertised brainstorm.'),
+
+insight('s2','2.5','Data grants permission; owning the data grants power',
+'Communities and officials usually already know what should change; what they lack is permission to act on it. A single clear piece of behavioral evidence supplies that permission, and communities that collect their own data gain leverage no petition can match.',
+'Merker\u2019s touchstone is Gehl\u2019s Times Square work: one data point (90% of people were walking, but 90% of the space served cars) \u201cgives a bunch of people the political courage\u201d to pedestrianize. His sharper line: \u201cwe all know what we should do, we just don\u2019t believe we have permission to do it.\u201d He also described East Bay residents buying their own Telraam traffic sensors and dropping the data \u201con the city\u2019s desk,\u201d and Gehl\u2019s ideal engagement is training residents to gather data themselves. Rahimi\u2019s group did DIY crash analysis that got a pedestrian island built.',
+'Make community-owned data collection a first-class participation mode. It is simultaneously an engagement activity, an empowerment mechanism, and the evidence base that unlocks institutional action. SF New Deal and Gehl\u2019s vibrancy index points at a ready-made framework.'),
+
+insight('s2','2.6','Walking together changes the conversation: shared experience dissolves the defensive crouch',
+'Where a civic conversation happens shapes what people are willing to imagine. In a meeting room, people show up as stakeholders defending what they have; walking the actual street together, they become neighbors looking at a shared place. Physical, shared experience is the most reliable way found in this research to move people out of a defensive, protective posture and into problem-solving.',
+'Merker gets engineers to take safety seriously by riding a bike with them instead of holding a hearing: \u201cwalk shops or experience shops where we just say, hey, bring your kids, we\u2019re gonna go do this thing that we\u2019re talking about before we figure out what we\u2019re doing, and we\u2019re gonna have that experience together.\u201d The Kei team\u2019s parallel from prior practice: the same conversation produces \u201csurprisingly different results\u201d in a city hall basement versus standing in the intersection being discussed. Merker\u2019s diagnosis of why this matters: \u201cmost people are not imaginative. We have a really hard time imagining a way of living that\u2019s different but maybe better,\u201d so abstract proposals trigger fear of change even when the offer is \u201camazingness.\u201d Lewis\u2019s Slow Streets example completes the loop: the moment residents physically experienced the change, at near-zero cost, they wanted more. Roach adds the designer\u2019s contribution: constructing \u201ca tangible vision of alternative futures\u201d (renderings, comic strips, videos) does for the imagination what the walk does for the body.',
+'Make walking, and embodied experience generally, a signature method of the program: neighborhood walks as the default format for surfacing priorities, prototypes people can sit on and taste, cheap pilots with sunset clauses (Roach\u2019s \u201chigh energy democracy\u201d) that lower the stakes of saying yes and generate their own demand.', true),
+
+insight('s2','2.7','One caring human beats any platform',
+'Sustained presence of a person who cares (a host, a steward, an ambassador) changes conditions and creates engagement in ways that no tool, program, or space does on its own. The venues everyone cites as models work because of who runs them.',
+'Bertrang\u2019s strongest finding from his Tenderloin years: \u201chuman attention turned out to be the only thing that really shifted conditions,\u201d via Safe Passage school-route ambassadors and Urban Alchemy practitioners; interventions without sustained human presence reverted overnight. Merker and Roach independently pointed to Manny\u2019s (the cafe, bookstore, and event space at 16th and Valencia) as the model civic third space, and both stressed it works because of Manny himself: \u201ccertain human beings are creating pockets of engagement around them.\u201d Bertrang extends this to small business owners as neighborhood \u201ccharacters\u201d and connectors whose civic value exceeds their revenue model.',
+'Fund and celebrate hosts, stewards, and connectors as the program\u2019s core unit, before funding spaces or tools. Identify the Mannys of each neighborhood and build around them.'),
+
+insight('s2','2.8','The standard engagement palette is stale and structurally biased',
+'The default tools of public engagement (surveys, sticky dots, evening meetings) systematically over-represent whoever has free time, which in practice means retirees and homeowners over working parents and renters. Any process that doesn\u2019t correct for who is missing will reproduce the city\u2019s existing biases.',
+'Merker: \u201cwe use such a limited palette in public engagement... mood boards, dots on things, and surveys,\u201d rarely corrected for who is absent. Lewis\u2019s harder version: the engagement process itself \u201cbiases outcomes toward the people with the time to show up.\u201d A fix worth stealing, via Merker: Bay Area engagement practitioner Dave Javid opens meetings with a live demographic poll overlaid on city demographics, instantly reframing whose voice the room actually represents. Merker\u2019s closing advice to the team was to map \u201cwho has free resources to engage\u201d at all.',
+'Design for the time-poor: fifteen-minute participation, childcare at events, asynchronous input, and visible representativeness for every input stream. Time and free energy are the gating resources.'),
+
+insight('s2','2.9','Flip the extractive model: community as experts',
+'Communities in San Francisco have learned to distrust engagement that treats them as research subjects whose problems outsiders will diagnose and solve. The trust-building inversion is to treat residents as the experts on their own priorities and offer professional capability in service of their agenda.',
+'Roach\u2019s CCA studios worked with CBOs like the Excelsior Action Group and the Japantown Task Force by inverting the usual posture: \u201cinstead of us coming in as the experts, we allowed them to be the experts and us to support them,\u201d contributing what designers uniquely can, which is making futures tangible. He named the counterexample directly: traditional academic and institutional engagement has been \u201cextractive,\u201d with the community as \u201can interesting petri dish.\u201d',
+'Structure the challenge so neighborhood groups set the problems and outside expertise is offered as a service to their agenda, not the reverse. This is also the strongest defense against the outsider-credibility problem in 1.7.'),
+
+insight('s2','2.10','Grievance opens the door; love and pride keep people in the room',
+'People often enter civic life angry: about a pothole, a crash, a failure. But anger sustains nothing. What keeps people participating year after year is affection for the place, relationships with neighbors, and the satisfaction of contributing. A program built around complaint capture recruits the aggrieved once; a program built around contribution compounds.',
+'Both energies show up in the research. On the grievance side: Rahimi\u2019s group grew after a fatal crash; the Kei team\u2019s own city-council observation that people join over a pothole; Lewis\u2019s argument that movements need a visible \u201cvillain\u201d and that reassuring people \u201cthe experts have this under control\u201d is a permission structure to disengage. But the sustaining fuel was always the other thing. Rogers stays for the neighborhood friendships (\u201cI wouldn\u2019t underrate that\u201d). Rahimi\u2019s neighbors spent their own money on pedestrian flags stamped with the group\u2019s name. Bertrang found trash pickup \u201ca really satisfying way to connect with your neighbors\u201d and describes small business owners who \u201csee themselves as civic actors.\u201d Roach\u2019s baseline: \u201cpeople care about their neighborhoods.\u201d Merker\u2019s belonging comes from being allowed to alter and customize a place you love. And notably, even Lewis, the villain theorist, says his actual messaging is entirely positive values: inclusivity, freedom, affordability, walkability. The opposition supplies its own contrast; the movement doesn\u2019t have to manufacture or dwell in it.',
+'Build the program around contribution and care, never around complaint capture. A tool for posting what\u2019s wrong hands the aggrieved nothing to do; a cleanup, a corridor improvement, a shared build recruits neighbors repeatedly and compounds relationships. Where grievance shows up organically (and it will), the job is conversion: give the angry newcomer a constructive, specific thing to do alongside people who love the place. Keep Lewis\u2019s caution as a tone guardrail rather than a mechanic: stay honest about obstacles and specific in asks, because a program that sounds like everything is handled demobilizes the very people it wants.', true),
+
+{sec:'s3',type:'divider',num:'3',title:'San Francisco Specifics',kicker:'Where is it landing',toc:[
+ ['3.1','The density gradient is the political map'],['3.2','A city of corridors, and the corridors saved it'],['3.3','Journalism collapse: SF is the least sick patient'],['3.4','The civic terrain is layered and unevenly covered'],['3.5','Timing: a fragile rebound between crash and reckoning']]},
+
+insight('s3','3.1','The density gradient is the city\u2019s political and messaging map',
+'Receptivity to change in San Francisco follows the housing itself. The single-family west side resists housing, transit, and street changes; support rises steadily as neighborhoods get denser toward the east. Crucially, west-side resistance is grounded in rational self-interest about parking and daily convenience, which means it responds to different messaging, not more facts.',
+'Lewis described the pattern as a clean gradient visible in voting maps and activism alike, and was explicit that the resistance is factually reasonable within its context: \u201cif you add more homes to my neighborhood, I won\u2019t be able to park my car. That\u2019s not wrong.\u201d His framing: loss aversion overrides logic once a change asks people to give something up personally. The same proposal lands as freedom in the Mission and as loss in the outer Sunset.',
+'Segment messaging by land-use typology, not just demographics. In dense neighborhoods, lead with walkability, joy, and shared space. In single-family neighborhoods, avoid loss-framed language entirely and lead with what residents gain.'),
+
+insight('s3','3.2','SF is a city of corridors, and the corridors saved it',
+'The neighborhood commercial corridor (the walkable strip of small businesses that anchors each neighborhood) is San Francisco\u2019s natural unit of identity, recovery, and intervention. The corridors came through the pandemic stronger while downtown struggled, and the city\u2019s civic energy now concentrates there.',
+'Roach: the corridors \u201cbecame the saving grace of the city\u201d post-COVID, recovering faster than downtown and proving their value to residents. Bertrang\u2019s entire model at SF New Deal (vibrancy funds, Vacant to Vibrant, corridor-level investment) treats the corridor as the intervention unit, while noting small business is also existential downtown: \u201c40% of small businesses are dependent on a thriving downtown.\u201d Merker\u2019s belonging example (24th Street) is a corridor.',
+'The corridor, not the district or the city, is the natural home for this brand: where identity, small business connectors, foot traffic, and visible change all coincide. A corridor-by-corridor rollout logic would match how San Franciscans actually experience improvement.'),
+
+insight('s3','3.3','The journalism collapse is the disease; SF is the least sick patient',
+'Nationally, the collapse of local journalism has hollowed out civic awareness: most residents can\u2019t name their local officials or find out what\u2019s happening in their neighborhood, and vocal minorities fill the vacuum. San Francisco has degraded less than almost any American city, retaining real local media capacity, and that residual capacity is part of why its civic movements are unusually organized. Both halves matter for the program.',
+'Lewis\u2019s primary explanation for civic disengagement is journalism\u2019s collapse: without it, \u201cyou just don\u2019t have any civic awareness in most cities anymore,\u201d and elected officials lose their channel to constituents. The Kei team\u2019s exchange with Merker hit the same note: the journalistic outlets people relied on are gone and the economic model likely isn\u2019t coming back. Lewis then carved out the exception: the Bay Area is a \u201cnatural experiment\u201d that retained more local media than almost anywhere, which he credits for the region building \u201cby far the most organized, most powerful\u201d civic movements in the country, contrasting a media-starved and \u201chorribly governed\u201d Los Angeles. The capacity demonstrably converts: D9 Neighbors\u2019 rezoning push gained traction through Chronicle coverage (Rogers), and the posting-to-policy pipeline was born here.',
+'Two things at once. Earned media is a more viable channel in SF than in most American cities, so budget for press strategy and give journalists accurate, evidence-forward material. But the degraded baseline is precisely the gap this initiative can help fill: most residents still don\u2019t know what\u2019s happening locally, which argues for building the program\u2019s own awareness infrastructure (neighborhood channels, gatherings, hosts) rather than relying on press coverage to carry it. The Chronicle also cuts both ways: the same paper that covers wins covers nonprofit indictments.'),
+
+insight('s3','3.4','The civic terrain is layered and unevenly covered',
+'San Francisco\u2019s civic life runs through an unusual stack of overlapping structures, from informal chat groups to quasi-governmental districts to nonprofits that function as arms of the city, all under a supervisor system that can make or break local efforts. Coverage is uneven: some neighborhoods have rich institutional support, others have almost none.',
+'The stack, as it appeared across the interviews: informal WhatsApp/Slack groups (Rahimi, Rogers), quasi-governmental Community Benefit Districts and Green Benefit Districts with their own budgets and staff (Bertrang, Roach), city-partner nonprofits like SF New Deal, which draws 80% of its revenue from city contracts (Bertrang), advocacy organizations, and 11 supervisorial districts whose supervisors are pivotal: per Rahimi, \u201cif they oppose, you can\u2019t do anything.\u201d Roach flagged the equity edge: neighborhoods without a CBD get \u201cthe mediocre overlay of regular government.\u201d',
+'Program design should map onto this stack neighborhood by neighborhood: partner with the CBD where one exists, with informal groups and CBOs where one doesn\u2019t, and always with awareness of supervisor dynamics. The uncovered neighborhoods are both the greatest need and the thinnest partnership infrastructure.'),
+
+insight('s3','3.5','Timing: a fragile rebound between a crash and a reckoning',
+'San Francisco is between chapters. A vibrant 2010s culture of artist-led civic engagement crashed in the pandemic; a vibes-led recovery is now underway, powered by optimism that has not yet been matched by structural results. The moment is genuinely favorable for a new initiative, and genuinely unforgiving of one that overpromises.',
+'Merker traced the arc: the 2010s city \u201chumming with engagement\u201d (Park(ing) Day, the Market Street Prototyping Festival, artist-designer civic culture), then a post-pandemic crash in public-realm energy and money. Bertrang described today\u2019s recovery in mood terms (night markets, \u201cLet\u2019s Go San Francisco,\u201d strong mayoral approval) while warning that downtown remains existential for the tax base and \u201cwe feel better about it than it actually is.\u201d Roach sees the energy now concentrated in downtown revitalization and the corridors, while the big master-plan developments have largely stalled on financing.',
+'The initiative arrives when appetite for positivity is high, the memory of a more engaged city is still alive, and skepticism is equally alive. The brand that wins this moment treats the rebound as fragile and delivers small proofs quickly.'),
+
+{sec:'naming',type:'naming'}
+];
+
+/* ---------- render ---------- */
+const stage = document.getElementById('stage');
+const esc = s => s;
+
+function insightHTML(s){
+  return `<div class="eyebrow"><span class="tick"></span>${s.num} · Section ${SEC[s.sec].name}</div>
+  <h1 class="slidetitle">${s.title}${s.lean?'<span class="lean">Strategic lean</span>':''}</h1>
+  <div class="slidebody">
+    <div class="lbl">The big idea</div>
+    <p class="big">${s.big}</p>
+    <div class="cols">
+      <div class="heard"><div class="lbl">What we heard</div><p>${s.heard}</p></div>
+      <div class="means"><div class="lbl">What it means</div><p>${s.means}</p></div>
+    </div>
+  </div>`;
+}
+function dividerHTML(s){
+  return `<div class="huge">${s.num}</div><h1>${s.title}</h1><div class="kicker">${s.kicker}</div>
+  <div class="toc">${s.toc.map(t=>`<div><b>${t[0]}</b><span>${t[1]}</span></div>`).join('')}</div>`;
+}
+function titleHTML(){
+  return `<div class="over">Kei · July 2026 · Working draft</div>
+  <h1>SF Open Innovation Challenge<br>Research Synthesis</h1>
+  <p class="sub">Insights to guide naming, messaging, branding, and positioning, drawn from conversations with the people closest to San Francisco\u2019s civic life.</p>
+  <div class="titleroute">
+    <i style="--dotc:var(--c-intro)"></i><em>Intro</em><span></span>
+    <i style="--dotc:var(--c-s1)"></i><em>Brand</em><span></span>
+    <i style="--dotc:var(--c-s2)"></i><em>Gather</em><span></span>
+    <i style="--dotc:var(--c-s3)"></i><em>SF</em><span></span>
+    <i style="--dotc:var(--c-name)"></i><em>Naming</em>
+  </div>
+  <div class="meta">Use &larr; &rarr; to walk through · ${slides.length} stops</div>`;
+}
+function sourcesHTML(){
+  const P=[
+   ['Mahdi Rahimi','Safe Streets Bernal','Founder of an informal, volunteer neighborhood street-safety group organized through WhatsApp.'],
+   ['Blaine Merker','Gehl','Partner at the Copenhagen-founded public-space design and research consultancy; formerly led the SF public-art practice that created Park(ing) Day.'],
+   ['Chris Roach','Studio Vara · CCA · AIA','Founding principal (architecture), 12-year urban design educator at CCA, and housing/policy advocate with AIA California and the Housing Action Coalition.'],
+   ['Simon Bertrang','SF New Deal','Executive director of the nonprofit supporting small businesses and neighborhood vibrancy; previously ran the Tenderloin Community Benefit District.'],
+   ['Thomas Rogers','D9 Neighbors for Housing','Participant in the volunteer pro-housing group in Bernal Heights.'],
+   ['Matthew Lewis','California YIMBY','Director of communications for the state\u2019s largest pro-housing policy organization.']];
+  return `<div class="eyebrow"><span class="tick"></span>Sources</div>
+  <h1 class="slidetitle">Six conversations, July 1\u201310, 2026</h1>
+  <div class="slidebody"><div class="cards">${P.map(p=>`<div class="card"><h3>${p[0]}</h3><div class="org">${p[1]}</div><p>${p[2]}</p></div>`).join('')}</div>
+  <p style="margin-top:18px;max-width:80ch;font-size:14.5px;line-height:1.6;color:var(--ink2)"><strong style="font-family:var(--disp)">How to read this:</strong> directional insights from a small, expert-skewed sample. Strong on how organizers, designers, and civic operators think; thinner on everyday residents.</p></div>`;
+}
+function structureHTML(){
+  return `<div class="eyebrow"><span class="tick"></span>Orientation</div>
+  <h1 class="slidetitle">How this document is structured</h1>
+  <div class="slidebody prose">
+  <p>We knew the initiative\u2019s ambition; we didn\u2019t yet know San Francisco. We set out to interview eight people close to the city\u2019s civic life. Holidays and the World Cup made scheduling hard, so six are complete, with the remaining two happening this week and next. The findings organize into three sections:</p>
+  <div class="threeup">
+    <div class="card" style="--acc:var(--c-s1)"><div class="num">1</div><h3>Brand, Naming &amp; Positioning</h3><p>The language that builds coalitions, the words this city is allergic to, and the credibility debts the initiative inherits. Guardrails and raw material for naming.</p></div>
+    <div class="card" style="--acc:var(--c-s2)"><div class="num">2</div><h3>How People Gather, Brainstorm &amp; Innovate</h3><p>How San Franciscans actually come together and make change. Design principles for the program, including our two strategic leans: walking together as the method, love of place as the motive.</p></div>
+    <div class="card" style="--acc:var(--c-s3)"><div class="num">3</div><h3>San Francisco Specifics</h3><p>The terrain: the density gradient, the corridor structure, and the fragile optimism of this exact moment.</p></div>
+  </div>
+  <p class="final" style="margin-top:20px">In order: what should this thing say, what should it do, and where is it landing.</p></div>`;
+}
+function anatomyHTML(){
+  return `<div class="eyebrow"><span class="tick"></span>Orientation</div>
+  <h1 class="slidetitle">How each insight works</h1>
+  <div class="slidebody"><p style="max-width:70ch;font-size:16px;line-height:1.6;margin-bottom:18px">Every insight in this document follows the same three-part structure:</p>
+  <div class="anatomy">
+    <div class="row"><h3>The big idea</h3><p>The insight itself, stated as plainly as possible.</p></div>
+    <div class="row"><h3>What we heard</h3><p>The evidence: who said it, in their words where it counts. We want this to give just a little color and indicate where you might want to dig deeper into a transcript.</p></div>
+    <div class="row"><h3>What it means</h3><p>This is the take away, trying to just get down to it so that we can take some action.</p></div>
+  </div></div>`;
+}
+function nogoHTML(s){
+  return `<div class="eyebrow"><span class="tick"></span>${s.num} continued · Section 1</div>
+  <h1 class="slidetitle">${s.title}</h1>
+  <div class="slidebody"><div class="nogo">${s.items.map(i=>`<div class="card"><h3>${i[0]}</h3><p>${i[1]}</p></div>`).join('')}</div></div>`;
+}
+function namingHTML(){
+  const pos=['neighborhood','block','corridor','streets','home','walk / walking','vibrancy','joy','pride','care','safe / safety','together','build / make','open'];
+  const neg=['innovation (tech-savior sense)','progressive','engagement / activation','community input','challenge (ideas w/o implementation)','platform- or app-flavored','311 / report-a-problem cast'];
+  return `<div class="eyebrow"><span class="tick"></span>General notes</div>
+  <h1 class="slidetitle">General notes on naming</h1>
+  <div class="slidebody">
+  <div class="wordbank">
+    <div class="pos"><h3>Carried positive charge</h3><div class="wb">${pos.map(w=>`<span>${w}</span>`).join('')}</div></div>
+    <div class="neg"><h3>Carried friction or fatigue</h3><div class="wb">${neg.map(w=>`<span>${w}</span>`).join('')}</div></div>
+  </div>
+  <p class="namingnote">The 311/report-a-problem cast cuts against the pride-and-contribution positioning in 1.6 and 2.10. \u201cVibrancy\u201d is ascendant locally (SF New Deal and Gehl\u2019s index), which makes it credible but potentially crowded. Given the strategic leans (walking and shared experience as method, love of place as motive), naming territory around movement through the neighborhood and affection for it deserves early exploration.</p></div>`;
+}
+
+slides.forEach((s,idx)=>{
+  const el=document.createElement('section');
+  el.className='slide'+(s.type==='divider'?' divider':(s.type==='title'?' titleslide':''));
+  el.style.setProperty('--sec',SEC[s.sec].color);
+  el.dataset.idx=idx;
+  el.innerHTML =
+    s.type==='insight'?insightHTML(s):
+    s.type==='divider'?dividerHTML(s):
+    s.type==='title'?titleHTML():
+    s.type==='sources'?sourcesHTML():
+    s.type==='structure'?structureHTML():
+    s.type==='anatomy'?anatomyHTML():
+    s.type==='nogo'?nogoHTML(s):
+    namingHTML();
+  stage.appendChild(el);
+});
+
+/* chips */
+const chipsEl=document.getElementById('chips');
+const order=['intro','s1','s2','s3','naming'];
+order.forEach(key=>{
+  const b=document.createElement('button');
+  b.className='chip'; b.textContent=SEC[key].name; b.style.setProperty('--chip',SEC[key].color);
+  b.addEventListener('click',()=>go(slides.findIndex(s=>s.sec===key)));
+  b.dataset.sec=key; chipsEl.appendChild(b);
+});
+
+/* stops */
+const stopsEl=document.getElementById('stops');
+slides.forEach((s,idx)=>{
+  const b=document.createElement('button');
+  b.className='stop'; b.style.setProperty('--dot',SEC[s.sec].color);
+  b.setAttribute('aria-label','Slide '+(idx+1));
+  const label = s.type==='divider'?SEC[s.sec].name.split(' · ')[0]:(idx===0?'Start':(s.type==='naming'?'Names':''));
+  b.innerHTML='<i></i>'+(label?`<b>${label}</b>`:'');
+  b.addEventListener('click',()=>go(idx));
+  stopsEl.appendChild(b);
+});
+
+/* nav */
+let cur=-1;
+const els=[...document.querySelectorAll('.slide')];
+const stopBtns=[...document.querySelectorAll('.stop')];
+const chipBtns=[...document.querySelectorAll('.chip')];
+function go(n){
+  n=Math.max(0,Math.min(slides.length-1,n));
+  if(n===cur)return;
+  const back=n<cur;
+  els.forEach((e,i)=>{e.classList.toggle('on',i===n);e.classList.toggle('back',back);});
+  cur=n;
+  const sec=slides[n].sec, col=SEC[sec].hex;
+  document.documentElement.style.setProperty('--sec-color',col);
+  document.getElementById('progress').style.width=((n+1)/slides.length*100)+'%';
+  document.getElementById('routedone').style.width=(n/(slides.length-1)*100)+'%';
+  document.getElementById('counter').textContent=(n+1)+' / '+slides.length;
+  document.getElementById('secname').textContent=SEC[sec].name;
+  stopBtns.forEach((b,i)=>{b.classList.toggle('here',i===n);b.classList.toggle('passed',i<n);});
+  chipBtns.forEach(b=>b.classList.toggle('active',b.dataset.sec===sec));
+  history.replaceState(null,'','#'+(n+1));
+  const body=els[n].querySelector('.slidebody'); if(body)body.scrollTop=0;
+}
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+  else if(e.key==='Home'){e.preventDefault();go(0);}
+  else if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+});
+let tx=null;
+document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(tx===null)return; const dx=e.changedTouches[0].clientX-tx; tx=null;
+  if(Math.abs(dx)>60)go(cur+(dx<0?1:-1));
+},{passive:true});
+
+const headerEl=document.querySelector('header');
+function setHeadH(){document.documentElement.style.setProperty('--headh',headerEl.offsetHeight+'px');}
+new ResizeObserver(setHeadH).observe(headerEl);
+setHeadH();
+
+const h=parseInt(location.hash.slice(1),10);
+go(isNaN(h)?0:h-1);
+</script>
+</body>
+</html>
